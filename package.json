@@ -11,7 +11,8 @@
     "compodoc:build-and-serve": "compodoc -p tsconfig.doc.json -s",
     "compodoc:serve": "compodoc -s",
     "storybook": "ng run components-angular:storybook",
-    "build-storybook": "ng run components-angular:build-storybook"
+    "build-storybook": "ng run components-angular:build-storybook",
+    "chromatic": "npx chromatic --project-token=chpt_e897d60e775b039"
   },
   "private": true,
   "dependencies": {
@@ -40,6 +41,7 @@
     "@storybook/blocks": "^8.6.12",
     "@storybook/test": "^8.6.12",
     "@types/jasmine": "~5.1.0",
+    "chromatic": "^11.28.0",
     "jasmine-core": "~5.6.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",

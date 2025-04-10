@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { ButtonComponent } from '../components';
+import { ButtonComponent } from '../../components';
 import type { User } from './user';
 
 @Component({

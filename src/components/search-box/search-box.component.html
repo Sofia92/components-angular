@@ -1,0 +1,22 @@
+<nz-input-group class="keywords"
+                 [style.width]="width||'max-content'"
+                 [style.height.%]="100"
+                 [nzPrefix]="searchIcon"
+                 [nzSuffix]="clearTpl">
+  <input nz-input
+         [(ngModel)]="keyword"
+         (ngModelChange)="keywordUpdate($event)"
+         [disabled]="disabled"
+         (keyup.enter)="submit()"
+         [placeholder]="placeholder" />
+  <ng-template #searchIcon><i nz-icon
+       nzType="search"></i></ng-template>
+  <ng-template #clearTpl>
+    <span nz-icon
+          *ngIf="keyword"
+          class="ant-input-clear-icon"
+          nzType="close-circle"
+          nzTheme="fill"
+          (click)="cancel()"></span>
+  </ng-template>
+</nz-input-group>

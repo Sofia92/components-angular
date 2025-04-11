@@ -24,9 +24,9 @@ import { IconType } from "./util";
     `,
   styles: [`
     :host {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
     :host.round {
       border-radius:100%;
@@ -34,16 +34,23 @@ import { IconType } from "./util";
     :host:not(.round) {
       border-radius: 4px;
     }
-        .icon-box {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .img-box {
-          overflow: hidden
-        }
-    
-    `],
+    .icon-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .img-box {
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+    .img-box img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+`],
   standalone: true,
   imports: [CommonModule, NzIconModule]
 })

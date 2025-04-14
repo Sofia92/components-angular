@@ -1,6 +1,5 @@
-import { applicationConfig, type Meta, type StoryObj } from '@storybook/angular';
+import { type Meta, type StoryObj } from '@storybook/angular';
 import { IconRenderComponent, IconType } from '../../components';
-import { provideHttpClient } from '@angular/common/http';
 
 const meta: Meta<IconRenderComponent> = {
     title: 'Example/Icon-render',
@@ -11,12 +10,7 @@ const meta: Meta<IconRenderComponent> = {
         icon: '',
         icon_background: '',
         icon_url: ''
-    },
-    decorators: [
-        applicationConfig({
-            providers: [provideHttpClient()],
-        }),
-    ],
+    }
 };
 
 export default meta;

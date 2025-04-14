@@ -1,6 +1,5 @@
-import { applicationConfig, type Meta, type StoryObj } from '@storybook/angular';
+import { type Meta, type StoryObj } from '@storybook/angular';
 import { IconSelectComponent, IconType } from '../../components';
-import { provideHttpClient } from '@angular/common/http';
 
 const meta: Meta<IconSelectComponent> = {
     title: 'Example/Icon-select',
@@ -14,12 +13,7 @@ const meta: Meta<IconSelectComponent> = {
             icon_url: ''
         },
         filter_icon_type: IconType.ICON,
-    },
-    decorators: [
-        applicationConfig({
-            providers: [provideHttpClient()],
-        }),
-    ],
+    }
 };
 
 export default meta;

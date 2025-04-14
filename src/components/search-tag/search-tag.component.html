@@ -1,0 +1,20 @@
+<span
+  class="flex bg-white gap-md cursor-pointer bordered full-width full-height padding-top-sm padding-bottom-sm padding-left-sm padding-right-sm border-radius"
+  [style.width.px]="width" align="center">
+  <span class="flex gap-xs flex-1 ellipsis" align="center" nz-dropdown [nzDropdownMenu]="menu">
+    <i nz-icon nzType="tags" [nzTheme]="checkSet.size?'fill':'outline'"></i>
+    <i class="flex-1 text-left ellipsis">{{firstTag}}</i>
+    <i>{{tagsSurfix}}</i>
+  </span>
+  <i *ngIf="checkSet.size" class="icon" nz-icon nzType="close-circle" nzTheme="fill" (click)="clearCheckTags()"></i>
+  <i *ngIf="!checkSet.size" class="icon" nz-icon nzType="down"></i>
+</span>
+
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <div class="tag-group flex bg-white gap-sm padding-md bordered" vertical>
+    <label class="tag-item ellipsis" *ngFor="let tag of tagList" nz-checkbox [ngModel]="checkSet.has(tag.id)"
+      (ngModelChange)="toggleCheckTag(tag.id)">
+      <span class="ellipsis"><i >{{tag.name}}</i></span>
+    </label>
+  </div>
+</nz-dropdown-menu>

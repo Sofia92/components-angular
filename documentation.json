@@ -1,5 +1,262 @@
 {
-    "pipes": [],
+    "pipes": [
+        {
+            "name": "FileSizePipe",
+            "id": "pipe-FileSizePipe-0502bf13ba6fa1a877476ee45c851804002883e177943ad64ce4db95f3ddefd3fc475965e9b95afc923eebee603d1b4d238978d625f67447c7fcfec73589599d",
+            "file": "src/pipes/file-size.pipe.ts",
+            "type": "pipe",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "description": "",
+            "rawdescription": "\n",
+            "properties": [],
+            "methods": [
+                {
+                    "name": "transform",
+                    "args": [
+                        {
+                            "name": "size",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "string",
+                    "typeParameters": [],
+                    "line": 13,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        125
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "size",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "standalone": true,
+            "ngname": "fileSize",
+            "sourceCode": "import { Pipe, PipeTransform } from '@angular/core';\n\nconst kb = 1024;\nconst mb = 1024 * kb;\nconst gb = 1024 * mb;\n\n@Pipe({\n  name: 'fileSize',\n  standalone: true,\n})\nexport class FileSizePipe implements PipeTransform {\n\n  public transform(size: number): string {\n    if(!size){\n      return `0K`;\n    }\n    if (size < kb) {\n      return `${size}B`;\n    }\n    if (size >= kb && size < mb) {\n      return `${(size / kb).toFixed(2)}K`;\n    }\n    if (size >= mb && size <= gb) {\n      return `${(size / mb).toFixed(2)}M`;\n    }\n    if (size >= gb) {\n      return `${(size / gb).toFixed(2)}G`;\n    }\n    return '';\n  }\n\n}\n"
+        },
+        {
+            "name": "FormatNumberPipe",
+            "id": "pipe-FormatNumberPipe-a37e9a3ed7a7e2b179d66605b545a5ea1efe13f5d05ba8ba51cc0fe7fe5ee4332f97d8c8c17e53ceae7a990ac7b4fbd9e3e4953aa8183ea8f77bc93d156fcfe3",
+            "file": "src/pipes/format-number.pipe.ts",
+            "type": "pipe",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "description": "",
+            "rawdescription": "\n",
+            "properties": [],
+            "methods": [
+                {
+                    "name": "formatWithDecimals",
+                    "args": [
+                        {
+                            "name": "num",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "decimals",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "string",
+                    "typeParameters": [],
+                    "line": 29,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "num",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "decimals",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "transform",
+                    "args": [
+                        {
+                            "name": "value",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "decimals",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "defaultValue": "1"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "string",
+                    "typeParameters": [],
+                    "line": 8,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "value",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "decimals",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "defaultValue": "1",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "standalone": true,
+            "ngname": "formatNumber",
+            "sourceCode": "import { Pipe, PipeTransform } from '@angular/core';\n\n@Pipe({\n  name: 'formatNumber',\n  standalone: true\n})\nexport class FormatNumberPipe implements PipeTransform {\n  transform(value: number, decimals: number = 1): string {\n    if (value === null || value === undefined) return '0';\n    \n    if (value >= 1000000000) {\n      const num = value / 1000000000;\n      return this.formatWithDecimals(num, decimals) + 'B';\n    }\n    \n    if (value >= 1000000) {\n      const num = value / 1000000;\n      return this.formatWithDecimals(num, decimals) + 'M';\n    }\n    \n    if (value >= 1000) {\n      const num = value / 1000;\n      return this.formatWithDecimals(num, decimals) + 'K';\n    }\n    \n    return value.toString();\n  }\n\n  private formatWithDecimals(num: number, decimals: number): string {\n    const rounded = Math.round(num * Math.pow(10, decimals)) / Math.pow(10, decimals);\n    return rounded % 1 === 0 ? rounded.toString() : rounded.toFixed(decimals);\n  }\n} "
+        },
+        {
+            "name": "TranslatePipe",
+            "id": "pipe-TranslatePipe-c53c07d85c94307547b59d7a97472f56d1f431b50cc56520110ab78a8d5d71f559ce09909615f3e1e8ff211a3c59f26b5ce64460b0934ceec0f2b7befda18080",
+            "file": "src/pipes/translate.pipe.ts",
+            "type": "pipe",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "description": "",
+            "rawdescription": "\n",
+            "properties": [
+                {
+                    "name": "lastResult",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 12,
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
+                    "name": "path",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 11,
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
+                    "name": "value",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "any",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 10,
+                    "modifierKind": [
+                        123
+                    ]
+                }
+            ],
+            "methods": [
+                {
+                    "name": "transform",
+                    "args": [
+                        {
+                            "name": "value",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "args",
+                            "type": "any[]",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "dotDotDotToken": true
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "string",
+                    "typeParameters": [],
+                    "line": 22,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "value",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "args",
+                            "type": "any[]",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "dotDotDotToken": true,
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "standalone": true,
+            "pure": false,
+            "ngname": "translate",
+            "sourceCode": "import { Pipe, PipeTransform } from \"@angular/core\";\nimport { NzI18nService } from \"ng-zorro-antd/i18n\";\n\n@Pipe({\n    name: 'translate',\n    standalone: true,\n    pure: false\n})\nexport class TranslatePipe implements PipeTransform {\n    private value: any;\n    private path: string;\n    private lastResult: string;\n\n    constructor(private i18n: NzI18nService) {\n        this.i18n.localeChange.subscribe(() => {\n            if (this.path?.trim()) {\n                this.lastResult = this.i18n.translate(this.path);\n            }\n        });\n    }\n\n    transform(value: any, ...args: any[]): string {\n        this.path = args[0];\n        this.value = value;\n\n        // 如果提供了翻译路径，直接使用翻译路径进行翻译\n        if (this.path?.trim()) {\n            this.lastResult = this.i18n.translate(this.path);\n            return this.lastResult;\n        }\n\n        // 如果没有提供翻译路径，但提供了值，尝试直接翻译该值\n        if (value?.trim()) {\n            this.lastResult = this.i18n.translate(value);\n            return this.lastResult;\n        }\n\n        // 如果都没有，返回空字符串\n        return '';\n    }\n} "
+        }
+    ],
     "interfaces": [
         {
             "name": "IAppIcon",
@@ -1115,6 +1372,208 @@
             },
             "extends": [],
             "templateData": "<nz-input-group class=\"keywords\"\n                 [style.width]=\"width||'max-content'\"\n                 [style.height.%]=\"100\"\n                 [nzPrefix]=\"searchIcon\"\n                 [nzSuffix]=\"clearTpl\">\n  <input nz-input\n         [(ngModel)]=\"keyword\"\n         (ngModelChange)=\"keywordUpdate($event)\"\n         [disabled]=\"disabled\"\n         (keyup.enter)=\"submit()\"\n         [placeholder]=\"placeholder\" />\n  <ng-template #searchIcon><i nz-icon\n       nzType=\"search\"></i></ng-template>\n  <ng-template #clearTpl>\n    <span nz-icon\n          *ngIf=\"keyword\"\n          class=\"ant-input-clear-icon\"\n          nzType=\"close-circle\"\n          nzTheme=\"fill\"\n          (click)=\"cancel()\"></span>\n  </ng-template>\n</nz-input-group>\n"
+        },
+        {
+            "name": "SearchTagComponent",
+            "id": "component-SearchTagComponent-8a7e2c530e5d0152d1dc063cbc77b238b793ee8b314568d544664acb68057095b803b53ea47df50fd8f66ac3739d84be651892476eabb89cb5ff6e13a3b7e8b8",
+            "file": "src/components/search-tag/search-tag.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "app-search-tag",
+            "styleUrls": [],
+            "styles": [
+                "\n    :host{\n      display: block;\n      width: 100%;\n      height: 28px;\n      text-align: left;\n      font-size: 14px;\n    }\n    .tag-group {\n      min-width: 200px;\n      max-width: 300px;\n    }\n    .tag-item {\n      margin: 0;\n    }\n    .icon{\n      color: #d9d9d9;\n    }\n    "
+            ],
+            "templateUrl": [
+                "./search-tag.component.html"
+            ],
+            "viewProviders": [],
+            "hostDirectives": [],
+            "inputsClass": [
+                {
+                    "name": "tagIds",
+                    "defaultValue": "[]",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 42,
+                    "type": "string[]",
+                    "decorators": []
+                },
+                {
+                    "name": "tagList",
+                    "defaultValue": "[]",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 40,
+                    "type": "any[]",
+                    "decorators": []
+                },
+                {
+                    "name": "width",
+                    "defaultValue": "150",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 41,
+                    "type": "number",
+                    "decorators": []
+                }
+            ],
+            "outputsClass": [
+                {
+                    "name": "tagIdsChange",
+                    "defaultValue": "new EventEmitter<string[]>()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 43,
+                    "type": "EventEmitter"
+                }
+            ],
+            "propertiesClass": [
+                {
+                    "name": "checkSet",
+                    "defaultValue": "new Set<string>()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 44
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "clearCheckTags",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 64,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "toggleCheckTag",
+                    "args": [
+                        {
+                            "name": "tagId",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 59,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "tagId",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "standalone": true,
+            "imports": [
+                {
+                    "name": "CommonModule",
+                    "type": "module"
+                },
+                {
+                    "name": "FormsModule",
+                    "type": "module"
+                },
+                {
+                    "name": "NzSelectModule",
+                    "type": "module"
+                },
+                {
+                    "name": "NzIconModule",
+                    "type": "module"
+                },
+                {
+                    "name": "NzDropDownModule",
+                    "type": "module"
+                },
+                {
+                    "name": "NzCheckboxModule",
+                    "type": "module"
+                },
+                {
+                    "name": "TranslatePipe",
+                    "type": "pipe"
+                }
+            ],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Component, Input, Output, EventEmitter } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { NzSelectModule } from 'ng-zorro-antd/select';\nimport { FormsModule } from '@angular/forms';\nimport { NzDropDownModule } from 'ng-zorro-antd/dropdown';\nimport { NzCheckboxModule } from 'ng-zorro-antd/checkbox';\nimport { NzI18nService } from 'ng-zorro-antd/i18n';\nimport { NzIconModule } from 'ng-zorro-antd/icon';\nimport { TranslatePipe } from '@Pipes';\n@Component({\n  selector: 'app-search-tag',\n  templateUrl: './search-tag.component.html',\n  styles: [`\n    :host{\n      display: block;\n      width: 100%;\n      height: 28px;\n      text-align: left;\n      font-size: 14px;\n    }\n    .tag-group {\n      min-width: 200px;\n      max-width: 300px;\n    }\n    .tag-item {\n      margin: 0;\n    }\n    .icon{\n      color: #d9d9d9;\n    }\n    `],\n  standalone: true,\n  imports: [\n    CommonModule, FormsModule,\n    NzSelectModule, NzIconModule, NzDropDownModule, NzCheckboxModule,\n    TranslatePipe,\n  ]\n})\nexport class SearchTagComponent {\n  @Input() tagList: any[] = [];\n  @Input() width: number = 150;\n  @Input() tagIds: string[] = [];\n  @Output() tagIdsChange = new EventEmitter<string[]>();\n  checkSet = new Set<string>();\n\n  constructor(private i18n: NzI18nService) { }\n\n  get firstTag(): string {\n    return this.checkSet.size > 0\n      ? this.tagList.find(tag => this.checkSet.has(tag.id))?.name\n      : this.i18n.translate('Role.CommandTagPlaceholder')\n  }\n  get tagsSurfix(): string {\n    return this.checkSet.size > 1\n      ? `+ ${this.checkSet.size - 1}`\n      : '';\n  }\n\n  toggleCheckTag(tagId: string) {\n    this.checkSet.has(tagId) ? this.checkSet.delete(tagId) : this.checkSet.add(tagId);\n    this.tagIdsChange.emit([...this.checkSet]);\n  }\n\n  clearCheckTags() {\n    this.checkSet.clear();\n    this.tagIdsChange.emit([...this.checkSet]);\n  }\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "\n    :host{\n      display: block;\n      width: 100%;\n      height: 28px;\n      text-align: left;\n      font-size: 14px;\n    }\n    .tag-group {\n      min-width: 200px;\n      max-width: 300px;\n    }\n    .tag-item {\n      margin: 0;\n    }\n    .icon{\n      color: #d9d9d9;\n    }\n    \n",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [
+                    {
+                        "name": "i18n",
+                        "type": "NzI18nService",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "line": 44,
+                "jsdoctags": [
+                    {
+                        "name": "i18n",
+                        "type": "NzI18nService",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "extends": [],
+            "accessors": {
+                "firstTag": {
+                    "name": "firstTag",
+                    "getSignature": {
+                        "name": "firstTag",
+                        "type": "string",
+                        "returnType": "string",
+                        "line": 48
+                    }
+                },
+                "tagsSurfix": {
+                    "name": "tagsSurfix",
+                    "getSignature": {
+                        "name": "tagsSurfix",
+                        "type": "string",
+                        "returnType": "string",
+                        "line": 53
+                    }
+                }
+            },
+            "templateData": "<span\n  class=\"flex bg-white gap-md cursor-pointer bordered full-width full-height padding-top-sm padding-bottom-sm padding-left-sm padding-right-sm border-radius\"\n  [style.width.px]=\"width\" align=\"center\">\n  <span class=\"flex gap-xs flex-1 ellipsis\" align=\"center\" nz-dropdown [nzDropdownMenu]=\"menu\">\n    <i nz-icon nzType=\"tags\" [nzTheme]=\"checkSet.size?'fill':'outline'\"></i>\n    <i class=\"flex-1 text-left ellipsis\">{{firstTag}}</i>\n    <i>{{tagsSurfix}}</i>\n  </span>\n  <i *ngIf=\"checkSet.size\" class=\"icon\" nz-icon nzType=\"close-circle\" nzTheme=\"fill\" (click)=\"clearCheckTags()\"></i>\n  <i *ngIf=\"!checkSet.size\" class=\"icon\" nz-icon nzType=\"down\"></i>\n</span>\n\n<nz-dropdown-menu #menu=\"nzDropdownMenu\">\n  <div class=\"tag-group flex bg-white gap-sm padding-md bordered\" vertical>\n    <label class=\"tag-item ellipsis\" *ngFor=\"let tag of tagList\" nz-checkbox [ngModel]=\"checkSet.has(tag.id)\"\n      (ngModelChange)=\"toggleCheckTag(tag.id)\">\n      <span class=\"ellipsis\"><i >{{tag.name}}</i></span>\n    </label>\n  </div>\n</nz-dropdown-menu>"
         }
     ],
     "modules": [],
@@ -1128,7 +1587,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "ApplicationConfig",
-                "defaultValue": "{\n  providers: [\n    provideZoneChangeDetection({ eventCoalescing: true }),\n    provideRouter(routes),\n    provideAnimationsAsync(),\n    provideHttpClient() //added the function here\n  ]\n}"
+                "defaultValue": "{\n  providers: [\n    provideZoneChangeDetection({ eventCoalescing: true }),\n    provideRouter(routes),\n    provideAnimationsAsync(),\n    provideHttpClient(), //added the function here\n    provideNzI18n(en_US)\n  ]\n}"
             },
             {
                 "name": "CommonIconNames",
@@ -1159,6 +1618,36 @@
                 "deprecationMessage": "",
                 "type": "[]",
                 "defaultValue": "[\n    'Edit',\n    'Form',\n    'Copy',\n    'Scissor',\n    'Delete',\n    'Snippets',\n    'Diff',\n    'Highlight',\n    'AlignCenter',\n    'AlignLeft',\n    'AlignRight',\n    'BgColors',\n    'Bold',\n    'Italic',\n    'Underline',\n    'Strikethrough',\n    'Redo',\n    'Undo',\n    'ZoomIn',\n    'ZoomOut',\n    'FontColors',\n    'FontSize',\n    'LineHeight',\n    'Dash',\n    'SmallDash',\n    'SortAscending',\n    'SortDescending',\n    'Drag',\n    'OrderedList',\n    'UnorderedList',\n    'RadiusSetting',\n    'ColumnWidth',\n    'ColumnHeight',\n]"
+            },
+            {
+                "name": "gb",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/pipes/file-size.pipe.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "1024 * mb"
+            },
+            {
+                "name": "kb",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/pipes/file-size.pipe.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "number",
+                "defaultValue": "1024"
+            },
+            {
+                "name": "mb",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/pipes/file-size.pipe.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "1024 * kb"
             },
             {
                 "name": "SuggestionIconNames",
@@ -1225,7 +1714,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "ApplicationConfig",
-                    "defaultValue": "{\n  providers: [\n    provideZoneChangeDetection({ eventCoalescing: true }),\n    provideRouter(routes),\n    provideAnimationsAsync(),\n    provideHttpClient() //added the function here\n  ]\n}"
+                    "defaultValue": "{\n  providers: [\n    provideZoneChangeDetection({ eventCoalescing: true }),\n    provideRouter(routes),\n    provideAnimationsAsync(),\n    provideHttpClient(), //added the function here\n    provideNzI18n(en_US)\n  ]\n}"
                 }
             ],
             "src/components/assets/util/sourceIcons.ts": [
@@ -1268,6 +1757,38 @@
                     "deprecationMessage": "",
                     "type": "[]",
                     "defaultValue": "[\n    'Question',\n    'QuestionCircle',\n    'Plus',\n    'PlusCircle',\n    'Pause',\n    'PauseCircle',\n    'Minus',\n    'MinusCircle',\n    'PlusSquare',\n    'MinusSquare',\n    'Info',\n    'InfoCircle',\n    'Exclamation',\n    'ExclamationCircle',\n    'Close',\n    'CloseCircle',\n    'CloseSquare',\n    'Check',\n    'CheckCircle',\n    'CheckSquare',\n    'ClockCircle',\n    'Warning',\n    'IssuesClose',\n    'Stop',\n]"
+                }
+            ],
+            "src/pipes/file-size.pipe.ts": [
+                {
+                    "name": "gb",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/pipes/file-size.pipe.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "1024 * mb"
+                },
+                {
+                    "name": "kb",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/pipes/file-size.pipe.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "defaultValue": "1024"
+                },
+                {
+                    "name": "mb",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/pipes/file-size.pipe.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "1024 * kb"
                 }
             ]
         },
@@ -1322,7 +1843,7 @@
     },
     "routes": [],
     "coverage": {
-        "count": 11,
+        "count": 7,
         "status": "low",
         "files": [
             {
@@ -1447,6 +1968,72 @@
                 "coveragePercent": 90,
                 "coverageCount": "10/11",
                 "status": "very-good"
+            },
+            {
+                "filePath": "src/components/search-tag/search-tag.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "SearchTagComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/9",
+                "status": "low"
+            },
+            {
+                "filePath": "src/pipes/file-size.pipe.ts",
+                "type": "pipe",
+                "linktype": "pipe",
+                "name": "FileSizePipe",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/pipes/file-size.pipe.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "gb",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/pipes/file-size.pipe.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "kb",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/pipes/file-size.pipe.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "mb",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/pipes/format-number.pipe.ts",
+                "type": "pipe",
+                "linktype": "pipe",
+                "name": "FormatNumberPipe",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/pipes/translate.pipe.ts",
+                "type": "pipe",
+                "linktype": "pipe",
+                "name": "TranslatePipe",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
             },
             {
                 "filePath": "src/stories/header/header.component.ts",

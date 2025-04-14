@@ -1,0 +1,1 @@
+export { SearchTagComponent } from './search-tag.component';

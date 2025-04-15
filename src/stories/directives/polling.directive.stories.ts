@@ -44,25 +44,12 @@ class PollingDemoComponent extends PollingDirective implements OnInit {
     pollingResults: any[] = [];
     isPolling = false; // 是否开启轮询
     loading = { success: false, error: false };
-    randomData = () => Math.random().toFixed(2);
 
     ngOnInit() {
         // 设置轮询条件：接口状态pending则一直轮询，除非手动停止或者轮询成功｜失败
-        this.polling(this.mockApi(), 2, (response) => this.isPolling ? response.status == 'pending' : false);
+        this.polling(this._mockApi(), 2, (response) => this.isPolling ? response.status == 'pending' : false);
     }
-    // 模拟API请求
-    mockApi() {
-        return new Observable(subscriber => {
-            const data = this.randomData();
-            subscriber.next({
-                id: uuidv4(),
-                timestamp: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
-                data,
-                status: +data < 0.8 ? 'pending' : 'success'
-            });
-            subscriber.complete();
-        });
-    }
+
     startPolling() {
         this.isPolling = true;
         this.pollingResults = [];
@@ -89,11 +76,33 @@ class PollingDemoComponent extends PollingDirective implements OnInit {
         this.isPolling = false;
         this.loading = { success: true, error: false };
     }
+
+    // 模拟API请求
+    private _mockApi() {
+        return new Observable(subscriber => {
+            const data = Math.random().toFixed(2);
+            subscriber.next({
+                id: uuidv4(),
+                timestamp: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
+                data,
+                status: +data < 0.8 ? 'pending' : 'success'
+            });
+            subscriber.complete();
+        });
+    }
 }
 
 const meta: Meta<PollingDemoComponent> = {
     title: 'Directives/Polling',
     component: PollingDemoComponent,
+    argTypes: {
+        interval: {
+            control: 'number',
+            description: '轮询间隔时间，默认2秒',
+            defaultValue: 2000
+        }
+    },
+    tags: ['autodocs'],
     decorators: [
         moduleMetadata({
             imports: [PollingDemoComponent],

@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { IconSelectComponent, SearchBoxComponent } from '../components';
 import { FormsModule } from '@angular/forms';
-
+import { NzInputModule } from 'ng-zorro-antd/input';
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, FormsModule, IconSelectComponent, SearchBoxComponent],
+  imports: [FormsModule, NzInputModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

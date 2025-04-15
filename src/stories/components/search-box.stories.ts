@@ -1,5 +1,5 @@
 import { type Meta, type StoryObj } from '@storybook/angular';
-import { SearchBoxComponent } from '../components';
+import { SearchBoxComponent } from '@Components/search-box';
 
 
 let keyword = '';

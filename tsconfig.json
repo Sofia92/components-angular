@@ -25,6 +25,12 @@
       ],
       "@Pipes": [
         "./src/pipes"
+      ],
+      "@Directives": [
+        "./src/directives"
+      ],
+      "@Utils": [
+        "./src/utils"
       ]
     }
   },

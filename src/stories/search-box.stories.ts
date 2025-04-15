@@ -4,7 +4,7 @@ import { SearchBoxComponent } from '../components';
 
 let keyword = '';
 const meta: Meta<SearchBoxComponent> = {
-    title: 'Example/search box',
+    title: 'Components/search box',
     component: SearchBoxComponent,
     tags: ['autodocs'],
     args: {

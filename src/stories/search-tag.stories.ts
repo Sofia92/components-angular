@@ -4,7 +4,7 @@ import { SearchTagComponent } from '@Components/search-tag';
 
 
 const meta: Meta<SearchTagComponent> = {
-    title: 'Example/search tag',
+    title: 'Components/search tag',
     component: SearchTagComponent,
     tags: ['autodocs']
 };
@@ -13,7 +13,7 @@ export default meta;
 type Story = StoryObj<SearchTagComponent>;
 export const base: Story = {
     args: {
-        tagList: [{ id: 1, name: 'tag1' }, { id: 2, name: 'tag2' }],
+        tagList: [{ id: 1, name: 'tag1' }, { id: 2, name: '超超超超超超超超超超超茶匙擦和春华草吵吵吵吵' }, { id: 3, name: 'tag3' }],
         width: 150,
         tagIds: ['1', '2']
     },

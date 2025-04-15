@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { default as assetsJson } from './util/list.json';
 import { ngZorroIconCategoryNames, IAppIcon, IconType } from "./util";
 import { CommonModule } from "@angular/common";
@@ -113,6 +113,7 @@ import { NzIconModule } from "ng-zorro-antd/icon";
 })
 export class IconSelectComponent {
   @Input() icon: IAppIcon;
+  @Output() iconChange = new EventEmitter<IAppIcon>();
   @Input() filter_icon_type: IconType;
   public assets: any[];
   public iconBackgrounds = [
@@ -164,9 +165,11 @@ export class IconSelectComponent {
     } else {
       this.icon = { ...this.icon, icon_type: IconType.IMAGE, icon: '', icon_url: asset.icon_url };
     }
+    this.iconChange.emit(this.icon);
   }
 
   public updateIconBackground(background: string) {
     this.icon = { ...this.icon, icon_background: background };
+    this.iconChange.emit(this.icon);
   }
 }

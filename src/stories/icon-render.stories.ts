@@ -1,8 +1,8 @@
 import { type Meta, type StoryObj } from '@storybook/angular';
-import { IconRenderComponent, IconType } from '../../components';
+import { IconRenderComponent, IconType } from '@Components/assets';
 
 const meta: Meta<IconRenderComponent> = {
-    title: 'Example/Icon-render',
+    title: 'Components/Icon-render',
     component: IconRenderComponent,
     tags: ['autodocs'],
     args: {

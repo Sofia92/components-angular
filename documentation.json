@@ -966,7 +966,7 @@
         },
         {
             "name": "IconSelectComponent",
-            "id": "component-IconSelectComponent-f8bbf8cd3591f799e2b8f43a85c557c8b16215be8d2645aec9d6c67955fb01621c711f4025dfbe65ac76cefaed65c23d9410a0eb0f4101cc7bc66e4178a00231",
+            "id": "component-IconSelectComponent-717fecff8fa9e04938c8d41d6ac665c267d20c047a6cbb3170b1f2b854469c839c6fd6dbcf37ec8906f910b210a95b209ff7b23158be4466e0fc8f2116e13f11",
             "file": "src/components/assets/icon-select.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -987,7 +987,7 @@
                     "name": "filter_icon_type",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 116,
+                    "line": 117,
                     "type": "IconType",
                     "decorators": []
                 },
@@ -1000,7 +1000,16 @@
                     "decorators": []
                 }
             ],
-            "outputsClass": [],
+            "outputsClass": [
+                {
+                    "name": "iconChange",
+                    "defaultValue": "new EventEmitter<IAppIcon>()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 116,
+                    "type": "EventEmitter"
+                }
+            ],
             "propertiesClass": [
                 {
                     "name": "assets",
@@ -1010,7 +1019,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 117,
+                    "line": 118,
                     "modifierKind": [
                         125
                     ]
@@ -1024,7 +1033,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 118,
+                    "line": 119,
                     "modifierKind": [
                         125
                     ]
@@ -1037,7 +1046,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 149,
+                    "line": 150,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -1057,7 +1066,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 158,
+                    "line": 159,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -1088,7 +1097,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 169,
+                    "line": 171,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -1125,7 +1134,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, Input } from \"@angular/core\";\nimport { default as assetsJson } from './util/list.json';\nimport { ngZorroIconCategoryNames, IAppIcon, IconType } from \"./util\";\nimport { CommonModule } from \"@angular/common\";\nimport { NzIconModule } from \"ng-zorro-antd/icon\";\n\n@Component({\n  selector: 'icon-select',\n  template: `\n<div class=\"assets-wrapper\">\n  <ul class=\"anticons-list\">\n    <ng-container *ngFor=\"let item of assets\">\n      <li *ngIf=\"item.icon_type=='icon'\" [class.active]=\"icon?.icon==item.icon\" (click)=\"updateIcon(item)\">\n        <nz-icon class=\"icon\" [nzType]=\"item.icon\" />\n      </li>\n      <li *ngIf=\"item.icon_type=='emoji'\" [class.active]=\"icon?.icon==item.icon\" (click)=\"updateIcon(item)\">\n         <nz-icon class=\"icon\" [nzType]=\"item.icon\" />\n      </li>\n      <li *ngIf=\"item.icon_type=='image'\" [class.active]=\"icon?.icon_url==item.icon_url\" (click)=\"updateIcon(item)\">\n        <img [src]=\"item.icon_url\">\n      </li>\n    </ng-container>\n  </ul>\n</div>\n<h3>Choose Style</h3>\n<div *ngIf=\"icon\" class=\"bg-wrapper\">\n  <div class=\"bg-box cursor-pointer\" *ngFor=\"let background of iconBackgrounds; let i = index\"\n  [class.active]=\"icon.icon_background==background\"\n  (click)=\"updateIconBackground(background)\">\n    <span [style.background]=\"background\" class=\"icon-box\">\n      <span *ngIf=\"icon.icon_type=='emoji'\" [style.color]=\"i==0 ? '#000' : '#fff'\"\n        nz-icon [nzType]=\"icon.icon\"></span>\n      <img *ngIf=\"icon.icon_type=='image'\" [src]=\"icon.icon_url\">\n    </span>\n  </div>\n</div>\n`,\n  styles: [`\n.anticons-list {\n    display: grid;\n    grid-auto-rows: 40px;\n    grid-template-columns: repeat(auto-fill, 40px);\n    align-items: center;\n    gap: 1px;\n    justify-content: center;\n    max-height: 200px;\n    overflow: hidden auto;\n\n    li {\n      cursor: pointer;\n      text-align: center;\n      list-style: none;\n      width: 100%;\n      height: 100%;\n      display: flex;\n      align-items: center;\n      justify-content: center;\n      border-radius: 4px;\n    }\n    li:hover {\n      background: #108AC9;\n      color: #fff;\n    }\n    li.active {\n      background: #3664d9;\n      color: #fff;\n    }\n    .icon {\n      font-size: 24px;\n    }\n    img {\n      max-width: 32px;\n      max-height: 32px;\n      display: inline-block;\n    }\n}\n\n.bg-wrapper{\n    display: flex;\n    gap: 12px;\n    flex-wrap: wrap;\n}\n.bg-box{\n      padding: 4px;\n      border: 1.5px solid #fff;\n      border-radius: 4px;\n    }\n.bg-box.active {\n    border-color: #3664d9;\n}\n.icon-box{\n    background: rgb(54, 100, 217);\n    min-width: 32px;\n    min-height: 32px;\n    max-width: 60px;\n    max-height: 60px;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    border-radius: 4px;\n    color: #fff;\n    font-size: 20px;\n}\n\n.icon-box img{\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n}\n\n`],\n  imports: [CommonModule, NzIconModule]\n})\nexport class IconSelectComponent {\n  @Input() icon: IAppIcon;\n  @Input() filter_icon_type: IconType;\n  public assets: any[];\n  public iconBackgrounds = [\n    'inherit', '#3664D9', '#757575', '#8200FF', '#0DC4CB', '#2DC76D', '#FF3143',\n    '#FD8701', '#FFC900', '#FF9900', '#FF6600', '#FEF7C3'\n  ];\n\n\n  constructor() {\n    this.assets = [];\n    Object.values(ngZorroIconCategoryNames()).forEach(icons => {\n      const groupIcons = icons.map(icon => ({ icon_type: IconType.EMOJI, icon: icon, icon_url: null, name: icon + '' }));\n      this.assets.push(...groupIcons);\n    });\n    (assetsJson as any[])\n      .filter((item: any) => ['png', 'gif', 'jpg', 'svg'].includes(item.group))\n      .forEach((item: any) => {\n        this.assets.push(...(item.children.map((icon: any) => {\n          const icon_type = icon.usingImg ? IconType.IMAGE : IconType.EMOJI;\n          return {\n            icon_type,\n            icon: icon_type == IconType.EMOJI ? icon.nzType : null,\n            icon_url: icon_type == IconType.IMAGE ? icon.path : null,\n            name: icon.name\n          }\n        })))\n      });\n  }\n\n  public get valid(): boolean {\n    return !!this.icon?.icon_type && !!this.icon?.icon_background;\n  }\n\n  public ngOnInit(): void {\n    if (!this.icon) {\n      this.icon = { icon_type: IconType.EMOJI, icon: this.assets[0].icon, icon_url: '', icon_background: this.iconBackgrounds[1] };\n    }\n    if (this.filter_icon_type) {\n      this.assets = this.assets.filter((asset: any) => this.filter_icon_type == IconType.IMAGE ? asset.icon_type == IconType.IMAGE : true);\n    }\n  }\n\n  public updateIcon(asset: any) {\n    if (!this.icon?.icon_background) {\n      this.icon.icon_background = this.iconBackgrounds[1];\n    }\n    if (asset.icon_type == IconType.EMOJI) {\n      this.icon = { ...this.icon, icon_type: IconType.EMOJI, icon: asset.icon, icon_url: '' };\n    } else {\n      this.icon = { ...this.icon, icon_type: IconType.IMAGE, icon: '', icon_url: asset.icon_url };\n    }\n  }\n\n  public updateIconBackground(background: string) {\n    this.icon = { ...this.icon, icon_background: background };\n  }\n}",
+            "sourceCode": "import { Component, EventEmitter, Input, Output } from \"@angular/core\";\nimport { default as assetsJson } from './util/list.json';\nimport { ngZorroIconCategoryNames, IAppIcon, IconType } from \"./util\";\nimport { CommonModule } from \"@angular/common\";\nimport { NzIconModule } from \"ng-zorro-antd/icon\";\n\n@Component({\n  selector: 'icon-select',\n  template: `\n<div class=\"assets-wrapper\">\n  <ul class=\"anticons-list\">\n    <ng-container *ngFor=\"let item of assets\">\n      <li *ngIf=\"item.icon_type=='icon'\" [class.active]=\"icon?.icon==item.icon\" (click)=\"updateIcon(item)\">\n        <nz-icon class=\"icon\" [nzType]=\"item.icon\" />\n      </li>\n      <li *ngIf=\"item.icon_type=='emoji'\" [class.active]=\"icon?.icon==item.icon\" (click)=\"updateIcon(item)\">\n         <nz-icon class=\"icon\" [nzType]=\"item.icon\" />\n      </li>\n      <li *ngIf=\"item.icon_type=='image'\" [class.active]=\"icon?.icon_url==item.icon_url\" (click)=\"updateIcon(item)\">\n        <img [src]=\"item.icon_url\">\n      </li>\n    </ng-container>\n  </ul>\n</div>\n<h3>Choose Style</h3>\n<div *ngIf=\"icon\" class=\"bg-wrapper\">\n  <div class=\"bg-box cursor-pointer\" *ngFor=\"let background of iconBackgrounds; let i = index\"\n  [class.active]=\"icon.icon_background==background\"\n  (click)=\"updateIconBackground(background)\">\n    <span [style.background]=\"background\" class=\"icon-box\">\n      <span *ngIf=\"icon.icon_type=='emoji'\" [style.color]=\"i==0 ? '#000' : '#fff'\"\n        nz-icon [nzType]=\"icon.icon\"></span>\n      <img *ngIf=\"icon.icon_type=='image'\" [src]=\"icon.icon_url\">\n    </span>\n  </div>\n</div>\n`,\n  styles: [`\n.anticons-list {\n    display: grid;\n    grid-auto-rows: 40px;\n    grid-template-columns: repeat(auto-fill, 40px);\n    align-items: center;\n    gap: 1px;\n    justify-content: center;\n    max-height: 200px;\n    overflow: hidden auto;\n\n    li {\n      cursor: pointer;\n      text-align: center;\n      list-style: none;\n      width: 100%;\n      height: 100%;\n      display: flex;\n      align-items: center;\n      justify-content: center;\n      border-radius: 4px;\n    }\n    li:hover {\n      background: #108AC9;\n      color: #fff;\n    }\n    li.active {\n      background: #3664d9;\n      color: #fff;\n    }\n    .icon {\n      font-size: 24px;\n    }\n    img {\n      max-width: 32px;\n      max-height: 32px;\n      display: inline-block;\n    }\n}\n\n.bg-wrapper{\n    display: flex;\n    gap: 12px;\n    flex-wrap: wrap;\n}\n.bg-box{\n      padding: 4px;\n      border: 1.5px solid #fff;\n      border-radius: 4px;\n    }\n.bg-box.active {\n    border-color: #3664d9;\n}\n.icon-box{\n    background: rgb(54, 100, 217);\n    min-width: 32px;\n    min-height: 32px;\n    max-width: 60px;\n    max-height: 60px;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    border-radius: 4px;\n    color: #fff;\n    font-size: 20px;\n}\n\n.icon-box img{\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n}\n\n`],\n  imports: [CommonModule, NzIconModule]\n})\nexport class IconSelectComponent {\n  @Input() icon: IAppIcon;\n  @Output() iconChange = new EventEmitter<IAppIcon>();\n  @Input() filter_icon_type: IconType;\n  public assets: any[];\n  public iconBackgrounds = [\n    'inherit', '#3664D9', '#757575', '#8200FF', '#0DC4CB', '#2DC76D', '#FF3143',\n    '#FD8701', '#FFC900', '#FF9900', '#FF6600', '#FEF7C3'\n  ];\n\n\n  constructor() {\n    this.assets = [];\n    Object.values(ngZorroIconCategoryNames()).forEach(icons => {\n      const groupIcons = icons.map(icon => ({ icon_type: IconType.EMOJI, icon: icon, icon_url: null, name: icon + '' }));\n      this.assets.push(...groupIcons);\n    });\n    (assetsJson as any[])\n      .filter((item: any) => ['png', 'gif', 'jpg', 'svg'].includes(item.group))\n      .forEach((item: any) => {\n        this.assets.push(...(item.children.map((icon: any) => {\n          const icon_type = icon.usingImg ? IconType.IMAGE : IconType.EMOJI;\n          return {\n            icon_type,\n            icon: icon_type == IconType.EMOJI ? icon.nzType : null,\n            icon_url: icon_type == IconType.IMAGE ? icon.path : null,\n            name: icon.name\n          }\n        })))\n      });\n  }\n\n  public get valid(): boolean {\n    return !!this.icon?.icon_type && !!this.icon?.icon_background;\n  }\n\n  public ngOnInit(): void {\n    if (!this.icon) {\n      this.icon = { icon_type: IconType.EMOJI, icon: this.assets[0].icon, icon_url: '', icon_background: this.iconBackgrounds[1] };\n    }\n    if (this.filter_icon_type) {\n      this.assets = this.assets.filter((asset: any) => this.filter_icon_type == IconType.IMAGE ? asset.icon_type == IconType.IMAGE : true);\n    }\n  }\n\n  public updateIcon(asset: any) {\n    if (!this.icon?.icon_background) {\n      this.icon.icon_background = this.iconBackgrounds[1];\n    }\n    if (asset.icon_type == IconType.EMOJI) {\n      this.icon = { ...this.icon, icon_type: IconType.EMOJI, icon: asset.icon, icon_url: '' };\n    } else {\n      this.icon = { ...this.icon, icon_type: IconType.IMAGE, icon: '', icon_url: asset.icon_url };\n    }\n    this.iconChange.emit(this.icon);\n  }\n\n  public updateIconBackground(background: string) {\n    this.icon = { ...this.icon, icon_background: background };\n    this.iconChange.emit(this.icon);\n  }\n}",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "\n.anticons-list {\n    display: grid;\n    grid-auto-rows: 40px;\n    grid-template-columns: repeat(auto-fill, 40px);\n    align-items: center;\n    gap: 1px;\n    justify-content: center;\n    max-height: 200px;\n    overflow: hidden auto;\n\n    li {\n      cursor: pointer;\n      text-align: center;\n      list-style: none;\n      width: 100%;\n      height: 100%;\n      display: flex;\n      align-items: center;\n      justify-content: center;\n      border-radius: 4px;\n    }\n    li:hover {\n      background: #108AC9;\n      color: #fff;\n    }\n    li.active {\n      background: #3664d9;\n      color: #fff;\n    }\n    .icon {\n      font-size: 24px;\n    }\n    img {\n      max-width: 32px;\n      max-height: 32px;\n      display: inline-block;\n    }\n}\n\n.bg-wrapper{\n    display: flex;\n    gap: 12px;\n    flex-wrap: wrap;\n}\n.bg-box{\n      padding: 4px;\n      border: 1.5px solid #fff;\n      border-radius: 4px;\n    }\n.bg-box.active {\n    border-color: #3664d9;\n}\n.icon-box{\n    background: rgb(54, 100, 217);\n    min-width: 32px;\n    min-height: 32px;\n    max-width: 60px;\n    max-height: 60px;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    border-radius: 4px;\n    color: #fff;\n    font-size: 20px;\n}\n\n.icon-box img{\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n}\n\n\n",
@@ -1135,7 +1144,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "args": [],
-                "line": 121
+                "line": 122
             },
             "extends": [],
             "accessors": {
@@ -1145,7 +1154,7 @@
                         "name": "valid",
                         "type": "boolean",
                         "returnType": "boolean",
-                        "line": 145
+                        "line": 146
                     }
                 }
             }
@@ -1566,7 +1575,7 @@
                     }
                 }
             },
-            "templateData": "<span\n  class=\"flex bg-white gap-md cursor-pointer bordered full-width full-height padding-top-sm padding-bottom-sm padding-left-sm padding-right-sm border-radius\"\n  [style.width.px]=\"width\" align=\"center\">\n  <span class=\"flex gap-xs flex-1 ellipsis\" align=\"center\" nz-dropdown [nzDropdownMenu]=\"menu\">\n    <i nz-icon nzType=\"tags\" [nzTheme]=\"checkSet.size?'fill':'outline'\"></i>\n    <i class=\"flex-1 text-left ellipsis\">{{firstTag}}</i>\n    <i>{{tagsSurfix}}</i>\n  </span>\n  <i *ngIf=\"checkSet.size\" class=\"icon\" nz-icon nzType=\"close-circle\" nzTheme=\"fill\" (click)=\"clearCheckTags()\"></i>\n  <i *ngIf=\"!checkSet.size\" class=\"icon\" nz-icon nzType=\"down\"></i>\n</span>\n\n<nz-dropdown-menu #menu=\"nzDropdownMenu\">\n  <div class=\"tag-group flex bg-white gap-sm padding-md bordered\" vertical>\n    <label class=\"tag-item ellipsis\" *ngFor=\"let tag of tagList\" nz-checkbox [ngModel]=\"checkSet.has(tag.id)\"\n      (ngModelChange)=\"toggleCheckTag(tag.id)\">\n      <span class=\"ellipsis\"><i >{{tag.name}}</i></span>\n    </label>\n  </div>\n</nz-dropdown-menu>\n<h1 class=\"text-3xl font-bold underline\"> Hello world!\n</h1>\n\n<button class=\"bg-sky-500 hover:bg-sky-700\">Save changes</button>"
+            "templateData": "<span\n  class=\"flex bg-white gap-md cursor-pointer bordered full-width full-height padding-sm border-radius\"\n  [style.width.px]=\"width\" align=\"center\">\n  <span class=\"flex gap-xs flex-1 ellipsis\" align=\"center\" nz-dropdown [nzDropdownMenu]=\"menu\">\n    <i nz-icon nzType=\"tags\" [nzTheme]=\"checkSet.size?'fill':'outline'\"></i>\n    <i class=\"flex-1 text-left ellipsis\">{{firstTag}}</i>\n    <i>{{tagsSurfix}}</i>\n  </span>\n  <i *ngIf=\"checkSet.size\" class=\"icon\" nz-icon nzType=\"close-circle\" nzTheme=\"fill\" (click)=\"clearCheckTags()\"></i>\n  <i *ngIf=\"!checkSet.size\" class=\"icon\" nz-icon nzType=\"down\"></i>\n</span>\n\n<nz-dropdown-menu #menu=\"nzDropdownMenu\">\n  <div class=\"tag-group flex bg-white gap-sm padding-md bordered\" vertical>\n    <label class=\"tag-item ellipsis\" *ngFor=\"let tag of tagList\" nz-checkbox [ngModel]=\"checkSet.has(tag.id)\"\n      (ngModelChange)=\"toggleCheckTag(tag.id)\">\n      <span class=\"ellipsis\"><i >{{tag.name}}</i></span>\n    </label>\n  </div>\n</nz-dropdown-menu>"
         }
     ],
     "modules": [],
@@ -1882,7 +1891,7 @@
                 "linktype": "component",
                 "name": "IconSelectComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/9",
+                "coverageCount": "0/10",
                 "status": "low"
             },
             {

@@ -17,6 +17,6 @@ const config: StorybookConfig = {
   staticDirs: [
     { from: '../public/', to: '/assets/' },
     { from: '../node_modules/@ant-design/icons-angular/src/inline-svg/', to: '/assets/' }
-  ],
+  ]
 };
 export default config;

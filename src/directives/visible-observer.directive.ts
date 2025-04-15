@@ -5,7 +5,6 @@
 import { AfterViewInit, Directive, ElementRef, EventEmitter, OnDestroy, Output } from "@angular/core";
 
 @Directive({
-    standalone: true,
     selector: '[VisibleObserver]',
 })
 export class VisibleObserverDirective implements AfterViewInit, OnDestroy {

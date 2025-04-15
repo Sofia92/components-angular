@@ -1,28 +1,25 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({
-  name: 'formatNumber',
-  standalone: true
-})
+@Pipe({ name: 'formatNumber' })
 export class FormatNumberPipe implements PipeTransform {
   transform(value: number, decimals: number = 1): string {
     if (value === null || value === undefined) return '0';
-    
+
     if (value >= 1000000000) {
       const num = value / 1000000000;
       return this.formatWithDecimals(num, decimals) + 'B';
     }
-    
+
     if (value >= 1000000) {
       const num = value / 1000000;
       return this.formatWithDecimals(num, decimals) + 'M';
     }
-    
+
     if (value >= 1000) {
       const num = value / 1000;
       return this.formatWithDecimals(num, decimals) + 'K';
     }
-    
+
     return value.toString();
   }
 

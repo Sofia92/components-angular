@@ -51,7 +51,6 @@ import { IconType } from "./util";
       max-height: 100%;
     }
 `],
-  standalone: true,
   imports: [CommonModule, NzIconModule]
 })
 export class IconRenderComponent implements OnInit {

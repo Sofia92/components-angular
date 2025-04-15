@@ -2,9 +2,7 @@ import { Directive, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 
 // tslint:disable-next-line:directive-class-suffix
-@Directive({
-  standalone: true
-})
+@Directive()
 export abstract class DestroySubscription implements OnDestroy {
   protected destroy$: Subject<unknown> = new Subject();
 

@@ -1,5 +1,5 @@
 import { Validators, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
-import { NzSafeAny } from "ng-sds-sy/core/types";
+import { NzSafeAny } from "ng-zorro-antd/core/types";
 
 export const REGEXP = {
   phoneNumber: /^1[3-9]\d{9}$/,
@@ -92,7 +92,7 @@ export type MyValidationErrors = Record<string, MyErrorsOptions>;
 
 
 export class MyValidators extends Validators {
-  static minLength(minLength: number): ValidatorFn {
+  static override minLength(minLength: number): ValidatorFn {
     return (control: AbstractControl): MyValidationErrors | null => {
       if (Validators.minLength(minLength)(control) === null) {
         return null;
@@ -106,7 +106,7 @@ export class MyValidators extends Validators {
     };
   }
 
-  static maxLength(maxLength: number): ValidatorFn {
+  static override maxLength(maxLength: number): ValidatorFn {
     return (control: AbstractControl): MyValidationErrors | null => {
       if (Validators.maxLength(maxLength)(control) === null) {
         return null;
@@ -119,12 +119,14 @@ export class MyValidators extends Validators {
       };
     };
   }
-  static myName(control: AbstractControl): MyValidationErrors {
+  static myName(control: AbstractControl): MyValidationErrors | null {
     const value = control.value;
     if (/^[ ]*$/g.test(value)) {
       return {
         name: { 'zh-cn': `姓名不可为空`, en: `usernName Cannot be empty` },
       };
+    } else {
+      return null;
     }
   }
   static mobile(control: AbstractControl): MyValidationErrors | null {
@@ -149,6 +151,8 @@ export class MyValidators extends Validators {
       return {
         name: { 'zh-cn': `社会信用代码格式错误`, en: `invalid socialUnifiedCode` },
       };
+    } else {
+      return null;
     }
   }
 }

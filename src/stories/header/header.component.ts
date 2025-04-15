@@ -6,7 +6,6 @@ import type { User } from './user';
 
 @Component({
   selector: 'storybook-header',
-  standalone: true,
   imports: [CommonModule, ButtonComponent],
   template: `<header>
   <div class="storybook-header">

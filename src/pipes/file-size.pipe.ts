@@ -4,14 +4,11 @@ const kb = 1024;
 const mb = 1024 * kb;
 const gb = 1024 * mb;
 
-@Pipe({
-  name: 'fileSize',
-  standalone: true,
-})
+@Pipe({ name: 'fileSize' })
 export class FileSizePipe implements PipeTransform {
 
   public transform(size: number): string {
-    if(!size){
+    if (!size) {
       return `0K`;
     }
     if (size < kb) {

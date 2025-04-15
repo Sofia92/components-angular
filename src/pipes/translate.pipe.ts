@@ -3,7 +3,6 @@ import { NzI18nService } from "ng-zorro-antd/i18n";
 
 @Pipe({
     name: 'translate',
-    standalone: true,
     pure: false
 })
 export class TranslatePipe implements PipeTransform {

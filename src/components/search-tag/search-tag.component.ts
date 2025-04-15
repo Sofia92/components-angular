@@ -29,7 +29,6 @@ import { TranslatePipe } from '@Pipes';
       color: #d9d9d9;
     }
     `],
-  standalone: true,
   imports: [
     CommonModule, FormsModule,
     NzSelectModule, NzIconModule, NzDropDownModule, NzCheckboxModule,

@@ -4,12 +4,11 @@ import { FormsModule } from "@angular/forms";
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzImageModule } from 'ng-zorro-antd/image';
-import * as assets from '../../assets/list.json';
+import * as assets from './util/list.json';
 import { NzToolTipModule } from "ng-zorro-antd/tooltip";
 import { ngZorroIconCategoryNames } from "./util";
 
 @Component({
-  standalone: true,
   template: `
     <h4>组件库图标</h4>
 <div class="group" *ngFor="let obj of categories|keyvalue; let i = index">

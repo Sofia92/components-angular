@@ -41,7 +41,7 @@ export function isMatchedOption(value: string = '', option: any, names: string[]
   return index !== -1;
 }
 
-export function matchCount(source: string, keyword: string, item, prefixOrSuffix = false): number {
+export function matchCount(source: string, keyword: string, item: any, prefixOrSuffix = false): number {
   if (!source || !keyword) return 0;
   let qz = 0;
   if (prefixOrSuffix) {

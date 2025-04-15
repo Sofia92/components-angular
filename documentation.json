@@ -2,7 +2,7 @@
     "pipes": [
         {
             "name": "FileSizePipe",
-            "id": "pipe-FileSizePipe-0502bf13ba6fa1a877476ee45c851804002883e177943ad64ce4db95f3ddefd3fc475965e9b95afc923eebee603d1b4d238978d625f67447c7fcfec73589599d",
+            "id": "pipe-FileSizePipe-4b936999d8fe21f0a7739752ed584eccc9d16d5c0993a1b3a83d1098008c481e1cb7779c1027ada14ee603e629743380f7c535b288ea7482f83d3417538ccb22",
             "file": "src/pipes/file-size.pipe.ts",
             "type": "pipe",
             "deprecated": false,
@@ -24,7 +24,7 @@
                     "optional": false,
                     "returnType": "string",
                     "typeParameters": [],
-                    "line": 13,
+                    "line": 10,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -43,13 +43,13 @@
                     ]
                 }
             ],
-            "standalone": true,
+            "standalone": false,
             "ngname": "fileSize",
-            "sourceCode": "import { Pipe, PipeTransform } from '@angular/core';\n\nconst kb = 1024;\nconst mb = 1024 * kb;\nconst gb = 1024 * mb;\n\n@Pipe({\n  name: 'fileSize',\n  standalone: true,\n})\nexport class FileSizePipe implements PipeTransform {\n\n  public transform(size: number): string {\n    if(!size){\n      return `0K`;\n    }\n    if (size < kb) {\n      return `${size}B`;\n    }\n    if (size >= kb && size < mb) {\n      return `${(size / kb).toFixed(2)}K`;\n    }\n    if (size >= mb && size <= gb) {\n      return `${(size / mb).toFixed(2)}M`;\n    }\n    if (size >= gb) {\n      return `${(size / gb).toFixed(2)}G`;\n    }\n    return '';\n  }\n\n}\n"
+            "sourceCode": "import { Pipe, PipeTransform } from '@angular/core';\n\nconst kb = 1024;\nconst mb = 1024 * kb;\nconst gb = 1024 * mb;\n\n@Pipe({ name: 'fileSize' })\nexport class FileSizePipe implements PipeTransform {\n\n  public transform(size: number): string {\n    if (!size) {\n      return `0K`;\n    }\n    if (size < kb) {\n      return `${size}B`;\n    }\n    if (size >= kb && size < mb) {\n      return `${(size / kb).toFixed(2)}K`;\n    }\n    if (size >= mb && size <= gb) {\n      return `${(size / mb).toFixed(2)}M`;\n    }\n    if (size >= gb) {\n      return `${(size / gb).toFixed(2)}G`;\n    }\n    return '';\n  }\n\n}\n"
         },
         {
             "name": "FormatNumberPipe",
-            "id": "pipe-FormatNumberPipe-a37e9a3ed7a7e2b179d66605b545a5ea1efe13f5d05ba8ba51cc0fe7fe5ee4332f97d8c8c17e53ceae7a990ac7b4fbd9e3e4953aa8183ea8f77bc93d156fcfe3",
+            "id": "pipe-FormatNumberPipe-c9243a7e2b87514da0d79e46504bea45fc4df0b46264e5f3058a3f3a58307902aaf17f932a1543b6131c47d1a484bef001cf2abf9ab400093bdf3ea98340b302",
             "file": "src/pipes/format-number.pipe.ts",
             "type": "pipe",
             "deprecated": false,
@@ -77,7 +77,7 @@
                     "optional": false,
                     "returnType": "string",
                     "typeParameters": [],
-                    "line": 29,
+                    "line": 26,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -124,7 +124,7 @@
                     "optional": false,
                     "returnType": "string",
                     "typeParameters": [],
-                    "line": 8,
+                    "line": 5,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -150,13 +150,13 @@
                     ]
                 }
             ],
-            "standalone": true,
+            "standalone": false,
             "ngname": "formatNumber",
-            "sourceCode": "import { Pipe, PipeTransform } from '@angular/core';\n\n@Pipe({\n  name: 'formatNumber',\n  standalone: true\n})\nexport class FormatNumberPipe implements PipeTransform {\n  transform(value: number, decimals: number = 1): string {\n    if (value === null || value === undefined) return '0';\n    \n    if (value >= 1000000000) {\n      const num = value / 1000000000;\n      return this.formatWithDecimals(num, decimals) + 'B';\n    }\n    \n    if (value >= 1000000) {\n      const num = value / 1000000;\n      return this.formatWithDecimals(num, decimals) + 'M';\n    }\n    \n    if (value >= 1000) {\n      const num = value / 1000;\n      return this.formatWithDecimals(num, decimals) + 'K';\n    }\n    \n    return value.toString();\n  }\n\n  private formatWithDecimals(num: number, decimals: number): string {\n    const rounded = Math.round(num * Math.pow(10, decimals)) / Math.pow(10, decimals);\n    return rounded % 1 === 0 ? rounded.toString() : rounded.toFixed(decimals);\n  }\n} "
+            "sourceCode": "import { Pipe, PipeTransform } from '@angular/core';\n\n@Pipe({ name: 'formatNumber' })\nexport class FormatNumberPipe implements PipeTransform {\n  transform(value: number, decimals: number = 1): string {\n    if (value === null || value === undefined) return '0';\n\n    if (value >= 1000000000) {\n      const num = value / 1000000000;\n      return this.formatWithDecimals(num, decimals) + 'B';\n    }\n\n    if (value >= 1000000) {\n      const num = value / 1000000;\n      return this.formatWithDecimals(num, decimals) + 'M';\n    }\n\n    if (value >= 1000) {\n      const num = value / 1000;\n      return this.formatWithDecimals(num, decimals) + 'K';\n    }\n\n    return value.toString();\n  }\n\n  private formatWithDecimals(num: number, decimals: number): string {\n    const rounded = Math.round(num * Math.pow(10, decimals)) / Math.pow(10, decimals);\n    return rounded % 1 === 0 ? rounded.toString() : rounded.toFixed(decimals);\n  }\n} "
         },
         {
             "name": "TranslatePipe",
-            "id": "pipe-TranslatePipe-c53c07d85c94307547b59d7a97472f56d1f431b50cc56520110ab78a8d5d71f559ce09909615f3e1e8ff211a3c59f26b5ce64460b0934ceec0f2b7befda18080",
+            "id": "pipe-TranslatePipe-04c398da7f521a7232e306107f10421f8873121c6f434abe1650bb13d487666e8dc0822ed0b5380f22b67479ae5a9cf1546794c9af3210ad6a40cd4cdb49489d",
             "file": "src/pipes/translate.pipe.ts",
             "type": "pipe",
             "deprecated": false,
@@ -172,7 +172,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 12,
+                    "line": 11,
                     "modifierKind": [
                         123
                     ]
@@ -185,7 +185,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 11,
+                    "line": 10,
                     "modifierKind": [
                         123
                     ]
@@ -198,7 +198,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 10,
+                    "line": 9,
                     "modifierKind": [
                         123
                     ]
@@ -225,7 +225,7 @@
                     "optional": false,
                     "returnType": "string",
                     "typeParameters": [],
-                    "line": 22,
+                    "line": 21,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -251,13 +251,38 @@
                     ]
                 }
             ],
-            "standalone": true,
+            "standalone": false,
             "pure": false,
             "ngname": "translate",
-            "sourceCode": "import { Pipe, PipeTransform } from \"@angular/core\";\nimport { NzI18nService } from \"ng-zorro-antd/i18n\";\n\n@Pipe({\n    name: 'translate',\n    standalone: true,\n    pure: false\n})\nexport class TranslatePipe implements PipeTransform {\n    private value: any;\n    private path: string;\n    private lastResult: string;\n\n    constructor(private i18n: NzI18nService) {\n        this.i18n.localeChange.subscribe(() => {\n            if (this.path?.trim()) {\n                this.lastResult = this.i18n.translate(this.path);\n            }\n        });\n    }\n\n    transform(value: any, ...args: any[]): string {\n        this.path = args[0];\n        this.value = value;\n\n        // 如果提供了翻译路径，直接使用翻译路径进行翻译\n        if (this.path?.trim()) {\n            this.lastResult = this.i18n.translate(this.path);\n            return this.lastResult;\n        }\n\n        // 如果没有提供翻译路径，但提供了值，尝试直接翻译该值\n        if (value?.trim()) {\n            this.lastResult = this.i18n.translate(value);\n            return this.lastResult;\n        }\n\n        // 如果都没有，返回空字符串\n        return '';\n    }\n} "
+            "sourceCode": "import { Pipe, PipeTransform } from \"@angular/core\";\nimport { NzI18nService } from \"ng-zorro-antd/i18n\";\n\n@Pipe({\n    name: 'translate',\n    pure: false\n})\nexport class TranslatePipe implements PipeTransform {\n    private value: any;\n    private path: string;\n    private lastResult: string;\n\n    constructor(private i18n: NzI18nService) {\n        this.i18n.localeChange.subscribe(() => {\n            if (this.path?.trim()) {\n                this.lastResult = this.i18n.translate(this.path);\n            }\n        });\n    }\n\n    transform(value: any, ...args: any[]): string {\n        this.path = args[0];\n        this.value = value;\n\n        // 如果提供了翻译路径，直接使用翻译路径进行翻译\n        if (this.path?.trim()) {\n            this.lastResult = this.i18n.translate(this.path);\n            return this.lastResult;\n        }\n\n        // 如果没有提供翻译路径，但提供了值，尝试直接翻译该值\n        if (value?.trim()) {\n            this.lastResult = this.i18n.translate(value);\n            return this.lastResult;\n        }\n\n        // 如果都没有，返回空字符串\n        return '';\n    }\n} "
         }
     ],
     "interfaces": [
+        {
+            "name": "CanComponentDeactivate",
+            "id": "interface-CanComponentDeactivate-e9ffab0192d95449f7463f16f6ef5c9db328730fb82a8fafb9ddfa45ad0e777a2ebb5a84a4bc748d335fdada529691fff77ff74e1ffdb3bbd585683ed026c2fa",
+            "file": "src/services/canDeactive.guard.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "interface",
+            "sourceCode": "import { CanDeactivateFn } from '@angular/router';\nimport { Observable } from 'rxjs';\n\n\nexport interface CanComponentDeactivate {\n  canDeactivate: () => Observable<boolean> | Promise<boolean> | boolean;\n}\n\nexport const CanComponentDeactivateGuard: CanDeactivateFn<CanComponentDeactivate> = (\n  component: CanComponentDeactivate\n) => {\n  return component.canDeactivate ? component.canDeactivate() : true;\n}",
+            "properties": [
+                {
+                    "name": "canDeactivate",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "function",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 6
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 171,
+            "methods": [],
+            "extends": []
+        },
         {
             "name": "IAppIcon",
             "id": "interface-IAppIcon-59505c6142b25678c8f63be522ce230d04f3fecc29855271afc78486a2bd5212f677249be3dcdac84cc23343d6464df61cb4885dc2b2062721982197c5426b4c",
@@ -314,6 +339,135 @@
             "extends": []
         },
         {
+            "name": "IDocumentMeta",
+            "id": "interface-IDocumentMeta-e0eefa23937ad65a566db9ce8d870248b35ec57db5f3763e9defcf617422a005ae615a0a867438ac7ca5091ca25c85921d88012f771a4b25cb58d797aa7d73fa",
+            "file": "src/utils/index.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "interface",
+            "sourceCode": "import { IDocument, IFileUploadResponse, IndexTypeDisplayMap } from '@Api';\nimport { format } from 'date-fns';\n\nexport * from './select.util';\nexport * from './validators';\nexport * from './form-validator';\nexport * from './model.normalize';\nexport * from './chat-message.util';\n\nexport async function racePromises(promises) {\n  const results = await Promise.all(promises.map((p) => p.catch((err) => err)));\n  return results.includes(false) ? false : true;\n}\n\nexport function generateUid() {\n  return (Number(Math.random().toString().substring(2, 15)) + Date.now()).toString(36)\n}\n\nexport const fileTypeIconMap = {\n  'txt': 'files:text-fill',\n  'md': 'files:markdown-fill',\n  'mdx': 'files:markdown-fill',\n  'pdf': 'files:pdf-fill',\n  'html': 'files:html-fill',\n  'xlsx': 'files:excel-fill',\n  'xls': 'files:excel-fill',\n  'docx': 'files:word-fill',\n  'csv': 'files:excel-fill',\n}\n\nexport interface IFile extends IFileUploadResponse {\n  created_at_display?: string;\n  doc_form_display?: string;\n}\n\nexport function formatFileMeta(file: IFile) {\n  file.icon = fileTypeIconMap[file.extension];\n\n  if ('created_at' in file) {\n    file.created_at_display = file.created_at ? format(new Date(file.created_at * 1000), 'yyyy-MM-dd HH:mm:ss') : '';\n  }\n}\n\nexport interface IDocumentMeta extends IDocument {\n  doc_form_display?: string;\n}\n\nexport function formatDocumentMeta(document: IDocumentMeta) {\n  if ('doc_form' in document) {\n    document.doc_form_display = document.doc_form ? IndexTypeDisplayMap[document.doc_form] : ''\n  }\n}\n\nexport const StreamStatusIconMap = {\n  'default': ['loading', 'status-icon loading'],\n  'failed': ['question-circle', 'status-icon error'],\n  'succeeded': ['check-circle', 'status-icon success'],\n  'start': ['icons:node-start', 'node-icon start'],\n  'llm': ['icons:node-llm', 'node-icon llm'],\n  'if-else': ['icons:node-branch', 'node-icon if-else'],\n  'http-request': ['icons:node-http', 'node-icon http-request'],\n  'code': ['icons:script', 'node-icon code'],\n  'tool': ['icons:node-iteration', 'node-icon iteration'],\n  'iteration': ['icons:node-iteration', 'node-icon iteration'],\n  'answer': ['icons:node-answer', 'node-icon answer']\n}\nexport function formatSreamMeta(stream) {\n  stream.status = stream.status || 'default';\n  const [icon, className] = StreamStatusIconMap[stream.status];\n  stream.status_icon = icon;\n  stream.status_className = className;\n\n\n  if (stream.node_type) {\n    const [node_icon, node_className] = StreamStatusIconMap[stream.node_type] || ['', ''];\n    stream.node_icon = node_icon;\n    stream.node_className = node_className;\n  }\n}",
+            "properties": [
+                {
+                    "name": "doc_form_display",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": true,
+                    "description": "",
+                    "line": 45
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 171,
+            "methods": [],
+            "extends": [
+                "IDocument"
+            ]
+        },
+        {
+            "name": "IFile",
+            "id": "interface-IFile-e0eefa23937ad65a566db9ce8d870248b35ec57db5f3763e9defcf617422a005ae615a0a867438ac7ca5091ca25c85921d88012f771a4b25cb58d797aa7d73fa",
+            "file": "src/utils/index.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "interface",
+            "sourceCode": "import { IDocument, IFileUploadResponse, IndexTypeDisplayMap } from '@Api';\nimport { format } from 'date-fns';\n\nexport * from './select.util';\nexport * from './validators';\nexport * from './form-validator';\nexport * from './model.normalize';\nexport * from './chat-message.util';\n\nexport async function racePromises(promises) {\n  const results = await Promise.all(promises.map((p) => p.catch((err) => err)));\n  return results.includes(false) ? false : true;\n}\n\nexport function generateUid() {\n  return (Number(Math.random().toString().substring(2, 15)) + Date.now()).toString(36)\n}\n\nexport const fileTypeIconMap = {\n  'txt': 'files:text-fill',\n  'md': 'files:markdown-fill',\n  'mdx': 'files:markdown-fill',\n  'pdf': 'files:pdf-fill',\n  'html': 'files:html-fill',\n  'xlsx': 'files:excel-fill',\n  'xls': 'files:excel-fill',\n  'docx': 'files:word-fill',\n  'csv': 'files:excel-fill',\n}\n\nexport interface IFile extends IFileUploadResponse {\n  created_at_display?: string;\n  doc_form_display?: string;\n}\n\nexport function formatFileMeta(file: IFile) {\n  file.icon = fileTypeIconMap[file.extension];\n\n  if ('created_at' in file) {\n    file.created_at_display = file.created_at ? format(new Date(file.created_at * 1000), 'yyyy-MM-dd HH:mm:ss') : '';\n  }\n}\n\nexport interface IDocumentMeta extends IDocument {\n  doc_form_display?: string;\n}\n\nexport function formatDocumentMeta(document: IDocumentMeta) {\n  if ('doc_form' in document) {\n    document.doc_form_display = document.doc_form ? IndexTypeDisplayMap[document.doc_form] : ''\n  }\n}\n\nexport const StreamStatusIconMap = {\n  'default': ['loading', 'status-icon loading'],\n  'failed': ['question-circle', 'status-icon error'],\n  'succeeded': ['check-circle', 'status-icon success'],\n  'start': ['icons:node-start', 'node-icon start'],\n  'llm': ['icons:node-llm', 'node-icon llm'],\n  'if-else': ['icons:node-branch', 'node-icon if-else'],\n  'http-request': ['icons:node-http', 'node-icon http-request'],\n  'code': ['icons:script', 'node-icon code'],\n  'tool': ['icons:node-iteration', 'node-icon iteration'],\n  'iteration': ['icons:node-iteration', 'node-icon iteration'],\n  'answer': ['icons:node-answer', 'node-icon answer']\n}\nexport function formatSreamMeta(stream) {\n  stream.status = stream.status || 'default';\n  const [icon, className] = StreamStatusIconMap[stream.status];\n  stream.status_icon = icon;\n  stream.status_className = className;\n\n\n  if (stream.node_type) {\n    const [node_icon, node_className] = StreamStatusIconMap[stream.node_type] || ['', ''];\n    stream.node_icon = node_icon;\n    stream.node_className = node_className;\n  }\n}",
+            "properties": [
+                {
+                    "name": "created_at_display",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": true,
+                    "description": "",
+                    "line": 32
+                },
+                {
+                    "name": "doc_form_display",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": true,
+                    "description": "",
+                    "line": 33
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 171,
+            "methods": [],
+            "extends": [
+                "IFileUploadResponse"
+            ]
+        },
+        {
+            "name": "ISelectorOption",
+            "id": "interface-ISelectorOption-cd796fe185fe233fb76574eda3e62c0aefc636cdaf47e49127be47bbc0e5e843adec888a29ca2fcf01203790e5d16fb7cd9717f7338427d41ea7d0bb1ceccdd3",
+            "file": "src/utils/validators.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "interface",
+            "sourceCode": "import { Validators, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';\nimport { NzSafeAny } from \"ng-zorro-antd/core/types\";\n\nexport const REGEXP = {\n  phoneNumber: /^1[3-9]\\d{9}$/,\n  landlineAndPhone: /^((0\\d{2,3}-\\d{7,8})|(1[3-9]\\d{9}))$/,\n  onlyNumber: /^\\d+$/,\n  empty: /^\\s+$/,\n  onlyChinese: /^[\\u4e00-\\u9fa5_a-zA-Z]+$/,\n  certificateCode: /(^[1-9]\\d{5}(18|19|([23]\\d))\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{3}[0-9Xx]$)|(^[1-9]\\d{5}\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{2}[0-9Xx]$)/,\n};\n\nexport interface ISelectorOption<T = number, U = unknown> {\n  label: string;\n  value: T;\n  extra?: U;\n  checked?: boolean;\n  disabled?: boolean;\n}\n\n/**\n * 输入框不能为空（包括空白字符）\n */\nexport function noEmptyValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value;\n    const errorTip = { 'noEmpty': { value } };\n\n    return !value || REGEXP.empty.test(value) ? errorTip : null;\n  };\n}\n\nexport function checkListRequireValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value as ISelectorOption[] || [];\n    const errorTip = { 'requireChecked': { value } };\n\n    return value && value.some((item) => item.checked) ? null : errorTip;\n  };\n}\n\nexport function onlyNumberValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value;\n    const errorTip = { 'onlyNumber': { value } };\n\n    return value && REGEXP.onlyNumber.test(value) ? errorTip : null;\n  };\n}\n\nexport function onlyChineseValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value;\n    const errorTip = { 'onlyChinese': { value } };\n    return value && !REGEXP.onlyChinese.test(value) ? errorTip : null;\n  };\n}\n\nexport function phoneNumberValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value;\n    const errorTip = { 'phoneNumber': { value } };\n\n    return value && !REGEXP.phoneNumber.test(value) ? errorTip : null;\n  };\n}\n\nexport function landlineAndPhoneValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value;\n    const errorTip = { 'landlineAndPhone': { value } };\n    return value && !REGEXP.landlineAndPhone.test(value) ? errorTip : null;\n  };\n}\n\n\nexport function certificateCodeValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value;\n    const errorTip = { 'certificateCode': { value } };\n    return value && !REGEXP.certificateCode.test(value) ? errorTip : null;\n  };\n}\n\n\n// 自定义表单校验\nexport type MyErrorsOptions = { 'zh-cn': string; en: string } & Record<\n  string,\n  NzSafeAny\n>;\nexport type MyValidationErrors = Record<string, MyErrorsOptions>;\n\n\nexport class MyValidators extends Validators {\n  static override minLength(minLength: number): ValidatorFn {\n    return (control: AbstractControl): MyValidationErrors | null => {\n      if (Validators.minLength(minLength)(control) === null) {\n        return null;\n      }\n      return {\n        minlength: {\n          'zh-cn': `最小长度为 ${minLength}`,\n          en: `MinLength is ${minLength}`,\n        },\n      };\n    };\n  }\n\n  static override maxLength(maxLength: number): ValidatorFn {\n    return (control: AbstractControl): MyValidationErrors | null => {\n      if (Validators.maxLength(maxLength)(control) === null) {\n        return null;\n      }\n      return {\n        maxlength: {\n          'zh-cn': `最大长度为 ${maxLength}`,\n          en: `MaxLength is ${maxLength}`,\n        },\n      };\n    };\n  }\n  static myName(control: AbstractControl): MyValidationErrors | null {\n    const value = control.value;\n    if (/^[ ]*$/g.test(value)) {\n      return {\n        name: { 'zh-cn': `姓名不可为空`, en: `usernName Cannot be empty` },\n      };\n    } else {\n      return null;\n    }\n  }\n  static mobile(control: AbstractControl): MyValidationErrors | null {\n    const value = control.value;\n\n    if (isEmptyInputValue(value)) {\n      return null;\n    }\n\n    return isMobile(value)\n      ? null\n      : {\n        phoneNumber: {\n          'zh-cn': `手机号码格式不正确`,\n          en: `Mobile phone number is not valid`,\n        },\n      };\n  }\n  static socialUnifiedCode(control: AbstractControl): MyValidationErrors | null {\n    const value = control.value;\n    if (!/^(([0-9A-Za-z]{15})|([0-9A-Za-z]{18})|([0-9A-Za-z]{20}))$/.test(value)) {\n      return {\n        name: { 'zh-cn': `社会信用代码格式错误`, en: `invalid socialUnifiedCode` },\n      };\n    } else {\n      return null;\n    }\n  }\n}\n\nfunction isEmptyInputValue(value: NzSafeAny): boolean {\n  return value == null || value.length === 0;\n}\n\nfunction isMobile(value: string): boolean {\n  return typeof value === 'string' && /^1(3[0-9]|4[01456879]|5[0-35-9]|6[2567]|7[0-8]|8[0-9]|9[0-35-9])\\d{8}$/.test(value);\n}",
+            "properties": [
+                {
+                    "name": "checked",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "boolean",
+                    "indexKey": "",
+                    "optional": true,
+                    "description": "",
+                    "line": 17
+                },
+                {
+                    "name": "disabled",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "boolean",
+                    "indexKey": "",
+                    "optional": true,
+                    "description": "",
+                    "line": 18
+                },
+                {
+                    "name": "extra",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "U",
+                    "indexKey": "",
+                    "optional": true,
+                    "description": "",
+                    "line": 16
+                },
+                {
+                    "name": "label",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 14
+                },
+                {
+                    "name": "value",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "T",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 15
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 171,
+            "methods": [],
+            "extends": []
+        },
+        {
             "name": "User",
             "id": "interface-User-d4821beac0e4a852e513391b7470981c4353fdd95a18628bb68136c8695b489ee15b926e2e5031bc26cf30e1508e0a362c3ee13a06734702b4d15af140e485d5",
             "file": "src/stories/header/user.ts",
@@ -339,15 +493,766 @@
             "extends": []
         }
     ],
-    "injectables": [],
+    "injectables": [
+        {
+            "name": "MyModalService",
+            "id": "injectable-MyModalService-a6f8a52c9666306eb17ccab86eabdebbe592f2a9184c32c373ac01cd7e68bd7a32c1b63d69694b42535e814c1865c8c24dec138a7335756ccc3599e8c3e2bd3a",
+            "file": "src/services/modal.service.ts",
+            "properties": [],
+            "methods": [
+                {
+                    "name": "confirm",
+                    "args": [
+                        {
+                            "name": "nzTitle",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "nzContent",
+                            "type": "string | TemplateRef<NzSafeAny>",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "any",
+                    "typeParameters": [],
+                    "line": 50,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        125
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "nzTitle",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "nzContent",
+                            "type": "string | TemplateRef<NzSafeAny>",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "create",
+                    "args": [
+                        {
+                            "name": "tplTitle",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "tplContent",
+                            "type": "string | TemplateRef<NzSafeAny>",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "nzComponentParams",
+                            "type": "object",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "defaultValue": "{}"
+                        },
+                        {
+                            "name": "functions",
+                            "type": "any[]",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "modalOptions",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "optional": true
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "any",
+                    "typeParameters": [],
+                    "line": 9,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        125
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "tplTitle",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "tplContent",
+                            "type": "string | TemplateRef<NzSafeAny>",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "nzComponentParams",
+                            "type": "object",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "defaultValue": "{}",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "functions",
+                            "type": "any[]",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "modalOptions",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "optional": true,
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "description": "",
+            "rawdescription": "\n",
+            "sourceCode": "import { Injectable, TemplateRef } from \"@angular/core\";\nimport { NzModalService } from \"ng-zorro-antd/modal\";\nimport { NzI18nService } from \"ng-zorro-antd/i18n\";\nimport { NzSafeAny } from \"ng-zorro-antd/core/types\";\n@Injectable({ providedIn: 'root' })\nexport class MyModalService {\n  constructor(private _nzModal: NzModalService, private _nzI18nService: NzI18nService) { }\n\n  public create(tplTitle: string, tplContent: string | TemplateRef<NzSafeAny>, nzComponentParams = {}, functions: any[], modalOptions?: any) {\n    const [disabledSubmit, submitCallback] = functions;\n    const _modal = this._nzModal.create({\n      nzTitle: tplTitle,\n      nzContent: tplContent,\n      nzMaskClosable: false,\n      nzClosable: false,\n      nzAutofocus: false,\n      ...modalOptions,\n      nzComponentParams: nzComponentParams,\n      nzFooter: !!modalOptions && 'nzFooter' in modalOptions\n        ? modalOptions.nzFooter\n        : [\n          {\n            label: this._nzI18nService.translate('Modal.cancelText'),\n            onClick: () => {\n              _modal.destroy(false);\n            }\n          },\n          {\n            label: this._nzI18nService.translate('Modal.okText'),\n            type: 'primary',\n            disabled: disabledSubmit ? disabledSubmit : false,\n            onClick: async () => {\n              if (submitCallback) {\n                _modal.updateConfig({ nzOkLoading: true });\n                const res = await submitCallback();\n                if (!!res) {\n                  _modal.updateConfig({ nzOkLoading: false });\n                  _modal.destroy(true);\n                }\n              } else {\n                _modal.destroy(true);\n              }\n            }\n          }\n        ]\n    });\n    return _modal;\n  }\n\n  public confirm(nzTitle: string, nzContent: string | TemplateRef<NzSafeAny>) {\n    return new Promise((resolve) => {\n      return this._nzModal.confirm({\n        nzTitle, nzContent,\n        nzOkDanger: true,\n        nzOnCancel: () => resolve(false),\n        nzOnOk: () => resolve(true)\n      })\n    })\n  }\n}",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [
+                    {
+                        "name": "_nzModal",
+                        "type": "NzModalService",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "_nzI18nService",
+                        "type": "NzI18nService",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "line": 6,
+                "jsdoctags": [
+                    {
+                        "name": "_nzModal",
+                        "type": "NzModalService",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "_nzI18nService",
+                        "type": "NzI18nService",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "extends": [],
+            "type": "injectable"
+        }
+    ],
     "guards": [],
     "interceptors": [],
-    "classes": [],
-    "directives": [],
+    "classes": [
+        {
+            "name": "MyValidators",
+            "id": "class-MyValidators-cd796fe185fe233fb76574eda3e62c0aefc636cdaf47e49127be47bbc0e5e843adec888a29ca2fcf01203790e5d16fb7cd9717f7338427d41ea7d0bb1ceccdd3",
+            "file": "src/utils/validators.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "class",
+            "sourceCode": "import { Validators, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';\nimport { NzSafeAny } from \"ng-zorro-antd/core/types\";\n\nexport const REGEXP = {\n  phoneNumber: /^1[3-9]\\d{9}$/,\n  landlineAndPhone: /^((0\\d{2,3}-\\d{7,8})|(1[3-9]\\d{9}))$/,\n  onlyNumber: /^\\d+$/,\n  empty: /^\\s+$/,\n  onlyChinese: /^[\\u4e00-\\u9fa5_a-zA-Z]+$/,\n  certificateCode: /(^[1-9]\\d{5}(18|19|([23]\\d))\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{3}[0-9Xx]$)|(^[1-9]\\d{5}\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{2}[0-9Xx]$)/,\n};\n\nexport interface ISelectorOption<T = number, U = unknown> {\n  label: string;\n  value: T;\n  extra?: U;\n  checked?: boolean;\n  disabled?: boolean;\n}\n\n/**\n * 输入框不能为空（包括空白字符）\n */\nexport function noEmptyValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value;\n    const errorTip = { 'noEmpty': { value } };\n\n    return !value || REGEXP.empty.test(value) ? errorTip : null;\n  };\n}\n\nexport function checkListRequireValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value as ISelectorOption[] || [];\n    const errorTip = { 'requireChecked': { value } };\n\n    return value && value.some((item) => item.checked) ? null : errorTip;\n  };\n}\n\nexport function onlyNumberValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value;\n    const errorTip = { 'onlyNumber': { value } };\n\n    return value && REGEXP.onlyNumber.test(value) ? errorTip : null;\n  };\n}\n\nexport function onlyChineseValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value;\n    const errorTip = { 'onlyChinese': { value } };\n    return value && !REGEXP.onlyChinese.test(value) ? errorTip : null;\n  };\n}\n\nexport function phoneNumberValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value;\n    const errorTip = { 'phoneNumber': { value } };\n\n    return value && !REGEXP.phoneNumber.test(value) ? errorTip : null;\n  };\n}\n\nexport function landlineAndPhoneValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value;\n    const errorTip = { 'landlineAndPhone': { value } };\n    return value && !REGEXP.landlineAndPhone.test(value) ? errorTip : null;\n  };\n}\n\n\nexport function certificateCodeValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value;\n    const errorTip = { 'certificateCode': { value } };\n    return value && !REGEXP.certificateCode.test(value) ? errorTip : null;\n  };\n}\n\n\n// 自定义表单校验\nexport type MyErrorsOptions = { 'zh-cn': string; en: string } & Record<\n  string,\n  NzSafeAny\n>;\nexport type MyValidationErrors = Record<string, MyErrorsOptions>;\n\n\nexport class MyValidators extends Validators {\n  static override minLength(minLength: number): ValidatorFn {\n    return (control: AbstractControl): MyValidationErrors | null => {\n      if (Validators.minLength(minLength)(control) === null) {\n        return null;\n      }\n      return {\n        minlength: {\n          'zh-cn': `最小长度为 ${minLength}`,\n          en: `MinLength is ${minLength}`,\n        },\n      };\n    };\n  }\n\n  static override maxLength(maxLength: number): ValidatorFn {\n    return (control: AbstractControl): MyValidationErrors | null => {\n      if (Validators.maxLength(maxLength)(control) === null) {\n        return null;\n      }\n      return {\n        maxlength: {\n          'zh-cn': `最大长度为 ${maxLength}`,\n          en: `MaxLength is ${maxLength}`,\n        },\n      };\n    };\n  }\n  static myName(control: AbstractControl): MyValidationErrors | null {\n    const value = control.value;\n    if (/^[ ]*$/g.test(value)) {\n      return {\n        name: { 'zh-cn': `姓名不可为空`, en: `usernName Cannot be empty` },\n      };\n    } else {\n      return null;\n    }\n  }\n  static mobile(control: AbstractControl): MyValidationErrors | null {\n    const value = control.value;\n\n    if (isEmptyInputValue(value)) {\n      return null;\n    }\n\n    return isMobile(value)\n      ? null\n      : {\n        phoneNumber: {\n          'zh-cn': `手机号码格式不正确`,\n          en: `Mobile phone number is not valid`,\n        },\n      };\n  }\n  static socialUnifiedCode(control: AbstractControl): MyValidationErrors | null {\n    const value = control.value;\n    if (!/^(([0-9A-Za-z]{15})|([0-9A-Za-z]{18})|([0-9A-Za-z]{20}))$/.test(value)) {\n      return {\n        name: { 'zh-cn': `社会信用代码格式错误`, en: `invalid socialUnifiedCode` },\n      };\n    } else {\n      return null;\n    }\n  }\n}\n\nfunction isEmptyInputValue(value: NzSafeAny): boolean {\n  return value == null || value.length === 0;\n}\n\nfunction isMobile(value: string): boolean {\n  return typeof value === 'string' && /^1(3[0-9]|4[01456879]|5[0-35-9]|6[2567]|7[0-8]|8[0-9]|9[0-35-9])\\d{8}$/.test(value);\n}",
+            "inputsClass": [],
+            "outputsClass": [],
+            "properties": [],
+            "methods": [
+                {
+                    "name": "maxLength",
+                    "args": [
+                        {
+                            "name": "maxLength",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "ValidatorFn",
+                    "typeParameters": [],
+                    "line": 109,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        126,
+                        164
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "maxLength",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "minLength",
+                    "args": [
+                        {
+                            "name": "minLength",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "ValidatorFn",
+                    "typeParameters": [],
+                    "line": 95,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        126,
+                        164
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "minLength",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "mobile",
+                    "args": [
+                        {
+                            "name": "control",
+                            "type": "AbstractControl",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "MyValidationErrors | null",
+                    "typeParameters": [],
+                    "line": 132,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        126
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "control",
+                            "type": "AbstractControl",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "myName",
+                    "args": [
+                        {
+                            "name": "control",
+                            "type": "AbstractControl",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "MyValidationErrors | null",
+                    "typeParameters": [],
+                    "line": 122,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        126
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "control",
+                            "type": "AbstractControl",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "socialUnifiedCode",
+                    "args": [
+                        {
+                            "name": "control",
+                            "type": "AbstractControl",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "MyValidationErrors | null",
+                    "typeParameters": [],
+                    "line": 148,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        126
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "control",
+                            "type": "AbstractControl",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "indexSignatures": [],
+            "extends": [
+                "Validators"
+            ],
+            "hostBindings": [],
+            "hostListeners": []
+        }
+    ],
+    "directives": [
+        {
+            "name": "DestroySubscription",
+            "id": "directive-DestroySubscription-094f9440da6751b94a12a454fc646434e2f77467c1d5feb77a69f6a5559b0abe02334780eee31fe3be46e86a6e7aa8e433a30708b629bbc9f2d8742214e47c01",
+            "file": "src/directives/destroy.subscription.ts",
+            "type": "directive",
+            "description": "",
+            "rawdescription": "\n",
+            "sourceCode": "import { Directive, OnDestroy } from '@angular/core';\nimport { Subject } from 'rxjs';\n\n// tslint:disable-next-line:directive-class-suffix\n@Directive()\nexport abstract class DestroySubscription implements OnDestroy {\n  protected destroy$: Subject<unknown> = new Subject();\n\n  public ngOnDestroy(): void {\n    this.destroy$.next({});\n    this.destroy$.complete();\n  }\n}\n",
+            "providers": [],
+            "hostDirectives": [],
+            "standalone": false,
+            "inputsClass": [],
+            "outputsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "propertiesClass": [
+                {
+                    "name": "destroy$",
+                    "defaultValue": "new Subject()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Subject<>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 7,
+                    "modifierKind": [
+                        124
+                    ]
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "ngOnDestroy",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 9,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        125
+                    ]
+                }
+            ],
+            "extends": [],
+            "implements": [
+                "OnDestroy"
+            ]
+        },
+        {
+            "name": "PollingDirective",
+            "id": "directive-PollingDirective-da30f6ad53022a33f0a7fa5de67752628cef02249a611d1b09e93e0093dc8d02bded99f1bb66abc78aa1d899f8ff911ba617351f025bc398ac0a99c627fdbd31",
+            "file": "src/directives/polling.directive.ts",
+            "type": "directive",
+            "description": "",
+            "rawdescription": "\n",
+            "sourceCode": "import { Directive, Input, OnDestroy } from '@angular/core';\nimport { catchError, EMPTY, Observable, retry, Subscription, switchMap, takeWhile, timer } from 'rxjs';\n\n@Directive()\nexport class PollingDirective implements OnDestroy {\n    polling$: Observable<void>;\n    private subscription: Subscription;\n    @Input() interval: number = 2000;\n\n    ngOnDestroy(): void {\n        if (this.subscription) {\n            this.subscription.unsubscribe();\n        }\n    }\n\n    protected polling(source: Observable<any>, condition: (response: any) => boolean) {\n        this.polling$ = timer(0, this.interval)\n            .pipe(\n                switchMap(() => source.pipe(\n                    retry(4),\n                    // 错误时静默继续轮询\n                    catchError(error => {\n                        console.error('请求失败:', error);\n                        return EMPTY; // 不终止流\n                    })\n                )\n                ),\n                // 停止条件逻辑\n                takeWhile(\n                    // 使用 some 检查未完成项\n                    response => condition(response),\n                    true // 包含最后一个符合条件的响应\n                )\n            );\n    }\n\n    protected listenPolling() {\n        this.polling$.subscribe({\n            next: (response) => this.pollingNext(response),\n            error: (err) => this.pollingError(err),\n            complete: () => this.pollingComplete()\n        });\n    }\n\n    protected pollingNext(response: any) {\n        console.log(response);\n    }\n    protected pollingError(err: any) {\n        console.log(err);\n    }\n    protected pollingComplete() {\n        console.log('轮询完成');\n    }\n}\n",
+            "providers": [],
+            "hostDirectives": [],
+            "standalone": false,
+            "inputsClass": [
+                {
+                    "name": "interval",
+                    "defaultValue": "2000",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 11,
+                    "type": "number",
+                    "decorators": []
+                }
+            ],
+            "outputsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "propertiesClass": [
+                {
+                    "name": "polling$",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Observable<void>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 9
+                },
+                {
+                    "name": "subscription",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Subscription",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 10,
+                    "modifierKind": [
+                        123
+                    ]
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "listenPolling",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 40,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        124
+                    ]
+                },
+                {
+                    "name": "ngOnDestroy",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 13,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "polling",
+                    "args": [
+                        {
+                            "name": "source",
+                            "type": "Observable<any>",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "condition",
+                            "type": "function",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "function": [
+                                {
+                                    "name": "response",
+                                    "type": "any",
+                                    "deprecated": false,
+                                    "deprecationMessage": ""
+                                }
+                            ]
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 19,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        124
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "source",
+                            "type": "Observable<any>",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "condition",
+                            "type": "function",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "function": [
+                                {
+                                    "name": "response",
+                                    "type": "any",
+                                    "deprecated": false,
+                                    "deprecationMessage": ""
+                                }
+                            ],
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "pollingComplete",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 54,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        124
+                    ]
+                },
+                {
+                    "name": "pollingError",
+                    "args": [
+                        {
+                            "name": "err",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 51,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        124
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "err",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "pollingNext",
+                    "args": [
+                        {
+                            "name": "response",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 48,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        124
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "response",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "extends": [],
+            "implements": [
+                "OnDestroy"
+            ]
+        },
+        {
+            "name": "VisibleObserverDirective",
+            "id": "directive-VisibleObserverDirective-f1da19bea799a10edddbd83b5d3052684a78b39e71e916873ddce763a326b3b62f421b6af391303c045d8cf26269bab26ab5c17305ab82b4e79fdeaa859fe123",
+            "file": "src/directives/visible-observer.directive.ts",
+            "type": "directive",
+            "description": "",
+            "rawdescription": "\n",
+            "sourceCode": "import { AfterViewInit, Directive, ElementRef, EventEmitter, OnDestroy, Output } from \"@angular/core\";\n\n@Directive({\n    selector: '[VisibleObserver]',\n})\nexport class VisibleObserverDirective implements AfterViewInit, OnDestroy {\n    public observer;\n    @Output() public visible = new EventEmitter();\n\n    constructor(private _elf: ElementRef) {\n        const callback = (entries: IntersectionObserverEntry[]) => {\n            entries.forEach(({ intersectionRatio }) => {\n                if (intersectionRatio <= 0) return;\n                this.visible.emit()\n            });\n        };\n\n        this.observer = new IntersectionObserver(callback);\n    }\n\n    public ngAfterViewInit(): void {\n        this.observer.observe(this._elf.nativeElement);\n    }\n\n    public ngOnDestroy(): void {\n        this.observer.unobserve(this._elf.nativeElement);\n    }\n\n}",
+            "selector": "[VisibleObserver]",
+            "providers": [],
+            "hostDirectives": [],
+            "standalone": false,
+            "inputsClass": [],
+            "outputsClass": [
+                {
+                    "name": "visible",
+                    "defaultValue": "new EventEmitter()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 12,
+                    "type": "EventEmitter"
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "propertiesClass": [
+                {
+                    "name": "observer",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 11,
+                    "modifierKind": [
+                        125
+                    ]
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "ngAfterViewInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 25,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        125
+                    ]
+                },
+                {
+                    "name": "ngOnDestroy",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 29,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        125
+                    ]
+                }
+            ],
+            "extends": [],
+            "implements": [
+                "AfterViewInit",
+                "OnDestroy"
+            ],
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [
+                    {
+                        "name": "_elf",
+                        "type": "ElementRef",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "line": 12,
+                "jsdoctags": [
+                    {
+                        "name": "_elf",
+                        "type": "ElementRef",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            }
+        }
+    ],
     "components": [
         {
             "name": "AppAssets",
-            "id": "component-AppAssets-cd8c7549452496ffac4a999db9ee7c17d65cadf77054146f887a87d367eb8841a434adf1684e61e6fc1a09db16bdd5b2d6bfa29772976e200b5c1970ebe27e36",
+            "id": "component-AppAssets-50c594c34ab58a1798abc260a6a7ee9277f4e195158a0f2536a5efc1810a9fdeca9147f5d49f630718f175a812e3ff158d8c09b9db750f49974aaa1452581a72",
             "file": "src/components/assets/assets.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -373,7 +1278,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 102,
+                    "line": 101,
                     "modifierKind": [
                         125
                     ]
@@ -386,7 +1291,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 103,
+                    "line": 102,
                     "modifierKind": [
                         125
                     ]
@@ -406,7 +1311,7 @@
                     "optional": false,
                     "returnType": "any",
                     "typeParameters": [],
-                    "line": 116,
+                    "line": 115,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -437,7 +1342,7 @@
                     "optional": false,
                     "returnType": "string",
                     "typeParameters": [],
-                    "line": 112,
+                    "line": 111,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -461,7 +1366,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 107,
+                    "line": 106,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -473,7 +1378,7 @@
             "deprecationMessage": "",
             "hostBindings": [],
             "hostListeners": [],
-            "standalone": true,
+            "standalone": false,
             "imports": [
                 {
                     "name": "CommonModule",
@@ -503,7 +1408,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { CommonModule } from \"@angular/common\";\nimport { Component, OnInit } from \"@angular/core\";\nimport { FormsModule } from \"@angular/forms\";\nimport { NzTypographyModule } from 'ng-zorro-antd/typography';\nimport { NzIconModule } from 'ng-zorro-antd/icon';\nimport { NzImageModule } from 'ng-zorro-antd/image';\nimport * as assets from '../../assets/list.json';\nimport { NzToolTipModule } from \"ng-zorro-antd/tooltip\";\nimport { ngZorroIconCategoryNames } from \"./util\";\n\n@Component({\n  standalone: true,\n  template: `\n    <h4>组件库图标</h4>\n<div class=\"group\" *ngFor=\"let obj of categories|keyvalue; let i = index\">\n\n  <h4>{{obj.key}}</h4>\n  <div class=\"group-subGroup\">\n    <div class=\"item\" *ngFor=\"let icon of obj.value\">\n      <span class=\"img-wrapper\">\n        <span sds-icon [nzType]=\"icon\" style=\"font-size: 40px;color: #4D4D4D\"></span>\n      </span>\n      <span sds-typography nzCopyable [nzCopyText]=\"getIconCopyText(icon)\" sds-tooltip [nzTooltipTitle]=\"titleTemplate\"\n        [nzTooltipTitleContext]=\"{ $implicit: icon }\">\n        <i class=\"file-name\">{{icon}}</i>\n        <ng-template #titleTemplate let-item>\n          <p>图标方式引用: </p>\n          <p>{{ getIconCopyText(icon) }}</p>\n        </ng-template>\n      </span>\n    </div>\n  </div>\n</div>\n<div class=\"group\" *ngFor=\"let group of assets\">\n  <h4>{{group.group}}</h4>\n  <div class=\"group-subGroup\">\n    <div class=\"item\" *ngFor=\"let item of group.children\">\n      <span class=\"img-wrapper\">\n        <span *ngIf=\"item.isIcon\" sds-icon [nzType]=\"item.nzType\" style=\"font-size: 40px;color: #4D4D4D\"></span>\n        <img *ngIf=\"item.usingImg\" sds-image [nzSrc]=\"item.path\" />\n      </span>\n\n      <span sds-typography nzCopyable [nzCopyText]=\"getCopyText(item)\" sds-tooltip [nzTooltipTitle]=\"titleTemplate\"\n        [nzTooltipTitleContext]=\"{ $implicit: item }\">\n        <i class=\"file-name\">{{item.name}}</i>\n        <ng-template #titleTemplate let-item>\n          <p>资源路径: </p>\n          <p>{{ item.path }}</p>\n\n          <p *ngIf=\"item.isIcon\">图标方式引用: </p>\n          <p *ngIf=\"item.isIcon\">{{ getCopyText(item) }}</p>\n        </ng-template>\n      </span>\n    </div>\n  </div>\n</div>\n    `,\n  styles: [`\n    .group {\n        margin: 16px;\n        padding: 12px 16px;\n        border-radius: 4px;\n        box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.15);\n    }\n    .group-subGroup {\n        display: flex;\n        flex-wrap: wrap;\n        gap: 16px;\n    }\n    .item {\n        display: grid;\n        grid-template-rows: minmax(0, 1fr) 28px;\n        gap: 12px;\n        align-items: center;\n        justify-content: space-between;\n    }\n\n    .img-wrapper {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n    }\n    .item img {\n        max-width: 100px;\n        max-height: 80px;\n        min-height: 48px;\n    }\n    .ant-typography {\n        display: inline-flex;\n    }\n    .file-name {\n        display: inline-block;\n        overflow: hidden;\n        white-space: nowrap;\n        text-overflow: ellipsis;\n        width: 80px;\n    }\n    `],\n  imports: [CommonModule, FormsModule, NzIconModule, NzTypographyModule, NzImageModule, NzToolTipModule]\n})\nexport class AppAssets implements OnInit {\n  public assets: any;\n  public categories: { 通用操作: string[]; 导航及指示: string[]; 图表相关: string[]; 角色相关: string[]; 符号和标识: string[]; 办公文档: string[]; 业务相关: string[]; 快捷键: string[]; };\n\n  constructor() { }\n\n  public ngOnInit(): void {\n    this.assets = assets['default'];\n    this.categories = ngZorroIconCategoryNames();\n  }\n\n  public getIconCopyText(nzType: string) {\n    return `<span sds-icon nzType=\"${nzType}\"></span>`;\n  }\n\n  public getCopyText(item: any) {\n    switch (true) {\n      case item.isIcon:\n        return `<span sds-icon nzType=\"${item.nzType}\"></span>`;\n      case item.usingImg:\n        return `<img src=\"${item.path}\">`;\n      case !item.isIcon && !item.usingImg:\n        return item.path;\n    }\n  }\n\n}",
+            "sourceCode": "import { CommonModule } from \"@angular/common\";\nimport { Component, OnInit } from \"@angular/core\";\nimport { FormsModule } from \"@angular/forms\";\nimport { NzTypographyModule } from 'ng-zorro-antd/typography';\nimport { NzIconModule } from 'ng-zorro-antd/icon';\nimport { NzImageModule } from 'ng-zorro-antd/image';\nimport * as assets from './util/list.json';\nimport { NzToolTipModule } from \"ng-zorro-antd/tooltip\";\nimport { ngZorroIconCategoryNames } from \"./util\";\n\n@Component({\n  template: `\n    <h4>组件库图标</h4>\n<div class=\"group\" *ngFor=\"let obj of categories|keyvalue; let i = index\">\n\n  <h4>{{obj.key}}</h4>\n  <div class=\"group-subGroup\">\n    <div class=\"item\" *ngFor=\"let icon of obj.value\">\n      <span class=\"img-wrapper\">\n        <span sds-icon [nzType]=\"icon\" style=\"font-size: 40px;color: #4D4D4D\"></span>\n      </span>\n      <span sds-typography nzCopyable [nzCopyText]=\"getIconCopyText(icon)\" sds-tooltip [nzTooltipTitle]=\"titleTemplate\"\n        [nzTooltipTitleContext]=\"{ $implicit: icon }\">\n        <i class=\"file-name\">{{icon}}</i>\n        <ng-template #titleTemplate let-item>\n          <p>图标方式引用: </p>\n          <p>{{ getIconCopyText(icon) }}</p>\n        </ng-template>\n      </span>\n    </div>\n  </div>\n</div>\n<div class=\"group\" *ngFor=\"let group of assets\">\n  <h4>{{group.group}}</h4>\n  <div class=\"group-subGroup\">\n    <div class=\"item\" *ngFor=\"let item of group.children\">\n      <span class=\"img-wrapper\">\n        <span *ngIf=\"item.isIcon\" sds-icon [nzType]=\"item.nzType\" style=\"font-size: 40px;color: #4D4D4D\"></span>\n        <img *ngIf=\"item.usingImg\" sds-image [nzSrc]=\"item.path\" />\n      </span>\n\n      <span sds-typography nzCopyable [nzCopyText]=\"getCopyText(item)\" sds-tooltip [nzTooltipTitle]=\"titleTemplate\"\n        [nzTooltipTitleContext]=\"{ $implicit: item }\">\n        <i class=\"file-name\">{{item.name}}</i>\n        <ng-template #titleTemplate let-item>\n          <p>资源路径: </p>\n          <p>{{ item.path }}</p>\n\n          <p *ngIf=\"item.isIcon\">图标方式引用: </p>\n          <p *ngIf=\"item.isIcon\">{{ getCopyText(item) }}</p>\n        </ng-template>\n      </span>\n    </div>\n  </div>\n</div>\n    `,\n  styles: [`\n    .group {\n        margin: 16px;\n        padding: 12px 16px;\n        border-radius: 4px;\n        box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.15);\n    }\n    .group-subGroup {\n        display: flex;\n        flex-wrap: wrap;\n        gap: 16px;\n    }\n    .item {\n        display: grid;\n        grid-template-rows: minmax(0, 1fr) 28px;\n        gap: 12px;\n        align-items: center;\n        justify-content: space-between;\n    }\n\n    .img-wrapper {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n    }\n    .item img {\n        max-width: 100px;\n        max-height: 80px;\n        min-height: 48px;\n    }\n    .ant-typography {\n        display: inline-flex;\n    }\n    .file-name {\n        display: inline-block;\n        overflow: hidden;\n        white-space: nowrap;\n        text-overflow: ellipsis;\n        width: 80px;\n    }\n    `],\n  imports: [CommonModule, FormsModule, NzIconModule, NzTypographyModule, NzImageModule, NzToolTipModule]\n})\nexport class AppAssets implements OnInit {\n  public assets: any;\n  public categories: { 通用操作: string[]; 导航及指示: string[]; 图表相关: string[]; 角色相关: string[]; 符号和标识: string[]; 办公文档: string[]; 业务相关: string[]; 快捷键: string[]; };\n\n  constructor() { }\n\n  public ngOnInit(): void {\n    this.assets = assets['default'];\n    this.categories = ngZorroIconCategoryNames();\n  }\n\n  public getIconCopyText(nzType: string) {\n    return `<span sds-icon nzType=\"${nzType}\"></span>`;\n  }\n\n  public getCopyText(item: any) {\n    switch (true) {\n      case item.isIcon:\n        return `<span sds-icon nzType=\"${item.nzType}\"></span>`;\n      case item.usingImg:\n        return `<img src=\"${item.path}\">`;\n      case !item.isIcon && !item.usingImg:\n        return item.path;\n    }\n  }\n\n}",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "\n    .group {\n        margin: 16px;\n        padding: 12px 16px;\n        border-radius: 4px;\n        box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.15);\n    }\n    .group-subGroup {\n        display: flex;\n        flex-wrap: wrap;\n        gap: 16px;\n    }\n    .item {\n        display: grid;\n        grid-template-rows: minmax(0, 1fr) 28px;\n        gap: 12px;\n        align-items: center;\n        justify-content: space-between;\n    }\n\n    .img-wrapper {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n    }\n    .item img {\n        max-width: 100px;\n        max-height: 80px;\n        min-height: 48px;\n    }\n    .ant-typography {\n        display: inline-flex;\n    }\n    .file-name {\n        display: inline-block;\n        overflow: hidden;\n        white-space: nowrap;\n        text-overflow: ellipsis;\n        width: 80px;\n    }\n    \n",
@@ -513,7 +1418,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "args": [],
-                "line": 103
+                "line": 102
             },
             "extends": [],
             "implements": [
@@ -726,7 +1631,7 @@
         },
         {
             "name": "HeaderComponent",
-            "id": "component-HeaderComponent-00ea5e0f1751f1dcfb55792dea079a9e48498a2f240d45ea1d951d6fa10d6993a56922d0b7f6237096e5f37cd2d5b2316f423c5afb9666f710388b829a323255",
+            "id": "component-HeaderComponent-9b571fd3d77fe8dd92f839f95556e0aa5cd2de2b4aa1565d3b5d0942e4802b17ae7ae510d5c85c4edb11aa7974c6751ee8fee5c4a11e9eab141a8530989cac3e",
             "file": "src/stories/header/header.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -748,7 +1653,7 @@
                     "defaultValue": "null",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 66,
+                    "line": 65,
                     "type": "User | null",
                     "decorators": []
                 }
@@ -759,7 +1664,7 @@
                     "defaultValue": "new EventEmitter<Event>()",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 75,
+                    "line": 74,
                     "type": "EventEmitter"
                 },
                 {
@@ -767,7 +1672,7 @@
                     "defaultValue": "new EventEmitter<Event>()",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 69,
+                    "line": 68,
                     "type": "EventEmitter"
                 },
                 {
@@ -775,7 +1680,7 @@
                     "defaultValue": "new EventEmitter<Event>()",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 72,
+                    "line": 71,
                     "type": "EventEmitter"
                 }
             ],
@@ -785,7 +1690,7 @@
             "deprecationMessage": "",
             "hostBindings": [],
             "hostListeners": [],
-            "standalone": true,
+            "standalone": false,
             "imports": [
                 {
                     "name": "CommonModule",
@@ -799,7 +1704,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, Input, Output, EventEmitter } from '@angular/core';\nimport { CommonModule } from '@angular/common';\n\nimport { ButtonComponent } from '../../components';\nimport type { User } from './user';\n\n@Component({\n  selector: 'storybook-header',\n  standalone: true,\n  imports: [CommonModule, ButtonComponent],\n  template: `<header>\n  <div class=\"storybook-header\">\n    <div>\n      <svg width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\">\n        <g fill=\"none\" fillRule=\"evenodd\">\n          <path\n            d=\"M10 0h12a10 10 0 0110 10v12a10 10 0 01-10 10H10A10 10 0 010 22V10A10 10 0 0110 0z\"\n            fill=\"#FFF\"\n          />\n          <path\n            d=\"M5.3 10.6l10.4 6v11.1l-10.4-6v-11zm11.4-6.2l9.7 5.5-9.7 5.6V4.4z\"\n            fill=\"#555AB9\"\n          />\n          <path d=\"M27.2 10.6v11.2l-10.5 6V16.5l10.5-6zM15.7 4.4v11L6 10l9.7-5.5z\" fill=\"#91BAF8\" />\n        </g>\n      </svg>\n      <h1>Acme</h1>\n    </div>\n    <div>\n      <div *ngIf=\"user\">\n        <span class=\"welcome\">\n          Welcome, <b>{{ user.name }}</b\n          >!\n        </span>\n        <storybook-button\n          *ngIf=\"user\"\n          size=\"small\"\n          (onClick)=\"onLogout.emit($event)\"\n          label=\"Log out\"\n        ></storybook-button>\n      </div>\n      <div *ngIf=\"!user\">\n        <storybook-button\n          *ngIf=\"!user\"\n          size=\"small\"\n          class=\"margin-left\"\n          (onClick)=\"onLogin.emit($event)\"\n          label=\"Log in\"\n        ></storybook-button>\n        <storybook-button\n          *ngIf=\"!user\"\n          size=\"small\"\n          [primary]=\"true\"\n          class=\"margin-left\"\n          (onClick)=\"onCreateAccount.emit($event)\"\n          label=\"Sign up\"\n        ></storybook-button>\n      </div>\n    </div>\n  </div>\n</header>`,\n  styleUrls: ['./header.css'],\n})\nexport class HeaderComponent {\n  @Input()\n  user: User | null = null;\n\n  @Output()\n  onLogin = new EventEmitter<Event>();\n\n  @Output()\n  onLogout = new EventEmitter<Event>();\n\n  @Output()\n  onCreateAccount = new EventEmitter<Event>();\n}\n",
+            "sourceCode": "import { Component, Input, Output, EventEmitter } from '@angular/core';\nimport { CommonModule } from '@angular/common';\n\nimport { ButtonComponent } from '../../components';\nimport type { User } from './user';\n\n@Component({\n  selector: 'storybook-header',\n  imports: [CommonModule, ButtonComponent],\n  template: `<header>\n  <div class=\"storybook-header\">\n    <div>\n      <svg width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\">\n        <g fill=\"none\" fillRule=\"evenodd\">\n          <path\n            d=\"M10 0h12a10 10 0 0110 10v12a10 10 0 01-10 10H10A10 10 0 010 22V10A10 10 0 0110 0z\"\n            fill=\"#FFF\"\n          />\n          <path\n            d=\"M5.3 10.6l10.4 6v11.1l-10.4-6v-11zm11.4-6.2l9.7 5.5-9.7 5.6V4.4z\"\n            fill=\"#555AB9\"\n          />\n          <path d=\"M27.2 10.6v11.2l-10.5 6V16.5l10.5-6zM15.7 4.4v11L6 10l9.7-5.5z\" fill=\"#91BAF8\" />\n        </g>\n      </svg>\n      <h1>Acme</h1>\n    </div>\n    <div>\n      <div *ngIf=\"user\">\n        <span class=\"welcome\">\n          Welcome, <b>{{ user.name }}</b\n          >!\n        </span>\n        <storybook-button\n          *ngIf=\"user\"\n          size=\"small\"\n          (onClick)=\"onLogout.emit($event)\"\n          label=\"Log out\"\n        ></storybook-button>\n      </div>\n      <div *ngIf=\"!user\">\n        <storybook-button\n          *ngIf=\"!user\"\n          size=\"small\"\n          class=\"margin-left\"\n          (onClick)=\"onLogin.emit($event)\"\n          label=\"Log in\"\n        ></storybook-button>\n        <storybook-button\n          *ngIf=\"!user\"\n          size=\"small\"\n          [primary]=\"true\"\n          class=\"margin-left\"\n          (onClick)=\"onCreateAccount.emit($event)\"\n          label=\"Sign up\"\n        ></storybook-button>\n      </div>\n    </div>\n  </div>\n</header>`,\n  styleUrls: ['./header.css'],\n})\nexport class HeaderComponent {\n  @Input()\n  user: User | null = null;\n\n  @Output()\n  onLogin = new EventEmitter<Event>();\n\n  @Output()\n  onLogout = new EventEmitter<Event>();\n\n  @Output()\n  onCreateAccount = new EventEmitter<Event>();\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -812,7 +1717,7 @@
         },
         {
             "name": "IconRenderComponent",
-            "id": "component-IconRenderComponent-99a2399aca112188e32cfbee76c0436438f6edad2a44dd8f06abb45e5d77aa4e77a502e693eaaa6e5a7ad306c570244cc29cf7f3fb34fd8dcece2ac456d820c6",
+            "id": "component-IconRenderComponent-4dea0b225cdd69f4bf143621982559fbdc1b582b82267f35b64d4e4bb155281121cb709fa7fd8531677380beb99dadc1418b031a4465bb614c0d9eadebb1c7e9",
             "file": "src/components/assets/icon-render.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -834,7 +1739,7 @@
                     "defaultValue": "\"🤖\"",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 66,
+                    "line": 65,
                     "type": "string",
                     "decorators": []
                 },
@@ -843,7 +1748,7 @@
                     "defaultValue": "\"#F3F4F6\"",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 61,
+                    "line": 60,
                     "type": "string",
                     "decorators": []
                 },
@@ -852,7 +1757,7 @@
                     "defaultValue": "'#fff'",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 68,
+                    "line": 67,
                     "type": "string",
                     "decorators": []
                 },
@@ -861,7 +1766,7 @@
                     "defaultValue": "16",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 69,
+                    "line": 68,
                     "type": "number",
                     "decorators": []
                 },
@@ -869,7 +1774,7 @@
                     "name": "icon_type",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 64,
+                    "line": 63,
                     "type": "IconType",
                     "decorators": []
                 },
@@ -877,7 +1782,7 @@
                     "name": "icon_url",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 67,
+                    "line": 66,
                     "type": "string",
                     "decorators": []
                 },
@@ -886,7 +1791,7 @@
                     "defaultValue": "false",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 62,
+                    "line": 61,
                     "type": "boolean",
                     "decorators": []
                 },
@@ -895,7 +1800,7 @@
                     "defaultValue": "24",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 60,
+                    "line": 59,
                     "type": "number",
                     "decorators": []
                 }
@@ -911,7 +1816,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 71
+                    "line": 70
                 },
                 {
                     "name": "isOriginEmoji",
@@ -922,7 +1827,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 72
+                    "line": 71
                 }
             ],
             "methodsClass": [
@@ -932,7 +1837,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 74,
+                    "line": 73,
                     "deprecated": false,
                     "deprecationMessage": ""
                 }
@@ -941,7 +1846,7 @@
             "deprecationMessage": "",
             "hostBindings": [],
             "hostListeners": [],
-            "standalone": true,
+            "standalone": false,
             "imports": [
                 {
                     "name": "CommonModule",
@@ -955,7 +1860,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { CommonModule } from \"@angular/common\";\nimport { Component, HostBinding, Input, OnInit } from \"@angular/core\";\nimport { NzIconModule } from \"ng-zorro-antd/icon\";\nimport { IconType } from \"./util\";\n\n@Component({\n  selector: 'icon-render',\n  template: `\n  <ng-container [ngSwitch]=\"icon_type\">\n    <span *ngSwitchCase=\"IconType.EMOJI\" class=\"icon-box\">\n      <i *ngIf=\"isOriginEmoji\">{{icon}}</i>\n      <i *ngIf=\"!isOriginEmoji\" nz-icon [nzType]=\"icon\" [style.color]=\"icon_color\" [style.font-size.px]=\"icon_size\"></i>\n    </span>\n\n    <span *ngSwitchCase=\"IconType.ICON\" class=\"icon-box\">\n      <i *ngIf=\"isOriginEmoji\">{{icon}}</i>\n      <i *ngIf=\"!isOriginEmoji\" nz-icon [nzType]=\"icon\" [style.color]=\"icon_color\" [style.font-size.px]=\"icon_size\"></i>\n    </span>\n\n    <ng-container *ngSwitchCase=\"IconType.IMAGE\">\n      <span class=\"img-box\"><img [src]=\"icon_url\" /></span>\n    </ng-container>\n  </ng-container>\n    `,\n  styles: [`\n    :host {\n      display: inline-flex;\n      align-items: center;\n      justify-content: center;\n    }\n    :host.round {\n      border-radius:100%;\n    }\n    :host:not(.round) {\n      border-radius: 4px;\n    }\n    .icon-box {\n      display: flex;\n      align-items: center;\n      justify-content: center;\n    }\n    .img-box {\n      overflow: hidden;\n      width: 100%;\n      height: 100%;\n      display: flex;\n      align-items: center;\n    }\n    .img-box img {\n      max-width: 100%;\n      max-height: 100%;\n    }\n`],\n  standalone: true,\n  imports: [CommonModule, NzIconModule]\n})\nexport class IconRenderComponent implements OnInit {\n  @HostBinding('style.width.px')\n  @HostBinding('style.height.px')\n  @Input() width: number = 24;\n  @HostBinding('style.backgroundColor') @Input() icon_background = \"#F3F4F6\";\n  @HostBinding('class.round') @Input() round = false;\n\n  @Input() icon_type: IconType; //  \"emoji\",\n\n  @Input() icon = \"🤖\";\n  @Input() icon_url: string;\n  @Input() icon_color = '#fff';\n  @Input() icon_size: number = 16;\n\n  IconType = IconType;\n  isOriginEmoji = false;\n\n  ngOnInit(): void {\n    this.icon = this.icon || \"🤖\";\n    this.icon_background = this.icon_background || \"#F3F4F6\";\n    this.isOriginEmoji = !this.icon.startsWith('icons:') && /\\p{Emoji}/u.test(this.icon);\n  }\n\n}",
+            "sourceCode": "import { CommonModule } from \"@angular/common\";\nimport { Component, HostBinding, Input, OnInit } from \"@angular/core\";\nimport { NzIconModule } from \"ng-zorro-antd/icon\";\nimport { IconType } from \"./util\";\n\n@Component({\n  selector: 'icon-render',\n  template: `\n  <ng-container [ngSwitch]=\"icon_type\">\n    <span *ngSwitchCase=\"IconType.EMOJI\" class=\"icon-box\">\n      <i *ngIf=\"isOriginEmoji\">{{icon}}</i>\n      <i *ngIf=\"!isOriginEmoji\" nz-icon [nzType]=\"icon\" [style.color]=\"icon_color\" [style.font-size.px]=\"icon_size\"></i>\n    </span>\n\n    <span *ngSwitchCase=\"IconType.ICON\" class=\"icon-box\">\n      <i *ngIf=\"isOriginEmoji\">{{icon}}</i>\n      <i *ngIf=\"!isOriginEmoji\" nz-icon [nzType]=\"icon\" [style.color]=\"icon_color\" [style.font-size.px]=\"icon_size\"></i>\n    </span>\n\n    <ng-container *ngSwitchCase=\"IconType.IMAGE\">\n      <span class=\"img-box\"><img [src]=\"icon_url\" /></span>\n    </ng-container>\n  </ng-container>\n    `,\n  styles: [`\n    :host {\n      display: inline-flex;\n      align-items: center;\n      justify-content: center;\n    }\n    :host.round {\n      border-radius:100%;\n    }\n    :host:not(.round) {\n      border-radius: 4px;\n    }\n    .icon-box {\n      display: flex;\n      align-items: center;\n      justify-content: center;\n    }\n    .img-box {\n      overflow: hidden;\n      width: 100%;\n      height: 100%;\n      display: flex;\n      align-items: center;\n    }\n    .img-box img {\n      max-width: 100%;\n      max-height: 100%;\n    }\n`],\n  imports: [CommonModule, NzIconModule]\n})\nexport class IconRenderComponent implements OnInit {\n  @HostBinding('style.width.px')\n  @HostBinding('style.height.px')\n  @Input() width: number = 24;\n  @HostBinding('style.backgroundColor') @Input() icon_background = \"#F3F4F6\";\n  @HostBinding('class.round') @Input() round = false;\n\n  @Input() icon_type: IconType; //  \"emoji\",\n\n  @Input() icon = \"🤖\";\n  @Input() icon_url: string;\n  @Input() icon_color = '#fff';\n  @Input() icon_size: number = 16;\n\n  IconType = IconType;\n  isOriginEmoji = false;\n\n  ngOnInit(): void {\n    this.icon = this.icon || \"🤖\";\n    this.icon_background = this.icon_background || \"#F3F4F6\";\n    this.isOriginEmoji = !this.icon.startsWith('icons:') && /\\p{Emoji}/u.test(this.icon);\n  }\n\n}",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "\n    :host {\n      display: inline-flex;\n      align-items: center;\n      justify-content: center;\n    }\n    :host.round {\n      border-radius:100%;\n    }\n    :host:not(.round) {\n      border-radius: 4px;\n    }\n    .icon-box {\n      display: flex;\n      align-items: center;\n      justify-content: center;\n    }\n    .img-box {\n      overflow: hidden;\n      width: 100%;\n      height: 100%;\n      display: flex;\n      align-items: center;\n    }\n    .img-box img {\n      max-width: 100%;\n      max-height: 100%;\n    }\n\n",
@@ -1377,7 +2282,7 @@
         },
         {
             "name": "SearchTagComponent",
-            "id": "component-SearchTagComponent-8a7e2c530e5d0152d1dc063cbc77b238b793ee8b314568d544664acb68057095b803b53ea47df50fd8f66ac3739d84be651892476eabb89cb5ff6e13a3b7e8b8",
+            "id": "component-SearchTagComponent-50fbfd6997c1218b19eb018c91426dbc6d248eaaa6f072e8668f443a584e1639e6ad975790a7bf575c36c10d31dcc7580200b22cf494e01deb96f24612b63b84",
             "file": "src/components/search-tag/search-tag.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -1400,7 +2305,7 @@
                     "defaultValue": "[]",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 42,
+                    "line": 41,
                     "type": "string[]",
                     "decorators": []
                 },
@@ -1409,7 +2314,7 @@
                     "defaultValue": "[]",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 40,
+                    "line": 39,
                     "type": "any[]",
                     "decorators": []
                 },
@@ -1418,7 +2323,7 @@
                     "defaultValue": "150",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 41,
+                    "line": 40,
                     "type": "number",
                     "decorators": []
                 }
@@ -1429,7 +2334,7 @@
                     "defaultValue": "new EventEmitter<string[]>()",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 43,
+                    "line": 42,
                     "type": "EventEmitter"
                 }
             ],
@@ -1443,7 +2348,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 44
+                    "line": 43
                 }
             ],
             "methodsClass": [
@@ -1453,7 +2358,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 64,
+                    "line": 63,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -1470,7 +2375,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 59,
+                    "line": 58,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -1490,7 +2395,7 @@
             "deprecationMessage": "",
             "hostBindings": [],
             "hostListeners": [],
-            "standalone": true,
+            "standalone": false,
             "imports": [
                 {
                     "name": "CommonModule",
@@ -1524,7 +2429,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, Input, Output, EventEmitter } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { NzSelectModule } from 'ng-zorro-antd/select';\nimport { FormsModule } from '@angular/forms';\nimport { NzDropDownModule } from 'ng-zorro-antd/dropdown';\nimport { NzCheckboxModule } from 'ng-zorro-antd/checkbox';\nimport { NzI18nService } from 'ng-zorro-antd/i18n';\nimport { NzIconModule } from 'ng-zorro-antd/icon';\nimport { TranslatePipe } from '@Pipes';\n@Component({\n  selector: 'app-search-tag',\n  templateUrl: './search-tag.component.html',\n  styles: [`\n    :host{\n      display: block;\n      width: 100%;\n      height: 28px;\n      text-align: left;\n      font-size: 14px;\n    }\n    .tag-group {\n      min-width: 200px;\n      max-width: 300px;\n    }\n    .tag-item {\n      margin: 0;\n    }\n    .icon{\n      color: #d9d9d9;\n    }\n    `],\n  standalone: true,\n  imports: [\n    CommonModule, FormsModule,\n    NzSelectModule, NzIconModule, NzDropDownModule, NzCheckboxModule,\n    TranslatePipe,\n  ]\n})\nexport class SearchTagComponent {\n  @Input() tagList: any[] = [];\n  @Input() width: number = 150;\n  @Input() tagIds: string[] = [];\n  @Output() tagIdsChange = new EventEmitter<string[]>();\n  checkSet = new Set<string>();\n\n  constructor(private i18n: NzI18nService) { }\n\n  get firstTag(): string {\n    return this.checkSet.size > 0\n      ? this.tagList.find(tag => this.checkSet.has(tag.id))?.name\n      : this.i18n.translate('Role.CommandTagPlaceholder')\n  }\n  get tagsSurfix(): string {\n    return this.checkSet.size > 1\n      ? `+ ${this.checkSet.size - 1}`\n      : '';\n  }\n\n  toggleCheckTag(tagId: string) {\n    this.checkSet.has(tagId) ? this.checkSet.delete(tagId) : this.checkSet.add(tagId);\n    this.tagIdsChange.emit([...this.checkSet]);\n  }\n\n  clearCheckTags() {\n    this.checkSet.clear();\n    this.tagIdsChange.emit([...this.checkSet]);\n  }\n}\n",
+            "sourceCode": "import { Component, Input, Output, EventEmitter } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { NzSelectModule } from 'ng-zorro-antd/select';\nimport { FormsModule } from '@angular/forms';\nimport { NzDropDownModule } from 'ng-zorro-antd/dropdown';\nimport { NzCheckboxModule } from 'ng-zorro-antd/checkbox';\nimport { NzI18nService } from 'ng-zorro-antd/i18n';\nimport { NzIconModule } from 'ng-zorro-antd/icon';\nimport { TranslatePipe } from '@Pipes';\n@Component({\n  selector: 'app-search-tag',\n  templateUrl: './search-tag.component.html',\n  styles: [`\n    :host{\n      display: block;\n      width: 100%;\n      height: 28px;\n      text-align: left;\n      font-size: 14px;\n    }\n    .tag-group {\n      min-width: 200px;\n      max-width: 300px;\n    }\n    .tag-item {\n      margin: 0;\n    }\n    .icon{\n      color: #d9d9d9;\n    }\n    `],\n  imports: [\n    CommonModule, FormsModule,\n    NzSelectModule, NzIconModule, NzDropDownModule, NzCheckboxModule,\n    TranslatePipe,\n  ]\n})\nexport class SearchTagComponent {\n  @Input() tagList: any[] = [];\n  @Input() width: number = 150;\n  @Input() tagIds: string[] = [];\n  @Output() tagIdsChange = new EventEmitter<string[]>();\n  checkSet = new Set<string>();\n\n  constructor(private i18n: NzI18nService) { }\n\n  get firstTag(): string {\n    return this.checkSet.size > 0\n      ? this.tagList.find(tag => this.checkSet.has(tag.id))?.name\n      : this.i18n.translate('Role.CommandTagPlaceholder')\n  }\n  get tagsSurfix(): string {\n    return this.checkSet.size > 1\n      ? `+ ${this.checkSet.size - 1}`\n      : '';\n  }\n\n  toggleCheckTag(tagId: string) {\n    this.checkSet.has(tagId) ? this.checkSet.delete(tagId) : this.checkSet.add(tagId);\n    this.tagIdsChange.emit([...this.checkSet]);\n  }\n\n  clearCheckTags() {\n    this.checkSet.clear();\n    this.tagIdsChange.emit([...this.checkSet]);\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "\n    :host{\n      display: block;\n      width: 100%;\n      height: 28px;\n      text-align: left;\n      font-size: 14px;\n    }\n    .tag-group {\n      min-width: 200px;\n      max-width: 300px;\n    }\n    .tag-item {\n      margin: 0;\n    }\n    .icon{\n      color: #d9d9d9;\n    }\n    \n",
@@ -1541,7 +2446,7 @@
                         "deprecationMessage": ""
                     }
                 ],
-                "line": 44,
+                "line": 43,
                 "jsdoctags": [
                     {
                         "name": "i18n",
@@ -1562,7 +2467,7 @@
                         "name": "firstTag",
                         "type": "string",
                         "returnType": "string",
-                        "line": 48
+                        "line": 47
                     }
                 },
                 "tagsSurfix": {
@@ -1571,7 +2476,7 @@
                         "name": "tagsSurfix",
                         "type": "string",
                         "returnType": "string",
-                        "line": 53
+                        "line": 52
                     }
                 }
             },
@@ -1590,6 +2495,16 @@
                 "deprecationMessage": "",
                 "type": "ApplicationConfig",
                 "defaultValue": "{\n  providers: [\n    provideZoneChangeDetection({ eventCoalescing: true }),\n    provideRouter(routes),\n    provideAnimationsAsync(),\n    provideHttpClient(), //added the function here\n    provideNzI18n(en_US)\n  ]\n}"
+            },
+            {
+                "name": "CanComponentDeactivateGuard",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/services/canDeactive.guard.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "CanDeactivateFn<CanComponentDeactivate>",
+                "defaultValue": "(\n  component: CanComponentDeactivate\n) => {\n  return component.canDeactivate ? component.canDeactivate() : true;\n}"
             },
             {
                 "name": "CommonIconNames",
@@ -1622,6 +2537,16 @@
                 "defaultValue": "[\n    'Edit',\n    'Form',\n    'Copy',\n    'Scissor',\n    'Delete',\n    'Snippets',\n    'Diff',\n    'Highlight',\n    'AlignCenter',\n    'AlignLeft',\n    'AlignRight',\n    'BgColors',\n    'Bold',\n    'Italic',\n    'Underline',\n    'Strikethrough',\n    'Redo',\n    'Undo',\n    'ZoomIn',\n    'ZoomOut',\n    'FontColors',\n    'FontSize',\n    'LineHeight',\n    'Dash',\n    'SmallDash',\n    'SortAscending',\n    'SortDescending',\n    'Drag',\n    'OrderedList',\n    'UnorderedList',\n    'RadiusSetting',\n    'ColumnWidth',\n    'ColumnHeight',\n]"
             },
             {
+                "name": "fileTypeIconMap",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/utils/index.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "object",
+                "defaultValue": "{\n  'txt': 'files:text-fill',\n  'md': 'files:markdown-fill',\n  'mdx': 'files:markdown-fill',\n  'pdf': 'files:pdf-fill',\n  'html': 'files:html-fill',\n  'xlsx': 'files:excel-fill',\n  'xls': 'files:excel-fill',\n  'docx': 'files:word-fill',\n  'csv': 'files:excel-fill',\n}"
+            },
+            {
                 "name": "gb",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -1652,6 +2577,26 @@
                 "defaultValue": "1024 * kb"
             },
             {
+                "name": "REGEXP",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/utils/validators.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "object",
+                "defaultValue": "{\n  phoneNumber: /^1[3-9]\\d{9}$/,\n  landlineAndPhone: /^((0\\d{2,3}-\\d{7,8})|(1[3-9]\\d{9}))$/,\n  onlyNumber: /^\\d+$/,\n  empty: /^\\s+$/,\n  onlyChinese: /^[\\u4e00-\\u9fa5_a-zA-Z]+$/,\n  certificateCode: /(^[1-9]\\d{5}(18|19|([23]\\d))\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{3}[0-9Xx]$)|(^[1-9]\\d{5}\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{2}[0-9Xx]$)/,\n}"
+            },
+            {
+                "name": "StreamStatusIconMap",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/utils/index.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "object",
+                "defaultValue": "{\n  'default': ['loading', 'status-icon loading'],\n  'failed': ['question-circle', 'status-icon error'],\n  'succeeded': ['check-circle', 'status-icon success'],\n  'start': ['icons:node-start', 'node-icon start'],\n  'llm': ['icons:node-llm', 'node-icon llm'],\n  'if-else': ['icons:node-branch', 'node-icon if-else'],\n  'http-request': ['icons:node-http', 'node-icon http-request'],\n  'code': ['icons:script', 'node-icon code'],\n  'tool': ['icons:node-iteration', 'node-icon iteration'],\n  'iteration': ['icons:node-iteration', 'node-icon iteration'],\n  'answer': ['icons:node-answer', 'node-icon answer']\n}"
+            },
+            {
                 "name": "SuggestionIconNames",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -1664,6 +2609,415 @@
         ],
         "functions": [
             {
+                "name": "certificateCodeValidator",
+                "file": "src/utils/validators.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [],
+                "returnType": "ValidatorFn"
+            },
+            {
+                "name": "checkListRequireValidator",
+                "file": "src/utils/validators.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [],
+                "returnType": "ValidatorFn"
+            },
+            {
+                "name": "chooseFileToUpload",
+                "file": "src/utils/upload.file.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [
+                    {
+                        "name": "fileType",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "createDataFromFile",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "_message",
+                        "type": "NzMessageService",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "accept",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "optional": true
+                    },
+                    {
+                        "name": "size",
+                        "type": "number",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "optional": true
+                    }
+                ],
+                "returnType": "void",
+                "jsdoctags": [
+                    {
+                        "name": "fileType",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "createDataFromFile",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "_message",
+                        "type": "NzMessageService",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "accept",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "optional": true,
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "size",
+                        "type": "number",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "optional": true,
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "formatDocumentMeta",
+                "file": "src/utils/index.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [
+                    {
+                        "name": "document",
+                        "type": "IDocumentMeta",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "jsdoctags": [
+                    {
+                        "name": "document",
+                        "type": "IDocumentMeta",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "formatFileMeta",
+                "file": "src/utils/index.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [
+                    {
+                        "name": "file",
+                        "type": "IFile",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "jsdoctags": [
+                    {
+                        "name": "file",
+                        "type": "IFile",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "formatSreamMeta",
+                "file": "src/utils/index.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [
+                    {
+                        "name": "stream",
+                        "type": "",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "jsdoctags": [
+                    {
+                        "name": "stream",
+                        "type": "",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "generateUid",
+                "file": "src/utils/index.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": []
+            },
+            {
+                "name": "isEmptyInputValue",
+                "file": "src/utils/validators.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [
+                    {
+                        "name": "value",
+                        "type": "NzSafeAny",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "returnType": "boolean",
+                "jsdoctags": [
+                    {
+                        "name": "value",
+                        "type": "NzSafeAny",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "isMatchedOption",
+                "file": "src/utils/select.util.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [
+                    {
+                        "name": "value",
+                        "type": "string",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "defaultValue": "''"
+                    },
+                    {
+                        "name": "option",
+                        "type": "any",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "names",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "defaultValue": "[]"
+                    }
+                ],
+                "returnType": "boolean",
+                "jsdoctags": [
+                    {
+                        "name": "value",
+                        "type": "string",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "defaultValue": "''",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "option",
+                        "type": "any",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "names",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "defaultValue": "[]",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "isMobile",
+                "file": "src/utils/validators.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [
+                    {
+                        "name": "value",
+                        "type": "string",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "returnType": "boolean",
+                "jsdoctags": [
+                    {
+                        "name": "value",
+                        "type": "string",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "landlineAndPhoneValidator",
+                "file": "src/utils/validators.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [],
+                "returnType": "ValidatorFn"
+            },
+            {
+                "name": "matchCount",
+                "file": "src/utils/select.util.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [
+                    {
+                        "name": "source",
+                        "type": "string",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "keyword",
+                        "type": "string",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "item",
+                        "type": "",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "prefixOrSuffix",
+                        "type": "",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "defaultValue": "false"
+                    }
+                ],
+                "returnType": "number",
+                "jsdoctags": [
+                    {
+                        "name": "source",
+                        "type": "string",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "keyword",
+                        "type": "string",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "item",
+                        "type": "",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "prefixOrSuffix",
+                        "type": "",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "defaultValue": "false",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            {
                 "name": "ngZorroIconCategoryNames",
                 "file": "src/components/assets/util/index.ts",
                 "ctype": "miscellaneous",
@@ -1672,9 +3026,236 @@
                 "deprecationMessage": "",
                 "description": "",
                 "args": []
+            },
+            {
+                "name": "noEmptyValidator",
+                "file": "src/utils/validators.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "<p>输入框不能为空（包括空白字符）</p>\n",
+                "args": [],
+                "returnType": "ValidatorFn"
+            },
+            {
+                "name": "onlyChineseValidator",
+                "file": "src/utils/validators.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [],
+                "returnType": "ValidatorFn"
+            },
+            {
+                "name": "onlyNumberValidator",
+                "file": "src/utils/validators.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [],
+                "returnType": "ValidatorFn"
+            },
+            {
+                "name": "phoneNumberValidator",
+                "file": "src/utils/validators.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [],
+                "returnType": "ValidatorFn"
+            },
+            {
+                "name": "racePromises",
+                "file": "src/utils/index.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [
+                    {
+                        "name": "promises",
+                        "type": "",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "jsdoctags": [
+                    {
+                        "name": "promises",
+                        "type": "",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "selectCompareFn",
+                "file": "src/utils/select.util.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [
+                    {
+                        "name": "name",
+                        "type": "string",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "defaultValue": "'id'"
+                    }
+                ],
+                "jsdoctags": [
+                    {
+                        "name": "name",
+                        "type": "string",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "defaultValue": "'id'",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "selectFilterOption",
+                "file": "src/utils/select.util.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [
+                    {
+                        "name": "names",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "dotDotDotToken": true
+                    }
+                ],
+                "jsdoctags": [
+                    {
+                        "name": "names",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "dotDotDotToken": true,
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "validateForm",
+                "file": "src/utils/form-validator.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "<p>angular 表单校验</p>\n",
+                "args": [
+                    {
+                        "name": "control",
+                        "type": "AbstractControl",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "options",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "defaultValue": "{}"
+                    }
+                ],
+                "returnType": "void",
+                "jsdoctags": [
+                    {
+                        "name": {
+                            "pos": 116,
+                            "end": 123,
+                            "kind": 80,
+                            "id": 0,
+                            "flags": 16777216,
+                            "transformFlags": 0,
+                            "escapedText": "control"
+                        },
+                        "type": "AbstractControl",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "pos": 110,
+                            "end": 115,
+                            "kind": 80,
+                            "id": 0,
+                            "flags": 16777216,
+                            "transformFlags": 0,
+                            "escapedText": "param"
+                        },
+                        "comment": "<p>表单控件</p>\n"
+                    },
+                    {
+                        "name": {
+                            "pos": 139,
+                            "end": 146,
+                            "kind": 80,
+                            "id": 0,
+                            "flags": 16777216,
+                            "transformFlags": 0,
+                            "escapedText": "options"
+                        },
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "defaultValue": "{}",
+                        "tagName": {
+                            "pos": 133,
+                            "end": 138,
+                            "kind": 80,
+                            "id": 0,
+                            "flags": 16777216,
+                            "transformFlags": 0,
+                            "escapedText": "param"
+                        },
+                        "comment": "<p>额外的参数配置，具体可以查看 AbstractControl.updateValueAndValidity 的第二个参数</p>\n"
+                    }
+                ]
             }
         ],
-        "typealiases": [],
+        "typealiases": [
+            {
+                "name": "MyErrorsOptions",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "",
+                "file": "src/utils/validators.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 193
+            },
+            {
+                "name": "MyValidationErrors",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "Record<string | MyErrorsOptions>",
+                "file": "src/utils/validators.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 183
+            }
+        ],
         "enumerations": [
             {
                 "name": "IconType",
@@ -1719,6 +3300,18 @@
                     "defaultValue": "{\n  providers: [\n    provideZoneChangeDetection({ eventCoalescing: true }),\n    provideRouter(routes),\n    provideAnimationsAsync(),\n    provideHttpClient(), //added the function here\n    provideNzI18n(en_US)\n  ]\n}"
                 }
             ],
+            "src/services/canDeactive.guard.ts": [
+                {
+                    "name": "CanComponentDeactivateGuard",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/services/canDeactive.guard.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "CanDeactivateFn<CanComponentDeactivate>",
+                    "defaultValue": "(\n  component: CanComponentDeactivate\n) => {\n  return component.canDeactivate ? component.canDeactivate() : true;\n}"
+                }
+            ],
             "src/components/assets/util/sourceIcons.ts": [
                 {
                     "name": "CommonIconNames",
@@ -1761,6 +3354,28 @@
                     "defaultValue": "[\n    'Question',\n    'QuestionCircle',\n    'Plus',\n    'PlusCircle',\n    'Pause',\n    'PauseCircle',\n    'Minus',\n    'MinusCircle',\n    'PlusSquare',\n    'MinusSquare',\n    'Info',\n    'InfoCircle',\n    'Exclamation',\n    'ExclamationCircle',\n    'Close',\n    'CloseCircle',\n    'CloseSquare',\n    'Check',\n    'CheckCircle',\n    'CheckSquare',\n    'ClockCircle',\n    'Warning',\n    'IssuesClose',\n    'Stop',\n]"
                 }
             ],
+            "src/utils/index.ts": [
+                {
+                    "name": "fileTypeIconMap",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/utils/index.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "object",
+                    "defaultValue": "{\n  'txt': 'files:text-fill',\n  'md': 'files:markdown-fill',\n  'mdx': 'files:markdown-fill',\n  'pdf': 'files:pdf-fill',\n  'html': 'files:html-fill',\n  'xlsx': 'files:excel-fill',\n  'xls': 'files:excel-fill',\n  'docx': 'files:word-fill',\n  'csv': 'files:excel-fill',\n}"
+                },
+                {
+                    "name": "StreamStatusIconMap",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/utils/index.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "object",
+                    "defaultValue": "{\n  'default': ['loading', 'status-icon loading'],\n  'failed': ['question-circle', 'status-icon error'],\n  'succeeded': ['check-circle', 'status-icon success'],\n  'start': ['icons:node-start', 'node-icon start'],\n  'llm': ['icons:node-llm', 'node-icon llm'],\n  'if-else': ['icons:node-branch', 'node-icon if-else'],\n  'http-request': ['icons:node-http', 'node-icon http-request'],\n  'code': ['icons:script', 'node-icon code'],\n  'tool': ['icons:node-iteration', 'node-icon iteration'],\n  'iteration': ['icons:node-iteration', 'node-icon iteration'],\n  'answer': ['icons:node-answer', 'node-icon answer']\n}"
+                }
+            ],
             "src/pipes/file-size.pipe.ts": [
                 {
                     "name": "gb",
@@ -1792,9 +3407,568 @@
                     "type": "",
                     "defaultValue": "1024 * kb"
                 }
+            ],
+            "src/utils/validators.ts": [
+                {
+                    "name": "REGEXP",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/utils/validators.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "object",
+                    "defaultValue": "{\n  phoneNumber: /^1[3-9]\\d{9}$/,\n  landlineAndPhone: /^((0\\d{2,3}-\\d{7,8})|(1[3-9]\\d{9}))$/,\n  onlyNumber: /^\\d+$/,\n  empty: /^\\s+$/,\n  onlyChinese: /^[\\u4e00-\\u9fa5_a-zA-Z]+$/,\n  certificateCode: /(^[1-9]\\d{5}(18|19|([23]\\d))\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{3}[0-9Xx]$)|(^[1-9]\\d{5}\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{2}[0-9Xx]$)/,\n}"
+                }
             ]
         },
         "groupedFunctions": {
+            "src/utils/validators.ts": [
+                {
+                    "name": "certificateCodeValidator",
+                    "file": "src/utils/validators.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [],
+                    "returnType": "ValidatorFn"
+                },
+                {
+                    "name": "checkListRequireValidator",
+                    "file": "src/utils/validators.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [],
+                    "returnType": "ValidatorFn"
+                },
+                {
+                    "name": "isEmptyInputValue",
+                    "file": "src/utils/validators.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [
+                        {
+                            "name": "value",
+                            "type": "NzSafeAny",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "returnType": "boolean",
+                    "jsdoctags": [
+                        {
+                            "name": "value",
+                            "type": "NzSafeAny",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "isMobile",
+                    "file": "src/utils/validators.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [
+                        {
+                            "name": "value",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "returnType": "boolean",
+                    "jsdoctags": [
+                        {
+                            "name": "value",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "landlineAndPhoneValidator",
+                    "file": "src/utils/validators.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [],
+                    "returnType": "ValidatorFn"
+                },
+                {
+                    "name": "noEmptyValidator",
+                    "file": "src/utils/validators.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "<p>输入框不能为空（包括空白字符）</p>\n",
+                    "args": [],
+                    "returnType": "ValidatorFn"
+                },
+                {
+                    "name": "onlyChineseValidator",
+                    "file": "src/utils/validators.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [],
+                    "returnType": "ValidatorFn"
+                },
+                {
+                    "name": "onlyNumberValidator",
+                    "file": "src/utils/validators.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [],
+                    "returnType": "ValidatorFn"
+                },
+                {
+                    "name": "phoneNumberValidator",
+                    "file": "src/utils/validators.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [],
+                    "returnType": "ValidatorFn"
+                }
+            ],
+            "src/utils/upload.file.ts": [
+                {
+                    "name": "chooseFileToUpload",
+                    "file": "src/utils/upload.file.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [
+                        {
+                            "name": "fileType",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "createDataFromFile",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "_message",
+                            "type": "NzMessageService",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "accept",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "optional": true
+                        },
+                        {
+                            "name": "size",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "optional": true
+                        }
+                    ],
+                    "returnType": "void",
+                    "jsdoctags": [
+                        {
+                            "name": "fileType",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "createDataFromFile",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "_message",
+                            "type": "NzMessageService",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "accept",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "optional": true,
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "size",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "optional": true,
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "src/utils/index.ts": [
+                {
+                    "name": "formatDocumentMeta",
+                    "file": "src/utils/index.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [
+                        {
+                            "name": "document",
+                            "type": "IDocumentMeta",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "document",
+                            "type": "IDocumentMeta",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "formatFileMeta",
+                    "file": "src/utils/index.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [
+                        {
+                            "name": "file",
+                            "type": "IFile",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "file",
+                            "type": "IFile",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "formatSreamMeta",
+                    "file": "src/utils/index.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [
+                        {
+                            "name": "stream",
+                            "type": "",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "stream",
+                            "type": "",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "generateUid",
+                    "file": "src/utils/index.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": []
+                },
+                {
+                    "name": "racePromises",
+                    "file": "src/utils/index.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [
+                        {
+                            "name": "promises",
+                            "type": "",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "promises",
+                            "type": "",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "src/utils/select.util.ts": [
+                {
+                    "name": "isMatchedOption",
+                    "file": "src/utils/select.util.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [
+                        {
+                            "name": "value",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "defaultValue": "''"
+                        },
+                        {
+                            "name": "option",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "names",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "defaultValue": "[]"
+                        }
+                    ],
+                    "returnType": "boolean",
+                    "jsdoctags": [
+                        {
+                            "name": "value",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "defaultValue": "''",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "option",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "names",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "defaultValue": "[]",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "matchCount",
+                    "file": "src/utils/select.util.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [
+                        {
+                            "name": "source",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "keyword",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "item",
+                            "type": "",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "prefixOrSuffix",
+                            "type": "",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "defaultValue": "false"
+                        }
+                    ],
+                    "returnType": "number",
+                    "jsdoctags": [
+                        {
+                            "name": "source",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "keyword",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "item",
+                            "type": "",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "prefixOrSuffix",
+                            "type": "",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "defaultValue": "false",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "selectCompareFn",
+                    "file": "src/utils/select.util.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [
+                        {
+                            "name": "name",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "defaultValue": "'id'"
+                        }
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "name",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "defaultValue": "'id'",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "selectFilterOption",
+                    "file": "src/utils/select.util.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [
+                        {
+                            "name": "names",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "dotDotDotToken": true
+                        }
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "names",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "dotDotDotToken": true,
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
             "src/components/assets/util/index.ts": [
                 {
                     "name": "ngZorroIconCategoryNames",
@@ -1805,6 +3979,82 @@
                     "deprecationMessage": "",
                     "description": "",
                     "args": []
+                }
+            ],
+            "src/utils/form-validator.ts": [
+                {
+                    "name": "validateForm",
+                    "file": "src/utils/form-validator.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "<p>angular 表单校验</p>\n",
+                    "args": [
+                        {
+                            "name": "control",
+                            "type": "AbstractControl",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "options",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "defaultValue": "{}"
+                        }
+                    ],
+                    "returnType": "void",
+                    "jsdoctags": [
+                        {
+                            "name": {
+                                "pos": 116,
+                                "end": 123,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16777216,
+                                "transformFlags": 0,
+                                "escapedText": "control"
+                            },
+                            "type": "AbstractControl",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "pos": 110,
+                                "end": 115,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16777216,
+                                "transformFlags": 0,
+                                "escapedText": "param"
+                            },
+                            "comment": "<p>表单控件</p>\n"
+                        },
+                        {
+                            "name": {
+                                "pos": 139,
+                                "end": 146,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16777216,
+                                "transformFlags": 0,
+                                "escapedText": "options"
+                            },
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "defaultValue": "{}",
+                            "tagName": {
+                                "pos": 133,
+                                "end": 138,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16777216,
+                                "transformFlags": 0,
+                                "escapedText": "param"
+                            },
+                            "comment": "<p>额外的参数配置，具体可以查看 AbstractControl.updateValueAndValidity 的第二个参数</p>\n"
+                        }
+                    ]
                 }
             ]
         },
@@ -1841,11 +4091,36 @@
                 }
             ]
         },
-        "groupedTypeAliases": {}
+        "groupedTypeAliases": {
+            "src/utils/validators.ts": [
+                {
+                    "name": "MyErrorsOptions",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "",
+                    "file": "src/utils/validators.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 193
+                },
+                {
+                    "name": "MyValidationErrors",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "Record<string | MyErrorsOptions>",
+                    "file": "src/utils/validators.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 183
+                }
+            ]
+        }
     },
     "routes": [],
     "coverage": {
-        "count": 7,
+        "count": 6,
         "status": "low",
         "files": [
             {
@@ -1981,6 +4256,33 @@
                 "status": "low"
             },
             {
+                "filePath": "src/directives/destroy.subscription.ts",
+                "type": "directive",
+                "linktype": "directive",
+                "name": "DestroySubscription",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "src/directives/polling.directive.ts",
+                "type": "directive",
+                "linktype": "directive",
+                "name": "PollingDirective",
+                "coveragePercent": 0,
+                "coverageCount": "0/10",
+                "status": "low"
+            },
+            {
+                "filePath": "src/directives/visible-observer.directive.ts",
+                "type": "directive",
+                "linktype": "directive",
+                "name": "VisibleObserverDirective",
+                "coveragePercent": 0,
+                "coverageCount": "0/6",
+                "status": "low"
+            },
+            {
                 "filePath": "src/pipes/file-size.pipe.ts",
                 "type": "pipe",
                 "linktype": "pipe",
@@ -2038,6 +4340,34 @@
                 "status": "low"
             },
             {
+                "filePath": "src/services/canDeactive.guard.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "CanComponentDeactivate",
+                "coveragePercent": 0,
+                "coverageCount": "0/2",
+                "status": "low"
+            },
+            {
+                "filePath": "src/services/canDeactive.guard.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "CanComponentDeactivateGuard",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/services/modal.service.ts",
+                "type": "injectable",
+                "linktype": "injectable",
+                "name": "MyModalService",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
                 "filePath": "src/stories/header/header.component.ts",
                 "type": "component",
                 "linktype": "component",
@@ -2053,6 +4383,292 @@
                 "name": "User",
                 "coveragePercent": 0,
                 "coverageCount": "0/2",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/form-validator.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "validateForm",
+                "coveragePercent": 100,
+                "coverageCount": "1/1",
+                "status": "very-good"
+            },
+            {
+                "filePath": "src/utils/index.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "IDocumentMeta",
+                "coveragePercent": 0,
+                "coverageCount": "0/2",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/index.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "IFile",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/index.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "formatDocumentMeta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/index.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "formatFileMeta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/index.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "formatSreamMeta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/index.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "generateUid",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/index.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "racePromises",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/index.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "fileTypeIconMap",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/index.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "StreamStatusIconMap",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/select.util.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "isMatchedOption",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/select.util.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "matchCount",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/select.util.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "selectCompareFn",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/select.util.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "selectFilterOption",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/upload.file.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "chooseFileToUpload",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/validators.ts",
+                "type": "class",
+                "linktype": "classe",
+                "name": "MyValidators",
+                "coveragePercent": 0,
+                "coverageCount": "0/6",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/validators.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "ISelectorOption",
+                "coveragePercent": 0,
+                "coverageCount": "0/6",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/validators.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "certificateCodeValidator",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/validators.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "checkListRequireValidator",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/validators.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "isEmptyInputValue",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/validators.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "isMobile",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/validators.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "landlineAndPhoneValidator",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/validators.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "noEmptyValidator",
+                "coveragePercent": 100,
+                "coverageCount": "1/1",
+                "status": "very-good"
+            },
+            {
+                "filePath": "src/utils/validators.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "onlyChineseValidator",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/validators.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "onlyNumberValidator",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/validators.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "phoneNumberValidator",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/validators.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "REGEXP",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/validators.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "MyErrorsOptions",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/validators.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "MyValidationErrors",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
                 "status": "low"
             }
         ]

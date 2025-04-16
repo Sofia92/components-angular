@@ -238,6 +238,7 @@
                             </li>
                             <li>
                                     <span class="modifier">Private</span>
+                                    <span class="modifier">Optional</span>
                                 <a href="#subscription" >subscription</a>
                             </li>
                         </ul>
@@ -347,10 +348,16 @@
                             </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in         <code><a href="../directives/PollingDirective.html#source" target="_self" >PollingDirective:12</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../directives/PollingDirective.html#source" target="_self" >PollingDirective:26</a></code>
 </div>
                             </td>
                         </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>轮询间隔时间（毫秒），默认2秒</p>
+</div>
+                    </td>
+                </tr>
             </tbody>
         </table>
 </section>
@@ -693,8 +700,14 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="60"
-                                    class="link-to-prism">src/stories/directives/polling.directive.stories.ts:60</a></div>
+                            <div class="io-line">Inherited from         <code><a href="../directives/PollingDirective.html" target="_self" >PollingDirective</a></code>
+</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../directives/PollingDirective.html#source" target="_self" >PollingDirective:60</a></code>
+</div>
                         </td>
                     </tr>
 
@@ -738,7 +751,7 @@
                     </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in         <code><a href="../directives/PollingDirective.html#source" target="_self" >PollingDirective:61</a></code>
+                                <div class="io-line">Defined in         <code><a href="../directives/PollingDirective.html#source" target="_self" >PollingDirective:88</a></code>
 </div>
                         </td>
                     </tr>
@@ -783,7 +796,7 @@
                     </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in         <code><a href="../directives/PollingDirective.html#source" target="_self" >PollingDirective:21</a></code>
+                                <div class="io-line">Defined in         <code><a href="../directives/PollingDirective.html#source" target="_self" >PollingDirective:40</a></code>
 </div>
                         </td>
                     </tr>
@@ -791,7 +804,7 @@
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>组件销毁时取消订阅</p>
+                        <div class="io-description"><p>组件销毁时取消订阅，防止内存泄漏</p>
 </div>
 
                         <div class="io-description">
@@ -830,7 +843,7 @@
                     </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in         <code><a href="../directives/PollingDirective.html#source" target="_self" >PollingDirective:33</a></code>
+                                <div class="io-line">Defined in         <code><a href="../directives/PollingDirective.html#source" target="_self" >PollingDirective:52</a></code>
 </div>
                         </td>
                     </tr>
@@ -938,9 +951,16 @@
                         <i>Default value : </i><code>false</code>
                     </td>
                 </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Inherited from         <code><a href="../directives/PollingDirective.html" target="_self" >PollingDirective</a></code>
+</div>
+                            </td>
+                        </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/stories/directives/polling.directive.stories.ts:45</a></div>
+                                <div class="io-line">Defined in         <code><a href="../directives/PollingDirective.html#source" target="_self" >PollingDirective:45</a></code>
+</div>
                         </td>
                     </tr>
 
@@ -1034,11 +1054,17 @@
                         </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in         <code><a href="../directives/PollingDirective.html#source" target="_self" >PollingDirective:14</a></code>
+                                <div class="io-line">Defined in         <code><a href="../directives/PollingDirective.html#source" target="_self" >PollingDirective:29</a></code>
 </div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>轮询的Observable流</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -1049,6 +1075,7 @@
                     <a name="subscription"></a>
                     <span class="name">
                             <span class="modifier">Private</span>
+                            <span class="modifier">Optional</span>
                         <span ><b>subscription</b></span>
                         <a href="#subscription"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1068,11 +1095,17 @@
                         </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in         <code><a href="../directives/PollingDirective.html#source" target="_self" >PollingDirective:16</a></code>
+                                <div class="io-line">Defined in         <code><a href="../directives/PollingDirective.html#source" target="_self" >PollingDirective:32</a></code>
 </div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>订阅对象，用于管理轮询的订阅</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -1235,7 +1268,7 @@ export const base: Story &#x3D; {
 <script>
         var COMPONENT_TEMPLATE = '<div><div>    <button nz-button nzType="primary" (click)="startPolling()" [disabled]="isPolling">开始轮询</button>    <button nz-button nzType="primary" (click)="stopPolling()" [disabled]="!isPolling">停止轮询</button>    <div style="margin-top: 20px;">        <h3>轮询结果 {{loading.success ? \'成功\' : loading.error ? \'失败\' : isPolling ? \'轮询中\' : \'未开始\'}}            <span *ngIf="isPolling && !loading.success && !loading.error" nz-icon nzType="loading"></span>            <span *ngIf="loading.success">                <span nz-icon nzType="check-circle" nzTheme="outline"></span>            </span>            <span *ngIf="loading.error">                <span nz-icon nzType="close-circle" nzTheme="outline"></span>            </span>        </h3>        <small>假定随机数>0.8为成功，否则继续查询</small>        <p>        @for (result of pollingResults; track result.id) {            <div>                {{result.data}}            </div>        }        </p>    </div></div></div>'
     var COMPONENTS = [{'name': 'AppAssets', 'selector': ''},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ButtonComponent', 'selector': 'storybook-button'},{'name': 'HeaderComponent', 'selector': 'storybook-header'},{'name': 'IconRenderComponent', 'selector': 'icon-render'},{'name': 'IconSelectComponent', 'selector': 'icon-select'},{'name': 'PollingDemoComponent', 'selector': 'polling-demo'},{'name': 'SearchBoxComponent', 'selector': 'search-box'},{'name': 'SearchTagComponent', 'selector': 'app-search-tag'}];
-    var DIRECTIVES = [{'name': 'DestroySubscription', 'selector': ''},{'name': 'PollingDirective', 'selector': ''},{'name': 'VisibleObserverDirective', 'selector': '[VisibleObserver]'}];
+    var DIRECTIVES = [{'name': 'DestroySubscription', 'selector': ''},{'name': 'IntersectionObserverDirective', 'selector': '[appIntersectionObserver]'},{'name': 'PollingDirective', 'selector': ''}];
     var ACTUAL_COMPONENT = {'name': 'PollingDemoComponent'};
 </script>
 <script src="../js/tree.js"></script>

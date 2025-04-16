@@ -94,10 +94,10 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                     <a href="directives/DestroySubscription.html" data-type="entity-link" >DestroySubscription</a>
                                 </li>
                                 <li class="link">
-                                    <a href="directives/PollingDirective.html" data-type="entity-link" >PollingDirective</a>
+                                    <a href="directives/IntersectionObserverDirective.html" data-type="entity-link" >IntersectionObserverDirective</a>
                                 </li>
                                 <li class="link">
-                                    <a href="directives/VisibleObserverDirective.html" data-type="entity-link" >VisibleObserverDirective</a>
+                                    <a href="directives/PollingDirective.html" data-type="entity-link" >PollingDirective</a>
                                 </li>
                             </ul>
                         </li>
@@ -122,6 +122,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <span class="icon ion-ios-arrow-down"></span>
                             </div>
                             <ul class="links collapse " ${ isNormalMode ? 'id="injectables-links"' : 'id="xs-injectables-links"' }>
+                                <li class="link">
+                                    <a href="injectables/FileService.html" data-type="entity-link" >FileService</a>
+                                </li>
                                 <li class="link">
                                     <a href="injectables/MyModalService.html" data-type="entity-link" >MyModalService</a>
                                 </li>

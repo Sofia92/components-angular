@@ -2,7 +2,7 @@ import { moduleMetadata, type Meta, type StoryObj } from '@storybook/angular';
 import { PollingDirective } from '@Directives';
 import { uuidv4 } from '@Utils';
 import { Component, OnInit } from '@angular/core';
-import { of, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { format } from 'date-fns';
 import { NzIconModule } from 'ng-zorro-antd/icon';
@@ -95,14 +95,6 @@ class PollingDemoComponent extends PollingDirective implements OnInit {
 const meta: Meta<PollingDemoComponent> = {
     title: 'Directives/Polling',
     component: PollingDemoComponent,
-    argTypes: {
-        interval: {
-            control: 'number',
-            description: '轮询间隔时间，默认2秒',
-            defaultValue: 2000
-        }
-    },
-    tags: ['autodocs'],
     decorators: [
         moduleMetadata({
             imports: [PollingDemoComponent],

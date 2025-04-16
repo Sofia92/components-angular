@@ -343,7 +343,7 @@ export class AppComponent {
 <script>
         var COMPONENT_TEMPLATE = '<div><h1 class="text-3xl font-bold underline">    Hello world!</h1><input type="text" nz-input><button class="bg-sky-500 hover:bg-sky-700">Save changes</button><button class="text-lg rounded-xl px-4 py-2 mx-6 my-4 text-white shadow-xl border-slate-400/50 border-2 bg-blue-700">    Save</button></div>'
     var COMPONENTS = [{'name': 'AppAssets', 'selector': ''},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ButtonComponent', 'selector': 'storybook-button'},{'name': 'HeaderComponent', 'selector': 'storybook-header'},{'name': 'IconRenderComponent', 'selector': 'icon-render'},{'name': 'IconSelectComponent', 'selector': 'icon-select'},{'name': 'PollingDemoComponent', 'selector': 'polling-demo'},{'name': 'SearchBoxComponent', 'selector': 'search-box'},{'name': 'SearchTagComponent', 'selector': 'app-search-tag'}];
-    var DIRECTIVES = [{'name': 'DestroySubscription', 'selector': ''},{'name': 'PollingDirective', 'selector': ''},{'name': 'VisibleObserverDirective', 'selector': '[VisibleObserver]'}];
+    var DIRECTIVES = [{'name': 'DestroySubscription', 'selector': ''},{'name': 'IntersectionObserverDirective', 'selector': '[appIntersectionObserver]'},{'name': 'PollingDirective', 'selector': ''}];
     var ACTUAL_COMPONENT = {'name': 'AppComponent'};
 </script>
 <script src="../js/tree.js"></script>

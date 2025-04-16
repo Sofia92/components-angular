@@ -554,7 +554,7 @@ export class ButtonComponent {
 <script>
         var COMPONENT_TEMPLATE = '<div> <button  type="button"  (click)="onClick.emit($event)"  [ngClass]="classes"  [ngStyle]="{ \'background-color\': backgroundColor }">  {{ label }}</button></div>'
     var COMPONENTS = [{'name': 'AppAssets', 'selector': ''},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ButtonComponent', 'selector': 'storybook-button'},{'name': 'HeaderComponent', 'selector': 'storybook-header'},{'name': 'IconRenderComponent', 'selector': 'icon-render'},{'name': 'IconSelectComponent', 'selector': 'icon-select'},{'name': 'PollingDemoComponent', 'selector': 'polling-demo'},{'name': 'SearchBoxComponent', 'selector': 'search-box'},{'name': 'SearchTagComponent', 'selector': 'app-search-tag'}];
-    var DIRECTIVES = [{'name': 'DestroySubscription', 'selector': ''},{'name': 'PollingDirective', 'selector': ''},{'name': 'VisibleObserverDirective', 'selector': '[VisibleObserver]'}];
+    var DIRECTIVES = [{'name': 'DestroySubscription', 'selector': ''},{'name': 'IntersectionObserverDirective', 'selector': '[appIntersectionObserver]'},{'name': 'PollingDirective', 'selector': ''}];
     var ACTUAL_COMPONENT = {'name': 'ButtonComponent'};
 </script>
 <script src="../js/tree.js"></script>

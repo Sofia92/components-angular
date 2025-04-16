@@ -1,20 +1,20 @@
 import { moduleMetadata, type Meta, type StoryObj } from '@storybook/angular';
-import { VisibleObserverDirective } from '@Directives';
+import { IntersectionObserverDirective } from '@Directives';
 import { NgZone } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-const meta: Meta<VisibleObserverDirective> = {
-    title: 'Directives/VisibleObserver',
+const meta: Meta<IntersectionObserverDirective> = {
+    title: 'Directives/IntersectionObserver',
     decorators: [
         moduleMetadata({
-            imports: [VisibleObserverDirective],
+            imports: [IntersectionObserverDirective],
         }),
     ]
 };
 
 export default meta;
 
-type Story = StoryObj<VisibleObserverDirective>;
+type Story = StoryObj<IntersectionObserverDirective>;
 
 const loadMore$ = new BehaviorSubject<boolean>(true);
 let cardList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -25,7 +25,7 @@ export const base: Story = {
             loadMore$,
             cardList,
             zone: new NgZone({ enableLongStackTrace: false }),
-            visible: function() {
+            visible: function () {
                 this.zone.run(() => {
                     cardList.push(11);
                     loadMore$.next(false);
@@ -40,7 +40,7 @@ export const base: Story = {
                     {{item}}
                 </li>
                 <li *ngIf="loadMore$ | async"
-                    VisibleObserver
+                    appIntersectionObserver
                     (visible)="visible()"
                     style="height: 50px; background-color: #f0f0f0; list-style: none;">
                     <span>加载中.......</span>

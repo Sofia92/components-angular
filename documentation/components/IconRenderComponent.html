@@ -757,7 +757,7 @@ export class IconRenderComponent implements OnInit {
 <script>
         var COMPONENT_TEMPLATE = '<div><ng-container [ngSwitch]="icon_type">  <span *ngSwitchCase="IconType.EMOJI" class="icon-box">    <i *ngIf="isOriginEmoji">{{icon}}</i>    <i *ngIf="!isOriginEmoji" nz-icon [nzType]="icon" [style.color]="icon_color" [style.font-size.px]="icon_size"></i>  </span>  <span *ngSwitchCase="IconType.ICON" class="icon-box">    <i *ngIf="isOriginEmoji">{{icon}}</i>    <i *ngIf="!isOriginEmoji" nz-icon [nzType]="icon" [style.color]="icon_color" [style.font-size.px]="icon_size"></i>  </span>  <ng-container *ngSwitchCase="IconType.IMAGE">    <span class="img-box"><img [src]="icon_url" /></span>  </ng-container></ng-container></div>'
     var COMPONENTS = [{'name': 'AppAssets', 'selector': ''},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ButtonComponent', 'selector': 'storybook-button'},{'name': 'HeaderComponent', 'selector': 'storybook-header'},{'name': 'IconRenderComponent', 'selector': 'icon-render'},{'name': 'IconSelectComponent', 'selector': 'icon-select'},{'name': 'PollingDemoComponent', 'selector': 'polling-demo'},{'name': 'SearchBoxComponent', 'selector': 'search-box'},{'name': 'SearchTagComponent', 'selector': 'app-search-tag'}];
-    var DIRECTIVES = [{'name': 'DestroySubscription', 'selector': ''},{'name': 'PollingDirective', 'selector': ''},{'name': 'VisibleObserverDirective', 'selector': '[VisibleObserver]'}];
+    var DIRECTIVES = [{'name': 'DestroySubscription', 'selector': ''},{'name': 'IntersectionObserverDirective', 'selector': '[appIntersectionObserver]'},{'name': 'PollingDirective', 'selector': ''}];
     var ACTUAL_COMPONENT = {'name': 'IconRenderComponent'};
 </script>
 <script src="../js/tree.js"></script>

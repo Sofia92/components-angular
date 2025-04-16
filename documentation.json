@@ -431,6 +431,239 @@
     ],
     "injectables": [
         {
+            "name": "FileService",
+            "id": "injectable-FileService-1af955bb3c189641c9daf18cd6221f933351ce2f57e392cfc1dbb36d0377cb6efc7166de27271fea71c9512f78a524f0a4797dad6ecd6c09737851a7ac5af28c",
+            "file": "src/services/file.service.ts",
+            "properties": [],
+            "methods": [
+                {
+                    "name": "downloadDom",
+                    "args": [
+                        {
+                            "name": "dom",
+                            "type": "HTMLElement",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "fileName",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "any",
+                    "typeParameters": [],
+                    "line": 52,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "dom",
+                            "type": "HTMLElement",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "fileName",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "downloadFile",
+                    "args": [
+                        {
+                            "name": "url",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "fileName",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "defaultValue": "'export'"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 14,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        125
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "url",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "fileName",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "defaultValue": "'export'",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "downloadFileWithBlob",
+                    "args": [
+                        {
+                            "name": "url",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "fileName",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "Promise<any>",
+                    "typeParameters": [],
+                    "line": 25,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        125
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "url",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "fileName",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "prepareHeaders",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "HttpHeaders",
+                    "typeParameters": [],
+                    "line": 84,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
+                    "name": "setFilesType",
+                    "args": [
+                        {
+                            "name": "filesList",
+                            "type": "literal type[]",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "literal type[]",
+                    "typeParameters": [],
+                    "line": 67,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        125
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "filesList",
+                            "type": "literal type[]",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "description": "",
+            "rawdescription": "\n",
+            "sourceCode": "import { HttpClient, HttpHeaders } from \"@angular/common/http\";\nimport { Injectable } from \"@angular/core\";\nimport html2canvas from \"html2canvas\";\nimport { catchError, map, of } from \"rxjs\";\n\n@Injectable({ providedIn: 'root' })\nexport class FileService {\n    constructor(private http: HttpClient) { }\n\n    public get signatureToken(): string | null {\n        return localStorage.getItem('signatureToken');\n    }\n\n    public downloadFile(url: string, fileName: string = 'export'): void {\n        let alink;\n        alink = document.createElement('a');\n        alink.setAttribute('href', url);\n        alink.setAttribute('download', fileName);\n        alink.style.visibility = 'hidden';\n        document.body.appendChild(alink);\n        alink.click();\n        document.body.removeChild(alink);\n    }\n\n    public downloadFileWithBlob(url: string, fileName: string): Promise<any> {\n        const headers = this.prepareHeaders();\n        return new Promise((resolve, reject) => {\n            this.http.post(url, {}, { headers, responseType: 'blob' })\n                .pipe(\n                    map(res => {\n                        const path = URL.createObjectURL(res);\n                        let link = document.createElement('a');\n\n                        link.style.display = 'none';\n                        link.href = path;\n                        link.download = fileName;\n                        document.body.appendChild(link);\n                        link.click();\n                        document.body.removeChild(link);\n                        // link = null;\n                        URL.revokeObjectURL(path);\n                        resolve(true)\n                    }),\n                    catchError((err) => {\n                        reject(err);\n                        return of(err);\n                    })\n                )\n        })\n    }\n\n    downloadDom(dom: HTMLElement, fileName: string,) {\n        return html2canvas(dom).then((canvas: any) => {\n            canvas.toBlob((blob: string) => {\n                const href = window.URL.createObjectURL(new Blob([blob]))\n                const link = document.createElement('a')\n                link.href = href;\n                link.download = `${fileName}.png`;\n                document.body.appendChild(link)\n                link.click()\n                document.body.removeChild(link)\n            }, 'image/png')\n        })\n    }\n\n    // 处理文件类型\n    public setFilesType(filesList: { sourceName: string, fileType: string }[]): { sourceName: string, fileType: string }[] {\n        const regPic = /\\.(?:jpeg|png|gif|jpg)/i;\n        const regDoc = /\\.(?:doc|docx)/i;\n        const regXls = /\\.(?:xls|xlsx)/i;\n        const newFileLists = filesList.map((item) => {\n            if (regPic.test(item.sourceName)) {\n                item.fileType = 'img';\n            } else if (regDoc.test(item.sourceName)) {\n                item.fileType = 'doc';\n            } else if (regXls.test(item.sourceName)) {\n                item.fileType = 'xls';\n            }\n            return item;\n        });\n        return newFileLists;\n    }\n\n    private prepareHeaders(): HttpHeaders {\n        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });\n\n        if (this.signatureToken) {\n            const authorization = `Bearer ${this.signatureToken}`;\n            headers.set('Authorization', authorization);\n        }\n        return headers;\n    }\n}",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [
+                    {
+                        "name": "http",
+                        "type": "HttpClient",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "line": 7,
+                "jsdoctags": [
+                    {
+                        "name": "http",
+                        "type": "HttpClient",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "accessors": {
+                "signatureToken": {
+                    "name": "signatureToken",
+                    "getSignature": {
+                        "name": "signatureToken",
+                        "type": "",
+                        "returnType": "string | null",
+                        "line": 10
+                    }
+                }
+            },
+            "extends": [],
+            "type": "injectable"
+        },
+        {
             "name": "MyModalService",
             "id": "injectable-MyModalService-a6f8a52c9666306eb17ccab86eabdebbe592f2a9184c32c373ac01cd7e68bd7a32c1b63d69694b42535e814c1865c8c24dec138a7335756ccc3599e8c3e2bd3a",
             "file": "src/services/modal.service.ts",
@@ -864,13 +1097,122 @@
             ]
         },
         {
+            "name": "IntersectionObserverDirective",
+            "id": "directive-IntersectionObserverDirective-66beecbb6bd1d9603fc30756cbe34169e8c60e1ff4199dfc5992eb3bd5f88cf30ac39f4d5085b5ef4e184ee6989be5b800b5908036576303bab32535734f50b0",
+            "file": "src/directives/intersectionObserver.directive.ts",
+            "type": "directive",
+            "description": "",
+            "rawdescription": "\n",
+            "sourceCode": "import {\n    AfterViewInit,\n    Directive,\n    ElementRef,\n    EventEmitter,\n    OnDestroy,\n    Output\n} from \"@angular/core\";\n\n@Directive({\n    selector: '[appIntersectionObserver]'\n})\nexport class IntersectionObserverDirective implements AfterViewInit, OnDestroy {\n    /**\n     * Event emitter that triggers when the element becomes visible\n     */\n    @Output() public visible = new EventEmitter<void>();\n\n    /**\n     * Intersection Observer instance\n     */\n    private intersectionObserver: IntersectionObserver;\n\n    constructor(private elementRef: ElementRef) {\n        // Create Intersection Observer with callback\n        const callback = (entries: IntersectionObserverEntry[]) => {\n            entries.forEach(({ intersectionRatio }) => {\n                // Only emit when element is actually visible (intersectionRatio > 0)\n                if (intersectionRatio > 0) {\n                    this.visible.emit();\n                }\n            });\n        };\n\n        // Initialize observer with default options\n        // Trigger when at least 10% of the element is visible\n        this.intersectionObserver = new IntersectionObserver(callback, { threshold: 0.1 });\n    }\n\n    /**\n     * Start observing the element after view initialization\n     */\n    public ngAfterViewInit(): void {\n        this.intersectionObserver.observe(this.elementRef.nativeElement);\n    }\n\n    /**\n     * Clean up by disconnecting the observer when directive is destroyed\n     */\n    public ngOnDestroy(): void {\n        this.intersectionObserver.disconnect();\n    }\n}",
+            "selector": "[appIntersectionObserver]",
+            "providers": [],
+            "hostDirectives": [],
+            "standalone": false,
+            "inputsClass": [],
+            "outputsClass": [
+                {
+                    "name": "visible",
+                    "defaultValue": "new EventEmitter<void>()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\nEvent emitter that triggers when the element becomes visible\n",
+                    "description": "<p>Event emitter that triggers when the element becomes visible</p>\n",
+                    "line": 39,
+                    "type": "EventEmitter"
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "propertiesClass": [
+                {
+                    "name": "intersectionObserver",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "IntersectionObserver",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "<p>Intersection Observer instance</p>\n",
+                    "line": 44,
+                    "rawdescription": "\n\nIntersection Observer instance\n",
+                    "modifierKind": [
+                        123
+                    ]
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "ngAfterViewInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 65,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\nStart observing the element after view initialization\n",
+                    "description": "<p>Start observing the element after view initialization</p>\n",
+                    "modifierKind": [
+                        125
+                    ]
+                },
+                {
+                    "name": "ngOnDestroy",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 72,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\nClean up by disconnecting the observer when directive is destroyed\n",
+                    "description": "<p>Clean up by disconnecting the observer when directive is destroyed</p>\n",
+                    "modifierKind": [
+                        125
+                    ]
+                }
+            ],
+            "extends": [],
+            "implements": [
+                "AfterViewInit",
+                "OnDestroy"
+            ],
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [
+                    {
+                        "name": "elementRef",
+                        "type": "ElementRef",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "line": 44,
+                "jsdoctags": [
+                    {
+                        "name": "elementRef",
+                        "type": "ElementRef",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            }
+        },
+        {
             "name": "PollingDirective",
-            "id": "directive-PollingDirective-b38f45e31095f8936b0c03cb5420ae736462d633228ba985e0c04a368c3bd4cf96ad032b1b31dff09b406d49b7596eb96bd20651693cd79c05e516d8afbabd85",
+            "id": "directive-PollingDirective-02a697da667ef276d7b43ad8dfea6f6494072aae497b65738e6c07e6b8f81e7038a5af365e0d4fde67cf59d3c8c201d400f39b788ea872c333398f8fc73fe349",
             "file": "src/directives/polling.directive.ts",
             "type": "directive",
             "description": "",
             "rawdescription": "\n",
-            "sourceCode": "import { Directive, Input, OnDestroy } from '@angular/core';\nimport { catchError, EMPTY, Observable, retry, Subscription, switchMap, takeWhile, timer } from 'rxjs';\n\n@Directive()\nexport class PollingDirective implements OnDestroy {\n    // 轮询间隔时间，默认2秒\n    @Input() interval: number = 2000;\n    // 轮询的Observable流\n    polling$: Observable<void>;\n    // 订阅对象，用于管理轮询的订阅\n    private subscription: Subscription;\n\n    /**\n     * 组件销毁时取消订阅\n     */\n    ngOnDestroy(): void {\n        if (this.subscription) {\n            this.subscription.unsubscribe();\n        }\n    }\n\n    /**\n     * 设置轮询\n     * @param source 数据源Observable，每次轮询都会调用\n     * @param minRetry 最小重试次数，当请求失败时重试\n     * @param condition 轮询条件函数，返回true继续轮询，false停止轮询\n     */\n    protected polling(source: Observable<any>, minRetry: number, condition: (response: any) => boolean) {\n        // 创建定时器Observable，立即开始，每隔interval时间触发一次\n        this.polling$ = timer(0, this.interval)\n            .pipe(\n                // 每次定时器触发时，切换到新的数据源Observable\n                switchMap(() => {\n                    return source.pipe(\n                        // 请求失败时重试指定次数\n                        retry(minRetry),\n                        // 错误处理，发生错误时继续轮询\n                        catchError(error => {\n                            console.error('请求失败:', error);\n                            return EMPTY; // 返回空Observable，不终止流\n                        })\n                    );\n                }),\n                // 根据条件决定是否继续轮询\n                takeWhile(\n                    // 检查响应是否满足继续轮询的条件\n                    response => condition(response),\n                    true // 包含最后一个符合条件的响应\n                )\n            );\n    }\n\n    /**\n     * 开始监听轮询结果\n     */\n    protected listenPolling() {\n        this.polling$.subscribe({\n            next: (response) => this.pollingNext(response),\n            error: (err) => this.pollingError(err),\n            complete: () => this.pollingComplete()\n        });\n    }\n\n    /**\n     * 处理轮询数据\n     * @param response 轮询返回的数据\n     */\n    protected pollingNext(response: any) {\n        console.log(response);\n    }\n\n    /**\n     * 处理轮询错误\n     * @param err 错误信息\n     */\n    protected pollingError(err: any) {\n        console.log(err);\n    }\n\n    /**\n     * 轮询完成时的处理\n     */\n    protected pollingComplete() {\n        console.log('轮询完成');\n    }\n}\n",
+            "sourceCode": "import { Directive, Input, OnDestroy } from '@angular/core';\nimport { catchError, EMPTY, Observable, retry, Subscription, switchMap, takeWhile, timer } from 'rxjs';\n\n@Directive()\nexport class PollingDirective implements OnDestroy {\n    /** 轮询间隔时间（毫秒），默认2秒 */\n    @Input() interval: number = 2000;\n\n    /** 轮询的Observable流 */\n    polling$: Observable<void>;\n\n    /** 订阅对象，用于管理轮询的订阅 */\n    private subscription?: Subscription;\n\n    /** 是否正在轮询 */\n    private _isPolling: boolean = false;\n\n    /**\n     * 组件销毁时取消订阅，防止内存泄漏\n     */\n    ngOnDestroy(): void {\n        this._stopPolling();\n    }\n\n    /**\n     * 设置轮询\n     * \n     * @param source 数据源Observable，每次轮询都会调用\n     * @param minRetry 最小重试次数，当请求失败时重试\n     * @param condition 轮询条件函数，返回true继续轮询，false停止轮询\n     * @throws Error 如果轮询已经在进行中\n     */\n    protected polling(source: Observable<any>, minRetry: number, condition: (response: any) => boolean) {\n        if (this._isPolling) {\n            throw new Error('Polling is already in progress');\n        }\n\n        this._isPolling = true;\n        \n        // 创建定时器Observable，立即开始，每隔interval时间触发一次\n        this.polling$ = timer(0, this.interval)\n            .pipe(\n                // 每次定时器触发时，切换到新的数据源Observable\n                switchMap(() => {\n                    return source.pipe(\n                        // 请求失败时重试指定次数\n                        retry(minRetry),\n                        // 错误处理，发生错误时继续轮询\n                        catchError(error => {\n                            this.pollingError(error);\n                            return EMPTY; // 返回空Observable，不终止流\n                        })\n                    );\n                }),\n                // 根据条件决定是否继续轮询\n                takeWhile(\n                    // 检查响应是否满足继续轮询的条件\n                    response => this._isPolling && condition(response),\n                    true // 包含最后一个符合条件的响应\n                )\n            );\n    }\n\n    /**\n     * 开始监听轮询结果\n     * \n     * @throws Error 如果轮询未设置\n     */\n    protected listenPolling() {\n        if (!this.polling$) {\n            throw new Error('Polling is not set up. Call polling() first.');\n        }\n\n        this.subscription = this.polling$.subscribe({\n            next: (response) => this.pollingNext(response),\n            error: (err) => this.pollingError(err),\n            complete: () => this.pollingComplete()\n        });\n    }\n\n    /**\n     * 处理轮询数据\n     * \n     * @param response 轮询返回的数据\n     */\n    protected pollingNext(response: any) {\n        console.log('Polling response:', response);\n    }\n\n    /**\n     * 处理轮询错误\n     * \n     * @param err 错误信息\n     */\n    protected pollingError(err: any) {\n        console.error('Polling error:', err);\n        this._stopPolling();\n    }\n\n    /**\n     * 轮询完成时的处理\n     */\n    protected pollingComplete() {\n        console.log('Polling completed');\n        this._isPolling = false;\n    }\n\n    /**\n     * 停止轮询\n     */\n    private _stopPolling() {\n        this._isPolling = false;\n        if (this.subscription) {\n            this.subscription.unsubscribe();\n            this.subscription = undefined;\n        }\n    }\n}\n",
             "providers": [],
             "hostDirectives": [],
             "standalone": false,
@@ -880,7 +1222,9 @@
                     "defaultValue": "2000",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 12,
+                    "rawdescription": "\n轮询间隔时间（毫秒），默认2秒",
+                    "description": "<p>轮询间隔时间（毫秒），默认2秒</p>\n",
+                    "line": 26,
                     "type": "number",
                     "decorators": []
                 }
@@ -892,14 +1236,30 @@
             "hostListeners": [],
             "propertiesClass": [
                 {
+                    "name": "_isPolling",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "boolean",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "<p>是否正在轮询</p>\n",
+                    "line": 35,
+                    "rawdescription": "\n是否正在轮询",
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
                     "name": "polling$",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Observable<void>",
                     "indexKey": "",
                     "optional": false,
-                    "description": "",
-                    "line": 14
+                    "description": "<p>轮询的Observable流</p>\n",
+                    "line": 29,
+                    "rawdescription": "\n轮询的Observable流"
                 },
                 {
                     "name": "subscription",
@@ -907,9 +1267,10 @@
                     "deprecationMessage": "",
                     "type": "Subscription",
                     "indexKey": "",
-                    "optional": false,
-                    "description": "",
-                    "line": 16,
+                    "optional": true,
+                    "description": "<p>订阅对象，用于管理轮询的订阅</p>\n",
+                    "line": 32,
+                    "rawdescription": "\n订阅对象，用于管理轮询的订阅",
                     "modifierKind": [
                         123
                     ]
@@ -917,19 +1278,35 @@
             ],
             "methodsClass": [
                 {
+                    "name": "_stopPolling",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 130,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\n停止轮询\n",
+                    "description": "<p>停止轮询</p>\n",
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
                     "name": "listenPolling",
                     "args": [],
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 61,
+                    "line": 88,
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "rawdescription": "\n\n开始监听轮询结果\n",
+                    "rawdescription": "\n\n开始监听轮询结果\n\n",
                     "description": "<p>开始监听轮询结果</p>\n",
                     "modifierKind": [
                         124
-                    ]
+                    ],
+                    "jsdoctags": []
                 },
                 {
                     "name": "ngOnDestroy",
@@ -937,11 +1314,11 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 21,
+                    "line": 40,
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "rawdescription": "\n\n组件销毁时取消订阅\n",
-                    "description": "<p>组件销毁时取消订阅</p>\n"
+                    "rawdescription": "\n\n组件销毁时取消订阅，防止内存泄漏\n",
+                    "description": "<p>组件销毁时取消订阅，防止内存泄漏</p>\n"
                 },
                 {
                     "name": "polling",
@@ -976,10 +1353,10 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 33,
+                    "line": 52,
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "rawdescription": "\n\n设置轮询\n",
+                    "rawdescription": "\n\n设置轮询\n\n",
                     "description": "<p>设置轮询</p>\n",
                     "modifierKind": [
                         124
@@ -987,8 +1364,8 @@
                     "jsdoctags": [
                         {
                             "name": {
-                                "pos": 651,
-                                "end": 657,
+                                "pos": 987,
+                                "end": 993,
                                 "kind": 80,
                                 "id": 0,
                                 "flags": 16842752,
@@ -999,8 +1376,8 @@
                             "deprecated": false,
                             "deprecationMessage": "",
                             "tagName": {
-                                "pos": 645,
-                                "end": 650,
+                                "pos": 981,
+                                "end": 986,
                                 "kind": 80,
                                 "id": 0,
                                 "flags": 16842752,
@@ -1011,8 +1388,8 @@
                         },
                         {
                             "name": {
-                                "pos": 695,
-                                "end": 703,
+                                "pos": 1031,
+                                "end": 1039,
                                 "kind": 80,
                                 "id": 0,
                                 "flags": 16842752,
@@ -1023,8 +1400,8 @@
                             "deprecated": false,
                             "deprecationMessage": "",
                             "tagName": {
-                                "pos": 689,
-                                "end": 694,
+                                "pos": 1025,
+                                "end": 1030,
                                 "kind": 80,
                                 "id": 0,
                                 "flags": 16842752,
@@ -1035,8 +1412,8 @@
                         },
                         {
                             "name": {
-                                "pos": 734,
-                                "end": 743,
+                                "pos": 1070,
+                                "end": 1079,
                                 "kind": 80,
                                 "id": 0,
                                 "flags": 16842752,
@@ -1055,8 +1432,8 @@
                                 }
                             ],
                             "tagName": {
-                                "pos": 728,
-                                "end": 733,
+                                "pos": 1064,
+                                "end": 1069,
                                 "kind": 80,
                                 "id": 0,
                                 "flags": 16842752,
@@ -1073,7 +1450,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 88,
+                    "line": 122,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "rawdescription": "\n\n轮询完成时的处理\n",
@@ -1095,10 +1472,10 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 81,
+                    "line": 114,
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "rawdescription": "\n\n处理轮询错误\n",
+                    "rawdescription": "\n\n处理轮询错误\n\n",
                     "description": "<p>处理轮询错误</p>\n",
                     "modifierKind": [
                         124
@@ -1106,8 +1483,8 @@
                     "jsdoctags": [
                         {
                             "name": {
-                                "pos": 2175,
-                                "end": 2178,
+                                "pos": 2915,
+                                "end": 2918,
                                 "kind": 80,
                                 "id": 0,
                                 "flags": 16842752,
@@ -1118,8 +1495,8 @@
                             "deprecated": false,
                             "deprecationMessage": "",
                             "tagName": {
-                                "pos": 2169,
-                                "end": 2174,
+                                "pos": 2909,
+                                "end": 2914,
                                 "kind": 80,
                                 "id": 0,
                                 "flags": 16842752,
@@ -1143,10 +1520,10 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 73,
+                    "line": 105,
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "rawdescription": "\n\n处理轮询数据\n",
+                    "rawdescription": "\n\n处理轮询数据\n\n",
                     "description": "<p>处理轮询数据</p>\n",
                     "modifierKind": [
                         124
@@ -1154,8 +1531,8 @@
                     "jsdoctags": [
                         {
                             "name": {
-                                "pos": 2033,
-                                "end": 2041,
+                                "pos": 2744,
+                                "end": 2752,
                                 "kind": 80,
                                 "id": 0,
                                 "flags": 16842752,
@@ -1166,8 +1543,8 @@
                             "deprecated": false,
                             "deprecationMessage": "",
                             "tagName": {
-                                "pos": 2027,
-                                "end": 2032,
+                                "pos": 2738,
+                                "end": 2743,
                                 "kind": 80,
                                 "id": 0,
                                 "flags": 16842752,
@@ -1183,108 +1560,6 @@
             "implements": [
                 "OnDestroy"
             ]
-        },
-        {
-            "name": "VisibleObserverDirective",
-            "id": "directive-VisibleObserverDirective-f1da19bea799a10edddbd83b5d3052684a78b39e71e916873ddce763a326b3b62f421b6af391303c045d8cf26269bab26ab5c17305ab82b4e79fdeaa859fe123",
-            "file": "src/directives/visible-observer.directive.ts",
-            "type": "directive",
-            "description": "",
-            "rawdescription": "\n",
-            "sourceCode": "import { AfterViewInit, Directive, ElementRef, EventEmitter, OnDestroy, Output } from \"@angular/core\";\n\n@Directive({\n    selector: '[VisibleObserver]',\n})\nexport class VisibleObserverDirective implements AfterViewInit, OnDestroy {\n    public observer;\n    @Output() public visible = new EventEmitter();\n\n    constructor(private _elf: ElementRef) {\n        const callback = (entries: IntersectionObserverEntry[]) => {\n            entries.forEach(({ intersectionRatio }) => {\n                if (intersectionRatio <= 0) return;\n                this.visible.emit()\n            });\n        };\n\n        this.observer = new IntersectionObserver(callback);\n    }\n\n    public ngAfterViewInit(): void {\n        this.observer.observe(this._elf.nativeElement);\n    }\n\n    public ngOnDestroy(): void {\n        this.observer.unobserve(this._elf.nativeElement);\n    }\n\n}",
-            "selector": "[VisibleObserver]",
-            "providers": [],
-            "hostDirectives": [],
-            "standalone": false,
-            "inputsClass": [],
-            "outputsClass": [
-                {
-                    "name": "visible",
-                    "defaultValue": "new EventEmitter()",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "line": 12,
-                    "type": "EventEmitter"
-                }
-            ],
-            "deprecated": false,
-            "deprecationMessage": "",
-            "hostBindings": [],
-            "hostListeners": [],
-            "propertiesClass": [
-                {
-                    "name": "observer",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "",
-                    "indexKey": "",
-                    "optional": false,
-                    "description": "",
-                    "line": 11,
-                    "modifierKind": [
-                        125
-                    ]
-                }
-            ],
-            "methodsClass": [
-                {
-                    "name": "ngAfterViewInit",
-                    "args": [],
-                    "optional": false,
-                    "returnType": "void",
-                    "typeParameters": [],
-                    "line": 25,
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "modifierKind": [
-                        125
-                    ]
-                },
-                {
-                    "name": "ngOnDestroy",
-                    "args": [],
-                    "optional": false,
-                    "returnType": "void",
-                    "typeParameters": [],
-                    "line": 29,
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "modifierKind": [
-                        125
-                    ]
-                }
-            ],
-            "extends": [],
-            "implements": [
-                "AfterViewInit",
-                "OnDestroy"
-            ],
-            "constructorObj": {
-                "name": "constructor",
-                "description": "",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "args": [
-                    {
-                        "name": "_elf",
-                        "type": "ElementRef",
-                        "deprecated": false,
-                        "deprecationMessage": ""
-                    }
-                ],
-                "line": 12,
-                "jsdoctags": [
-                    {
-                        "name": "_elf",
-                        "type": "ElementRef",
-                        "deprecated": false,
-                        "deprecationMessage": "",
-                        "tagName": {
-                            "text": "param"
-                        }
-                    }
-                ]
-            }
         }
     ],
     "components": [
@@ -4008,7 +4283,7 @@
     },
     "routes": [],
     "coverage": {
-        "count": 8,
+        "count": 9,
         "status": "low",
         "files": [
             {
@@ -4153,22 +4428,22 @@
                 "status": "low"
             },
             {
+                "filePath": "src/directives/intersectionObserver.directive.ts",
+                "type": "directive",
+                "linktype": "directive",
+                "name": "IntersectionObserverDirective",
+                "coveragePercent": 66,
+                "coverageCount": "4/6",
+                "status": "good"
+            },
+            {
                 "filePath": "src/directives/polling.directive.ts",
                 "type": "directive",
                 "linktype": "directive",
                 "name": "PollingDirective",
-                "coveragePercent": 60,
-                "coverageCount": "6/10",
-                "status": "good"
-            },
-            {
-                "filePath": "src/directives/visible-observer.directive.ts",
-                "type": "directive",
-                "linktype": "directive",
-                "name": "VisibleObserverDirective",
-                "coveragePercent": 0,
-                "coverageCount": "0/6",
-                "status": "low"
+                "coveragePercent": 91,
+                "coverageCount": "11/12",
+                "status": "very-good"
             },
             {
                 "filePath": "src/pipes/file-size.pipe.ts",
@@ -4244,6 +4519,15 @@
                 "name": "CanComponentDeactivateGuard",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/services/file.service.ts",
+                "type": "injectable",
+                "linktype": "injectable",
+                "name": "FileService",
+                "coveragePercent": 0,
+                "coverageCount": "0/7",
                 "status": "low"
             },
             {

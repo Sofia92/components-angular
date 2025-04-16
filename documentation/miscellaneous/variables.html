@@ -1,0 +1,2058 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>components-angular documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">components-angular documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content miscellaneous-variables">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Miscellaneous</li>
+  <li class="breadcrumb-item">Variables</li>
+</ol>
+
+<section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <ul class="index-list">
+                        <li>
+                            <a href="#appConfig" title="src/app/app.config.ts" ><b>appConfig</b>&nbsp;&nbsp;&nbsp;(src/.../app.config.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#base" title="src/stories/components/search-box.stories.ts" ><b>base</b>&nbsp;&nbsp;&nbsp;(src/.../search-box.stories.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#base" title="src/stories/components/search-tag.stories.ts" ><b>base</b>&nbsp;&nbsp;&nbsp;(src/.../search-tag.stories.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#base" title="src/stories/directives/polling.directive.stories.ts" ><b>base</b>&nbsp;&nbsp;&nbsp;(src/.../polling.directive.stories.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#base" title="src/stories/directives/visible-observer.directive.stories.ts" ><b>base</b>&nbsp;&nbsp;&nbsp;(src/.../visible-observer.directive.stories.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#base" title="src/stories/pipes/file-size.stories.ts" ><b>base</b>&nbsp;&nbsp;&nbsp;(src/.../file-size.stories.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#CanComponentDeactivateGuard" title="src/services/canDeactive.guard.ts" ><b>CanComponentDeactivateGuard</b>&nbsp;&nbsp;&nbsp;(src/.../canDeactive.guard.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#cardList" title="src/stories/directives/visible-observer.directive.stories.ts" ><b>cardList</b>&nbsp;&nbsp;&nbsp;(src/.../visible-observer.directive.stories.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#CommonIconNames" title="src/components/assets/util/sourceIcons.ts" ><b>CommonIconNames</b>&nbsp;&nbsp;&nbsp;(src/.../sourceIcons.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#DirectionIconNames" title="src/components/assets/util/sourceIcons.ts" ><b>DirectionIconNames</b>&nbsp;&nbsp;&nbsp;(src/.../sourceIcons.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#EditionIconNames" title="src/components/assets/util/sourceIcons.ts" ><b>EditionIconNames</b>&nbsp;&nbsp;&nbsp;(src/.../sourceIcons.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#fileTypeIconMap" title="src/utils/index.ts" ><b>fileTypeIconMap</b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#gb" title="src/pipes/file-size.pipe.ts" ><b>gb</b>&nbsp;&nbsp;&nbsp;(src/.../file-size.pipe.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#Icon" title="src/stories/components/icon-render.stories.ts" ><b>Icon</b>&nbsp;&nbsp;&nbsp;(src/.../icon-render.stories.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#Icon" title="src/stories/components/icon-select.stories.ts" ><b>Icon</b>&nbsp;&nbsp;&nbsp;(src/.../icon-select.stories.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#Image" title="src/stories/components/icon-render.stories.ts" ><b>Image</b>&nbsp;&nbsp;&nbsp;(src/.../icon-render.stories.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#Image" title="src/stories/components/icon-select.stories.ts" ><b>Image</b>&nbsp;&nbsp;&nbsp;(src/.../icon-select.stories.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#kb" title="src/pipes/file-size.pipe.ts" ><b>kb</b>&nbsp;&nbsp;&nbsp;(src/.../file-size.pipe.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#keyword" title="src/stories/components/search-box.stories.ts" ><b>keyword</b>&nbsp;&nbsp;&nbsp;(src/.../search-box.stories.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#Large" title="src/stories/button/button.stories.ts" ><b>Large</b>&nbsp;&nbsp;&nbsp;(src/.../button.stories.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#loadMore$" title="src/stories/directives/visible-observer.directive.stories.ts" ><b>loadMore$</b>&nbsp;&nbsp;&nbsp;(src/.../visible-observer.directive.stories.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#LoggedIn" title="src/stories/header/header.stories.ts" ><b>LoggedIn</b>&nbsp;&nbsp;&nbsp;(src/.../header.stories.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#LoggedOut" title="src/stories/header/header.stories.ts" ><b>LoggedOut</b>&nbsp;&nbsp;&nbsp;(src/.../header.stories.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#mb" title="src/pipes/file-size.pipe.ts" ><b>mb</b>&nbsp;&nbsp;&nbsp;(src/.../file-size.pipe.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#meta" title="src/stories/button/button.stories.ts" ><b>meta</b>&nbsp;&nbsp;&nbsp;(src/.../button.stories.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#meta" title="src/stories/components/icon-render.stories.ts" ><b>meta</b>&nbsp;&nbsp;&nbsp;(src/.../icon-render.stories.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#meta" title="src/stories/components/icon-select.stories.ts" ><b>meta</b>&nbsp;&nbsp;&nbsp;(src/.../icon-select.stories.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#meta" title="src/stories/components/search-box.stories.ts" ><b>meta</b>&nbsp;&nbsp;&nbsp;(src/.../search-box.stories.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#meta" title="src/stories/components/search-tag.stories.ts" ><b>meta</b>&nbsp;&nbsp;&nbsp;(src/.../search-tag.stories.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#meta" title="src/stories/directives/polling.directive.stories.ts" ><b>meta</b>&nbsp;&nbsp;&nbsp;(src/.../polling.directive.stories.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#meta" title="src/stories/directives/visible-observer.directive.stories.ts" ><b>meta</b>&nbsp;&nbsp;&nbsp;(src/.../visible-observer.directive.stories.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#meta" title="src/stories/header/header.stories.ts" ><b>meta</b>&nbsp;&nbsp;&nbsp;(src/.../header.stories.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#meta" title="src/stories/pipes/file-size.stories.ts" ><b>meta</b>&nbsp;&nbsp;&nbsp;(src/.../file-size.stories.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#NeW" title="src/stories/button/button.stories.ts" ><b>NeW</b>&nbsp;&nbsp;&nbsp;(src/.../button.stories.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#Primary" title="src/stories/button/button.stories.ts" ><b>Primary</b>&nbsp;&nbsp;&nbsp;(src/.../button.stories.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#REGEXP" title="src/utils/validators.ts" ><b>REGEXP</b>&nbsp;&nbsp;&nbsp;(src/.../validators.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#Secondary" title="src/stories/button/button.stories.ts" ><b>Secondary</b>&nbsp;&nbsp;&nbsp;(src/.../button.stories.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#size" title="src/stories/pipes/file-size.stories.ts" ><b>size</b>&nbsp;&nbsp;&nbsp;(src/.../file-size.stories.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#sizeDisplay" title="src/stories/pipes/file-size.stories.ts" ><b>sizeDisplay</b>&nbsp;&nbsp;&nbsp;(src/.../file-size.stories.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#Small" title="src/stories/button/button.stories.ts" ><b>Small</b>&nbsp;&nbsp;&nbsp;(src/.../button.stories.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#StreamStatusIconMap" title="src/utils/index.ts" ><b>StreamStatusIconMap</b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#SuggestionIconNames" title="src/components/assets/util/sourceIcons.ts" ><b>SuggestionIconNames</b>&nbsp;&nbsp;&nbsp;(src/.../sourceIcons.ts)</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    <h3>src/app/app.config.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="appConfig"></a>
+                    <span class="name">
+                        <span ><b>appConfig</b></span>
+                        <a href="#appConfig"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>ApplicationConfig</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+  providers: [
+    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideRouter(routes),
+    provideAnimationsAsync(),
+    provideHttpClient(), //added the function here
+    provideNzI18n(en_US)
+  ]
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/stories/components/search-box.stories.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="base"></a>
+                    <span class="name">
+                        <span ><b>base</b></span>
+                        <a href="#base"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/typealiases.html#Story" target="_self" >Story</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    args: {
+        keyword: keyword
+    },
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="keyword"></a>
+                    <span class="name">
+                        <span ><b>keyword</b></span>
+                        <a href="#keyword"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="meta"></a>
+                    <span class="name">
+                        <span ><b>meta</b></span>
+                        <a href="#meta"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../components/SearchBoxComponent.html" target="_self" >Meta&lt;SearchBoxComponent&gt;</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    title: &#x27;Components/search box&#x27;,
+    component: SearchBoxComponent,
+    tags: [&#x27;autodocs&#x27;],
+    args: {
+        keyword: keyword
+    }
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/stories/components/search-tag.stories.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="base"></a>
+                    <span class="name">
+                        <span ><b>base</b></span>
+                        <a href="#base"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/typealiases.html#Story" target="_self" >Story</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    args: {
+        tagList: [{ id: 1, name: &#x27;tag1&#x27; }, { id: 2, name: &#x27;超超超超超超超超超超超茶匙擦和春华草吵吵吵吵&#x27; }, { id: 3, name: &#x27;tag3&#x27; }],
+        width: 150,
+        tagIds: [&#x27;1&#x27;, &#x27;2&#x27;]
+    },
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="meta"></a>
+                    <span class="name">
+                        <span ><b>meta</b></span>
+                        <a href="#meta"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../components/SearchTagComponent.html" target="_self" >Meta&lt;SearchTagComponent&gt;</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    title: &#x27;Components/search tag&#x27;,
+    component: SearchTagComponent,
+    tags: [&#x27;autodocs&#x27;]
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/stories/directives/polling.directive.stories.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="base"></a>
+                    <span class="name">
+                        <span ><b>base</b></span>
+                        <a href="#base"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/typealiases.html#Story" target="_self" >Story</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    args: {
+        interval: 2000 // 默认2秒轮询一次
+    }
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="meta"></a>
+                    <span class="name">
+                        <span ><b>meta</b></span>
+                        <a href="#meta"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../components/PollingDemoComponent.html" target="_self" >Meta&lt;PollingDemoComponent&gt;</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    title: &#x27;Directives/Polling&#x27;,
+    component: PollingDemoComponent,
+    argTypes: {
+        interval: {
+            control: &#x27;number&#x27;,
+            description: &#x27;轮询间隔时间，默认2秒&#x27;,
+            defaultValue: 2000
+        }
+    },
+    tags: [&#x27;autodocs&#x27;],
+    decorators: [
+        moduleMetadata({
+            imports: [PollingDemoComponent],
+        }),
+    ]
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/stories/directives/visible-observer.directive.stories.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="base"></a>
+                    <span class="name">
+                        <span ><b>base</b></span>
+                        <a href="#base"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/typealiases.html#Story" target="_self" >Story</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    render: () &#x3D;&gt; ({
+        props: {
+            loadMore$,
+            cardList,
+            zone: new NgZone({ enableLongStackTrace: false }),
+            visible: function() {
+                this.zone.run(() &#x3D;&gt; {
+                    cardList.push(11);
+                    loadMore$.next(false);
+                });
+            }
+        },
+        template: &#x60;
+        &lt;div style&#x3D;&quot;width:400px; height: 300px; overflow-y: auto; border: 1px solid #ccc;&quot;&gt;
+            &lt;ul style&#x3D;&quot;margin: 0; padding: 0;&quot;&gt;
+                &lt;li *ngFor&#x3D;&quot;let item of cardList&quot; 
+                    style&#x3D;&quot;height: 100px; background-color: #f0f0f0; margin-bottom: 10px; list-style: none;&quot;&gt;
+                    {{item}}
+                &lt;/li&gt;
+                &lt;li *ngIf&#x3D;&quot;loadMore$ | async&quot;
+                    VisibleObserver
+                    (visible)&#x3D;&quot;visible()&quot;
+                    style&#x3D;&quot;height: 50px; background-color: #f0f0f0; list-style: none;&quot;&gt;
+                    &lt;span&gt;加载中.......&lt;/span&gt;
+                &lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/div&gt;
+        &#x60;,
+    })
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cardList"></a>
+                    <span class="name">
+                        <span ><b>cardList</b></span>
+                        <a href="#cardList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadMore$"></a>
+                    <span class="name">
+                        <span ><b>loadMore$</b></span>
+                        <a href="#loadMore$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new BehaviorSubject&lt;boolean&gt;(true)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="meta"></a>
+                    <span class="name">
+                        <span ><b>meta</b></span>
+                        <a href="#meta"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../directives/VisibleObserverDirective.html" target="_self" >Meta&lt;VisibleObserverDirective&gt;</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    title: &#x27;Directives/VisibleObserver&#x27;,
+    decorators: [
+        moduleMetadata({
+            imports: [VisibleObserverDirective],
+        }),
+    ]
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/stories/pipes/file-size.stories.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="base"></a>
+                    <span class="name">
+                        <span ><b>base</b></span>
+                        <a href="#base"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/typealiases.html#Story" target="_self" >Story</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    parameters: {
+        size: size,
+        sizeDisplay: sizeDisplay
+    },
+    render: () &#x3D;&gt; ({
+        template: &#x60;
+        &lt;nz-input-number [(ngModel)]&#x3D;&quot;size&quot; /&gt;
+        &lt;button nz-button nzType&#x3D;&quot;primary&quot; (click)&#x3D;&quot;sizeDisplay &#x3D; size&quot;&gt;转换&lt;/button&gt;
+        
+        &lt;p&gt;结果：{{sizeDisplay | fileSize}}&lt;/p&gt;
+        &#x60;,
+    })
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="meta"></a>
+                    <span class="name">
+                        <span ><b>meta</b></span>
+                        <a href="#meta"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Meta&lt;FileSizePipe&gt;</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    title: &#x27;Pipes/fileSize&#x27;,
+    decorators: [
+        moduleMetadata({
+            imports: [FileSizePipe, FormsModule, NzInputNumberModule, NzButtonModule],
+        }),
+    ],
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="size"></a>
+                    <span class="name">
+                        <span ><b>size</b></span>
+                        <a href="#size"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/variables.html#mb" target="_self" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sizeDisplay"></a>
+                    <span class="name">
+                        <span ><b>sizeDisplay</b></span>
+                        <a href="#sizeDisplay"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/variables.html#mb" target="_self" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/services/canDeactive.guard.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="CanComponentDeactivateGuard"></a>
+                    <span class="name">
+                        <span ><b>CanComponentDeactivateGuard</b></span>
+                        <a href="#CanComponentDeactivateGuard"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/CanComponentDeactivate.html" target="_self" >CanDeactivateFn&lt;CanComponentDeactivate&gt;</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>(
+  component: CanComponentDeactivate
+) &#x3D;&gt; {
+  return component.canDeactivate ? component.canDeactivate() : true;
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/components/assets/util/sourceIcons.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="CommonIconNames"></a>
+                    <span class="name">
+                        <span ><b>CommonIconNames</b></span>
+                        <a href="#CommonIconNames"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+    &#x27;Aim&#x27;,
+    &#x27;Alert&#x27;,
+    &#x27;Api&#x27;,
+    &#x27;AppstoreAdd&#x27;,
+    &#x27;Apartment&#x27;,
+    &#x27;Audio&#x27;,
+    &#x27;AudioMuted&#x27;,
+    &#x27;Bank&#x27;,
+    &#x27;Barcode&#x27;,
+    &#x27;Bars&#x27;,
+    &#x27;Bell&#x27;,
+    &#x27;Block&#x27;,
+    &#x27;Border&#x27;,
+    &#x27;AccountBook&#x27;,
+    &#x27;Branches&#x27;,
+    &#x27;Bug&#x27;,
+    &#x27;Audit&#x27;,
+    &#x27;Calendar&#x27;,
+    &#x27;Calculator&#x27;,
+    &#x27;Camera&#x27;,
+    &#x27;Car&#x27;,
+    &#x27;Bulb&#x27;,
+    &#x27;Book&#x27;,
+    &#x27;CarryOut&#x27;,
+    &#x27;Ci&#x27;,
+    &#x27;CiCircle&#x27;,
+    &#x27;CloudDownload&#x27;,
+    &#x27;Cloud&#x27;,
+    &#x27;CloudServer&#x27;,
+    &#x27;CloudSync&#x27;,
+    &#x27;Code&#x27;,
+    &#x27;Cluster&#x27;,
+    &#x27;CloudUpload&#x27;,
+    &#x27;Compress&#x27;,
+    &#x27;Compass&#x27;,
+    &#x27;ConsoleSql&#x27;,
+    &#x27;Appstore&#x27;,
+    &#x27;Contacts&#x27;,
+    &#x27;Coffee&#x27;,
+    &#x27;Container&#x27;,
+    &#x27;Control&#x27;,
+    &#x27;CopyrightCircle&#x27;,
+    &#x27;Clear&#x27;,
+    &#x27;Build&#x27;,
+    &#x27;Database&#x27;,
+    &#x27;Dashboard&#x27;,
+    &#x27;DeleteRow&#x27;,
+    &#x27;DeliveredProcedure&#x27;,
+    &#x27;DeploymentUnit&#x27;,
+    &#x27;DeleteColumn&#x27;,
+    &#x27;Desktop&#x27;,
+    &#x27;Dislike&#x27;,
+    &#x27;Disconnect&#x27;,
+    &#x27;Comment&#x27;,
+    &#x27;DollarCircle&#x27;,
+    &#x27;Dollar&#x27;,
+    &#x27;BorderlessTable&#x27;,
+    &#x27;Ellipsis&#x27;,
+    &#x27;EuroCircle&#x27;,
+    &#x27;Environment&#x27;,
+    &#x27;Exception&#x27;,
+    &#x27;Euro&#x27;,
+    &#x27;CustomerService&#x27;,
+    &#x27;ExpandAlt&#x27;,
+    &#x27;Expand&#x27;,
+    &#x27;Export&#x27;,
+    &#x27;Experiment&#x27;,
+    &#x27;EyeInvisible&#x27;,
+    &#x27;Eye&#x27;,
+    &#x27;Download&#x27;,
+    &#x27;FieldBinary&#x27;,
+    &#x27;FieldNumber&#x27;,
+    &#x27;CreditCard&#x27;,
+    &#x27;FieldString&#x27;,
+    &#x27;FieldTime&#x27;,
+    &#x27;FileExcel&#x27;,
+    &#x27;FileExclamation&#x27;,
+    &#x27;FileAdd&#x27;,
+    &#x27;FileDone&#x27;,
+    &#x27;Crown&#x27;,
+    &#x27;FileMarkdown&#x27;,
+    &#x27;File&#x27;,
+    &#x27;FilePdf&#x27;,
+    &#x27;FileJpg&#x27;,
+    &#x27;FileGif&#x27;,
+    &#x27;FileSync&#x27;,
+    &#x27;FileProtect&#x27;,
+    &#x27;FileSearch&#x27;,
+    &#x27;FileUnknown&#x27;,
+    &#x27;FileWord&#x27;,
+    &#x27;FileText&#x27;,
+    &#x27;FileZip&#x27;,
+    &#x27;Filter&#x27;,
+    &#x27;Flag&#x27;,
+    &#x27;Fire&#x27;,
+    &#x27;FolderAdd&#x27;,
+    &#x27;FolderOpen&#x27;,
+    &#x27;Folder&#x27;,
+    &#x27;FilePpt&#x27;,
+    &#x27;FolderView&#x27;,
+    &#x27;Copyright&#x27;,
+    &#x27;Fork&#x27;,
+    &#x27;Function&#x27;,
+    &#x27;FundProjectionScreen&#x27;,
+    &#x27;FunnelPlot&#x27;,
+    &#x27;Gateway&#x27;,
+    &#x27;Gift&#x27;,
+    &#x27;Gif&#x27;,
+    &#x27;Frown&#x27;,
+    &#x27;Global&#x27;,
+    &#x27;Gold&#x27;,
+    &#x27;Group&#x27;,
+    &#x27;Hdd&#x27;,
+    &#x27;Heart&#x27;,
+    &#x27;Home&#x27;,
+    &#x27;FormatPainter&#x27;,
+    &#x27;Idcard&#x27;,
+    &#x27;Hourglass&#x27;,
+    &#x27;Holder&#x27;,
+    &#x27;FundView&#x27;,
+    &#x27;Inbox&#x27;,
+    &#x27;InsertRowLeft&#x27;,
+    &#x27;Import&#x27;,
+    &#x27;InsertRowAbove&#x27;,
+    &#x27;InsertRowRight&#x27;,
+    &#x27;Interaction&#x27;,
+    &#x27;Laptop&#x27;,
+    &#x27;Layout&#x27;,
+    &#x27;Insurance&#x27;,
+    &#x27;Line&#x27;,
+    &#x27;Like&#x27;,
+    &#x27;Loading&#x27;,
+    &#x27;Loading3Quarters&#x27;,
+    &#x27;Lock&#x27;,
+    &#x27;MacCommand&#x27;,
+    &#x27;Mail&#x27;,
+    &#x27;Link&#x27;,
+    &#x27;Man&#x27;,
+    &#x27;MedicineBox&#x27;,
+    &#x27;Meh&#x27;,
+    &#x27;Message&#x27;,
+    &#x27;Menu&#x27;,
+    &#x27;Key&#x27;,
+    &#x27;Mobile&#x27;,
+    &#x27;MoneyCollect&#x27;,
+    &#x27;Monitor&#x27;,
+    &#x27;Moon&#x27;,
+    &#x27;More&#x27;,
+    &#x27;NodeIndex&#x27;,
+    &#x27;NodeCollapse&#x27;,
+    &#x27;NodeExpand&#x27;,
+    &#x27;Merge&#x27;,
+    &#x27;Number&#x27;,
+    &#x27;MergeCells&#x27;,
+    &#x27;Notification&#x27;,
+    &#x27;PaperClip&#x27;,
+    &#x27;Partition&#x27;,
+    &#x27;Muted&#x27;,
+    &#x27;OneToOne&#x27;,
+    &#x27;PayCircle&#x27;,
+    &#x27;Percentage&#x27;,
+    &#x27;Picture&#x27;,
+    &#x27;PlaySquare&#x27;,
+    &#x27;PoundCircle&#x27;,
+    &#x27;Pound&#x27;,
+    &#x27;Poweroff&#x27;,
+    &#x27;Profile&#x27;,
+    &#x27;Printer&#x27;,
+    &#x27;Project&#x27;,
+    &#x27;Product&#x27;,
+    &#x27;Phone&#x27;,
+    &#x27;PropertySafety&#x27;,
+    &#x27;Pushpin&#x27;,
+    &#x27;Qrcode&#x27;,
+    &#x27;PullRequest&#x27;,
+    &#x27;Read&#x27;,
+    &#x27;Reconciliation&#x27;,
+    &#x27;RedEnvelope&#x27;,
+    &#x27;Reload&#x27;,
+    &#x27;Rest&#x27;,
+    &#x27;Robot&#x27;,
+    &#x27;Rocket&#x27;,
+    &#x27;RotateRight&#x27;,
+    &#x27;SafetyCertificate&#x27;,
+    &#x27;RotateLeft&#x27;,
+    &#x27;Save&#x27;,
+    &#x27;Scan&#x27;,
+    &#x27;SecurityScan&#x27;,
+    &#x27;Schedule&#x27;,
+    &#x27;Select&#x27;,
+    &#x27;Send&#x27;,
+    &#x27;Shake&#x27;,
+    &#x27;Setting&#x27;,
+    &#x27;Shop&#x27;,
+    &#x27;Shopping&#x27;,
+    &#x27;ShoppingCart&#x27;,
+    &#x27;Sisternode&#x27;,
+    &#x27;Skin&#x27;,
+    &#x27;Smile&#x27;,
+    &#x27;FileImage&#x27;,
+    &#x27;Solution&#x27;,
+    &#x27;SplitCells&#x27;,
+    &#x27;Signature&#x27;,
+    &#x27;Search&#x27;,
+    &#x27;Star&#x27;,
+    &#x27;Sound&#x27;,
+    &#x27;ShareAlt&#x27;,
+    &#x27;Sun&#x27;,
+    &#x27;Switcher&#x27;,
+    &#x27;Sync&#x27;,
+    &#x27;Table&#x27;,
+    &#x27;Tag&#x27;,
+    &#x27;Tablet&#x27;,
+    &#x27;Team&#x27;,
+    &#x27;Subnode&#x27;,
+    &#x27;Thunderbolt&#x27;,
+    &#x27;Tags&#x27;,
+    &#x27;Tool&#x27;,
+    &#x27;TrademarkCircle&#x27;,
+    &#x27;ToTop&#x27;,
+    &#x27;Translation&#x27;,
+    &#x27;Safety&#x27;,
+    &#x27;Truck&#x27;,
+    &#x27;Unlock&#x27;,
+    &#x27;Ungroup&#x27;,
+    &#x27;Trademark&#x27;,
+    &#x27;Upload&#x27;,
+    &#x27;Usb&#x27;,
+    &#x27;Trophy&#x27;,
+    &#x27;User&#x27;,
+    &#x27;UserDelete&#x27;,
+    &#x27;UsergroupAdd&#x27;,
+    &#x27;UsergroupDelete&#x27;,
+    &#x27;Verified&#x27;,
+    &#x27;VideoCamera&#x27;,
+    &#x27;VideoCameraAdd&#x27;,
+    &#x27;UserAdd&#x27;,
+    &#x27;History&#x27;,
+    &#x27;InsertRowBelow&#x27;,
+    &#x27;Wifi&#x27;,
+    &#x27;Woman&#x27;,
+    &#x27;UserSwitch&#x27;,
+    &#x27;Transaction&#x27;,
+    &#x27;Wallet&#x27;,
+]</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="DirectionIconNames"></a>
+                    <span class="name">
+                        <span ><b>DirectionIconNames</b></span>
+                        <a href="#DirectionIconNames"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+    &#x27;StepBackward&#x27;,
+    &#x27;StepForward&#x27;,
+    &#x27;FastBackward&#x27;,
+    &#x27;FastForward&#x27;,
+    &#x27;Shrink&#x27;,
+    &#x27;ArrowsAlt&#x27;,
+    &#x27;Down&#x27;,
+    &#x27;Up&#x27;,
+    &#x27;Left&#x27;,
+    &#x27;Right&#x27;,
+    &#x27;CaretUp&#x27;,
+    &#x27;CaretDown&#x27;,
+    &#x27;CaretLeft&#x27;,
+    &#x27;CaretRight&#x27;,
+    &#x27;UpCircle&#x27;,
+    &#x27;DownCircle&#x27;,
+    &#x27;LeftCircle&#x27;,
+    &#x27;RightCircle&#x27;,
+    &#x27;DoubleRight&#x27;,
+    &#x27;DoubleLeft&#x27;,
+    &#x27;VerticalLeft&#x27;,
+    &#x27;VerticalRight&#x27;,
+    &#x27;VerticalAlignTop&#x27;,
+    &#x27;VerticalAlignMiddle&#x27;,
+    &#x27;VerticalAlignBottom&#x27;,
+    &#x27;Forward&#x27;,
+    &#x27;Backward&#x27;,
+    &#x27;Rollback&#x27;,
+    &#x27;Enter&#x27;,
+    &#x27;Retweet&#x27;,
+    &#x27;Swap&#x27;,
+    &#x27;SwapLeft&#x27;,
+    &#x27;SwapRight&#x27;,
+    &#x27;ArrowUp&#x27;,
+    &#x27;ArrowDown&#x27;,
+    &#x27;ArrowLeft&#x27;,
+    &#x27;ArrowRight&#x27;,
+    &#x27;PlayCircle&#x27;,
+    &#x27;UpSquare&#x27;,
+    &#x27;DownSquare&#x27;,
+    &#x27;LeftSquare&#x27;,
+    &#x27;RightSquare&#x27;,
+    &#x27;Login&#x27;,
+    &#x27;Logout&#x27;,
+    &#x27;MenuFold&#x27;,
+    &#x27;MenuUnfold&#x27;,
+    &#x27;BorderBottom&#x27;,
+    &#x27;BorderHorizontal&#x27;,
+    &#x27;BorderInner&#x27;,
+    &#x27;BorderOuter&#x27;,
+    &#x27;BorderLeft&#x27;,
+    &#x27;BorderRight&#x27;,
+    &#x27;BorderTop&#x27;,
+    &#x27;BorderVerticle&#x27;,
+    &#x27;PicCenter&#x27;,
+    &#x27;PicLeft&#x27;,
+    &#x27;PicRight&#x27;,
+    &#x27;RadiusBottomleft&#x27;,
+    &#x27;RadiusBottomright&#x27;,
+    &#x27;RadiusUpleft&#x27;,
+    &#x27;RadiusUpright&#x27;,
+    &#x27;Fullscreen&#x27;,
+    &#x27;FullscreenExit&#x27;,
+]</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="EditionIconNames"></a>
+                    <span class="name">
+                        <span ><b>EditionIconNames</b></span>
+                        <a href="#EditionIconNames"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+    &#x27;Edit&#x27;,
+    &#x27;Form&#x27;,
+    &#x27;Copy&#x27;,
+    &#x27;Scissor&#x27;,
+    &#x27;Delete&#x27;,
+    &#x27;Snippets&#x27;,
+    &#x27;Diff&#x27;,
+    &#x27;Highlight&#x27;,
+    &#x27;AlignCenter&#x27;,
+    &#x27;AlignLeft&#x27;,
+    &#x27;AlignRight&#x27;,
+    &#x27;BgColors&#x27;,
+    &#x27;Bold&#x27;,
+    &#x27;Italic&#x27;,
+    &#x27;Underline&#x27;,
+    &#x27;Strikethrough&#x27;,
+    &#x27;Redo&#x27;,
+    &#x27;Undo&#x27;,
+    &#x27;ZoomIn&#x27;,
+    &#x27;ZoomOut&#x27;,
+    &#x27;FontColors&#x27;,
+    &#x27;FontSize&#x27;,
+    &#x27;LineHeight&#x27;,
+    &#x27;Dash&#x27;,
+    &#x27;SmallDash&#x27;,
+    &#x27;SortAscending&#x27;,
+    &#x27;SortDescending&#x27;,
+    &#x27;Drag&#x27;,
+    &#x27;OrderedList&#x27;,
+    &#x27;UnorderedList&#x27;,
+    &#x27;RadiusSetting&#x27;,
+    &#x27;ColumnWidth&#x27;,
+    &#x27;ColumnHeight&#x27;,
+]</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="SuggestionIconNames"></a>
+                    <span class="name">
+                        <span ><b>SuggestionIconNames</b></span>
+                        <a href="#SuggestionIconNames"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+    &#x27;Question&#x27;,
+    &#x27;QuestionCircle&#x27;,
+    &#x27;Plus&#x27;,
+    &#x27;PlusCircle&#x27;,
+    &#x27;Pause&#x27;,
+    &#x27;PauseCircle&#x27;,
+    &#x27;Minus&#x27;,
+    &#x27;MinusCircle&#x27;,
+    &#x27;PlusSquare&#x27;,
+    &#x27;MinusSquare&#x27;,
+    &#x27;Info&#x27;,
+    &#x27;InfoCircle&#x27;,
+    &#x27;Exclamation&#x27;,
+    &#x27;ExclamationCircle&#x27;,
+    &#x27;Close&#x27;,
+    &#x27;CloseCircle&#x27;,
+    &#x27;CloseSquare&#x27;,
+    &#x27;Check&#x27;,
+    &#x27;CheckCircle&#x27;,
+    &#x27;CheckSquare&#x27;,
+    &#x27;ClockCircle&#x27;,
+    &#x27;Warning&#x27;,
+    &#x27;IssuesClose&#x27;,
+    &#x27;Stop&#x27;,
+]</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/utils/index.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="fileTypeIconMap"></a>
+                    <span class="name">
+                        <span ><b>fileTypeIconMap</b></span>
+                        <a href="#fileTypeIconMap"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+  &#x27;txt&#x27;: &#x27;files:text-fill&#x27;,
+  &#x27;md&#x27;: &#x27;files:markdown-fill&#x27;,
+  &#x27;mdx&#x27;: &#x27;files:markdown-fill&#x27;,
+  &#x27;pdf&#x27;: &#x27;files:pdf-fill&#x27;,
+  &#x27;html&#x27;: &#x27;files:html-fill&#x27;,
+  &#x27;xlsx&#x27;: &#x27;files:excel-fill&#x27;,
+  &#x27;xls&#x27;: &#x27;files:excel-fill&#x27;,
+  &#x27;docx&#x27;: &#x27;files:word-fill&#x27;,
+  &#x27;csv&#x27;: &#x27;files:excel-fill&#x27;,
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="StreamStatusIconMap"></a>
+                    <span class="name">
+                        <span ><b>StreamStatusIconMap</b></span>
+                        <a href="#StreamStatusIconMap"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+  &#x27;default&#x27;: [&#x27;loading&#x27;, &#x27;status-icon loading&#x27;],
+  &#x27;failed&#x27;: [&#x27;question-circle&#x27;, &#x27;status-icon error&#x27;],
+  &#x27;succeeded&#x27;: [&#x27;check-circle&#x27;, &#x27;status-icon success&#x27;],
+  &#x27;start&#x27;: [&#x27;icons:node-start&#x27;, &#x27;node-icon start&#x27;],
+  &#x27;llm&#x27;: [&#x27;icons:node-llm&#x27;, &#x27;node-icon llm&#x27;],
+  &#x27;if-else&#x27;: [&#x27;icons:node-branch&#x27;, &#x27;node-icon if-else&#x27;],
+  &#x27;http-request&#x27;: [&#x27;icons:node-http&#x27;, &#x27;node-icon http-request&#x27;],
+  &#x27;code&#x27;: [&#x27;icons:script&#x27;, &#x27;node-icon code&#x27;],
+  &#x27;tool&#x27;: [&#x27;icons:node-iteration&#x27;, &#x27;node-icon iteration&#x27;],
+  &#x27;iteration&#x27;: [&#x27;icons:node-iteration&#x27;, &#x27;node-icon iteration&#x27;],
+  &#x27;answer&#x27;: [&#x27;icons:node-answer&#x27;, &#x27;node-icon answer&#x27;]
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/pipes/file-size.pipe.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="gb"></a>
+                    <span class="name">
+                        <span ><b>gb</b></span>
+                        <a href="#gb"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>1024 * mb</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="kb"></a>
+                    <span class="name">
+                        <span ><b>kb</b></span>
+                        <a href="#kb"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/variables.html#mb" target="_self" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>1024</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="mb"></a>
+                    <span class="name">
+                        <span ><b>mb</b></span>
+                        <a href="#mb"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>1024 * kb</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/stories/components/icon-render.stories.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="Icon"></a>
+                    <span class="name">
+                        <span ><b>Icon</b></span>
+                        <a href="#Icon"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/typealiases.html#Story" target="_self" >Story</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    args: {
+        icon_type: IconType.ICON,
+        icon: &quot;robot&quot;,
+        icon_background: &#x27;&#x27;,
+        icon_url: &#x27;&#x27;
+    },
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="Image"></a>
+                    <span class="name">
+                        <span ><b>Image</b></span>
+                        <a href="#Image"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/typealiases.html#Story" target="_self" >Story</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    args: {
+        icon_type: IconType.IMAGE,
+        icon: &quot;&quot;,
+        icon_background: &#x27;&#x27;,
+        icon_url: &quot;/assets/assets.png&quot;
+    },
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="meta"></a>
+                    <span class="name">
+                        <span ><b>meta</b></span>
+                        <a href="#meta"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../components/IconRenderComponent.html" target="_self" >Meta&lt;IconRenderComponent&gt;</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    title: &#x27;Components/Icon-render&#x27;,
+    component: IconRenderComponent,
+    tags: [&#x27;autodocs&#x27;],
+    args: {
+        icon_type: IconType.ICON,
+        icon: &#x27;&#x27;,
+        icon_background: &#x27;&#x27;,
+        icon_url: &#x27;&#x27;
+    }
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/stories/components/icon-select.stories.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="Icon"></a>
+                    <span class="name">
+                        <span ><b>Icon</b></span>
+                        <a href="#Icon"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/typealiases.html#Story" target="_self" >Story</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    args: {
+        icon: {
+            icon_type: IconType.ICON,
+            icon: &#x27;&#x27;,
+            icon_background: &#x27;&#x27;,
+            icon_url: &#x27;&#x27;
+        },
+        filter_icon_type: IconType.ICON,
+    },
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="Image"></a>
+                    <span class="name">
+                        <span ><b>Image</b></span>
+                        <a href="#Image"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/typealiases.html#Story" target="_self" >Story</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    args: {
+        icon: {
+            icon_type: IconType.IMAGE,
+            icon: &#x27;/assets/assets.png&#x27;,
+            icon_background: &#x27;&#x27;,
+            icon_url: &#x27;&#x27;
+        },
+        filter_icon_type: IconType.IMAGE,
+    },
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="meta"></a>
+                    <span class="name">
+                        <span ><b>meta</b></span>
+                        <a href="#meta"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../components/IconSelectComponent.html" target="_self" >Meta&lt;IconSelectComponent&gt;</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    title: &#x27;Components/Icon-select&#x27;,
+    component: IconSelectComponent,
+    tags: [&#x27;autodocs&#x27;],
+    args: {
+        icon: {
+            icon_type: IconType.ICON,
+            icon: &#x27;&#x27;,
+            icon_background: &#x27;&#x27;,
+            icon_url: &#x27;&#x27;
+        },
+        filter_icon_type: IconType.ICON,
+    }
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/stories/button/button.stories.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="Large"></a>
+                    <span class="name">
+                        <span ><b>Large</b></span>
+                        <a href="#Large"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/typealiases.html#Story" target="_self" >Story</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+  args: {
+    size: &#x27;large&#x27;,
+    label: &#x27;Button&#x27;,
+  },
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="meta"></a>
+                    <span class="name">
+                        <span ><b>meta</b></span>
+                        <a href="#meta"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../components/ButtonComponent.html" target="_self" >Meta&lt;ButtonComponent&gt;</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+  title: &#x27;Example/Button&#x27;,
+  component: ButtonComponent,
+  tags: [&#x27;autodocs&#x27;],
+  argTypes: {
+    backgroundColor: {
+      control: &#x27;color&#x27;,
+    },
+  },
+  // Use &#x60;fn&#x60; to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
+  args: { onClick: fn() },
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="NeW"></a>
+                    <span class="name">
+                        <span ><b>NeW</b></span>
+                        <a href="#NeW"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/typealiases.html#Story" target="_self" >Story</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+  args: {
+    primary: false,
+    label: &quot;Button&quot;
+  }
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="Primary"></a>
+                    <span class="name">
+                        <span ><b>Primary</b></span>
+                        <a href="#Primary"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/typealiases.html#Story" target="_self" >Story</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+  args: {
+    primary: true,
+    label: &#x27;Button&#x27;,
+  },
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="Secondary"></a>
+                    <span class="name">
+                        <span ><b>Secondary</b></span>
+                        <a href="#Secondary"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/typealiases.html#Story" target="_self" >Story</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+  args: {
+    label: &#x27;Button&#x27;,
+  },
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="Small"></a>
+                    <span class="name">
+                        <span ><b>Small</b></span>
+                        <a href="#Small"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/typealiases.html#Story" target="_self" >Story</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+  args: {
+    size: &#x27;small&#x27;,
+    label: &#x27;Button&#x27;,
+  },
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/stories/header/header.stories.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="LoggedIn"></a>
+                    <span class="name">
+                        <span ><b>LoggedIn</b></span>
+                        <a href="#LoggedIn"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/typealiases.html#Story" target="_self" >Story</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+  args: {
+    user: {
+      name: &#x27;Jane Doe&#x27;,
+    },
+  },
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="LoggedOut"></a>
+                    <span class="name">
+                        <span ><b>LoggedOut</b></span>
+                        <a href="#LoggedOut"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/typealiases.html#Story" target="_self" >Story</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="meta"></a>
+                    <span class="name">
+                        <span ><b>meta</b></span>
+                        <a href="#meta"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../components/HeaderComponent.html" target="_self" >Meta&lt;HeaderComponent&gt;</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+  title: &#x27;Example/Header&#x27;,
+  component: HeaderComponent,
+  // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
+  tags: [&#x27;autodocs&#x27;],
+  parameters: {
+    // More on how to position stories at: https://storybook.js.org/docs/configure/story-layout
+    layout: &#x27;fullscreen&#x27;,
+  },
+  args: {
+    onLogin: fn(),
+    onLogout: fn(),
+    onCreateAccount: fn(),
+  },
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/utils/validators.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="REGEXP"></a>
+                    <span class="name">
+                        <span ><b>REGEXP</b></span>
+                        <a href="#REGEXP"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+  phoneNumber: /^1[3-9]\d{9}$/,
+  landlineAndPhone: /^((0\d{2,3}-\d{7,8})|(1[3-9]\d{9}))$/,
+  onlyNumber: /^\d+$/,
+  empty: /^\s+$/,
+  onlyChinese: /^[\u4e00-\u9fa5_a-zA-Z]+$/,
+  certificateCode: /(^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$)|(^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{2}[0-9Xx]$)/,
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'miscellaneous-variables';
+            var COMPODOC_CURRENT_PAGE_URL = 'variables.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

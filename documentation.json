@@ -339,70 +339,6 @@
             "extends": []
         },
         {
-            "name": "IDocumentMeta",
-            "id": "interface-IDocumentMeta-e0eefa23937ad65a566db9ce8d870248b35ec57db5f3763e9defcf617422a005ae615a0a867438ac7ca5091ca25c85921d88012f771a4b25cb58d797aa7d73fa",
-            "file": "src/utils/index.ts",
-            "deprecated": false,
-            "deprecationMessage": "",
-            "type": "interface",
-            "sourceCode": "import { IDocument, IFileUploadResponse, IndexTypeDisplayMap } from '@Api';\nimport { format } from 'date-fns';\n\nexport * from './select.util';\nexport * from './validators';\nexport * from './form-validator';\nexport * from './model.normalize';\nexport * from './chat-message.util';\n\nexport async function racePromises(promises) {\n  const results = await Promise.all(promises.map((p) => p.catch((err) => err)));\n  return results.includes(false) ? false : true;\n}\n\nexport function generateUid() {\n  return (Number(Math.random().toString().substring(2, 15)) + Date.now()).toString(36)\n}\n\nexport const fileTypeIconMap = {\n  'txt': 'files:text-fill',\n  'md': 'files:markdown-fill',\n  'mdx': 'files:markdown-fill',\n  'pdf': 'files:pdf-fill',\n  'html': 'files:html-fill',\n  'xlsx': 'files:excel-fill',\n  'xls': 'files:excel-fill',\n  'docx': 'files:word-fill',\n  'csv': 'files:excel-fill',\n}\n\nexport interface IFile extends IFileUploadResponse {\n  created_at_display?: string;\n  doc_form_display?: string;\n}\n\nexport function formatFileMeta(file: IFile) {\n  file.icon = fileTypeIconMap[file.extension];\n\n  if ('created_at' in file) {\n    file.created_at_display = file.created_at ? format(new Date(file.created_at * 1000), 'yyyy-MM-dd HH:mm:ss') : '';\n  }\n}\n\nexport interface IDocumentMeta extends IDocument {\n  doc_form_display?: string;\n}\n\nexport function formatDocumentMeta(document: IDocumentMeta) {\n  if ('doc_form' in document) {\n    document.doc_form_display = document.doc_form ? IndexTypeDisplayMap[document.doc_form] : ''\n  }\n}\n\nexport const StreamStatusIconMap = {\n  'default': ['loading', 'status-icon loading'],\n  'failed': ['question-circle', 'status-icon error'],\n  'succeeded': ['check-circle', 'status-icon success'],\n  'start': ['icons:node-start', 'node-icon start'],\n  'llm': ['icons:node-llm', 'node-icon llm'],\n  'if-else': ['icons:node-branch', 'node-icon if-else'],\n  'http-request': ['icons:node-http', 'node-icon http-request'],\n  'code': ['icons:script', 'node-icon code'],\n  'tool': ['icons:node-iteration', 'node-icon iteration'],\n  'iteration': ['icons:node-iteration', 'node-icon iteration'],\n  'answer': ['icons:node-answer', 'node-icon answer']\n}\nexport function formatSreamMeta(stream) {\n  stream.status = stream.status || 'default';\n  const [icon, className] = StreamStatusIconMap[stream.status];\n  stream.status_icon = icon;\n  stream.status_className = className;\n\n\n  if (stream.node_type) {\n    const [node_icon, node_className] = StreamStatusIconMap[stream.node_type] || ['', ''];\n    stream.node_icon = node_icon;\n    stream.node_className = node_className;\n  }\n}",
-            "properties": [
-                {
-                    "name": "doc_form_display",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "string",
-                    "indexKey": "",
-                    "optional": true,
-                    "description": "",
-                    "line": 45
-                }
-            ],
-            "indexSignatures": [],
-            "kind": 171,
-            "methods": [],
-            "extends": [
-                "IDocument"
-            ]
-        },
-        {
-            "name": "IFile",
-            "id": "interface-IFile-e0eefa23937ad65a566db9ce8d870248b35ec57db5f3763e9defcf617422a005ae615a0a867438ac7ca5091ca25c85921d88012f771a4b25cb58d797aa7d73fa",
-            "file": "src/utils/index.ts",
-            "deprecated": false,
-            "deprecationMessage": "",
-            "type": "interface",
-            "sourceCode": "import { IDocument, IFileUploadResponse, IndexTypeDisplayMap } from '@Api';\nimport { format } from 'date-fns';\n\nexport * from './select.util';\nexport * from './validators';\nexport * from './form-validator';\nexport * from './model.normalize';\nexport * from './chat-message.util';\n\nexport async function racePromises(promises) {\n  const results = await Promise.all(promises.map((p) => p.catch((err) => err)));\n  return results.includes(false) ? false : true;\n}\n\nexport function generateUid() {\n  return (Number(Math.random().toString().substring(2, 15)) + Date.now()).toString(36)\n}\n\nexport const fileTypeIconMap = {\n  'txt': 'files:text-fill',\n  'md': 'files:markdown-fill',\n  'mdx': 'files:markdown-fill',\n  'pdf': 'files:pdf-fill',\n  'html': 'files:html-fill',\n  'xlsx': 'files:excel-fill',\n  'xls': 'files:excel-fill',\n  'docx': 'files:word-fill',\n  'csv': 'files:excel-fill',\n}\n\nexport interface IFile extends IFileUploadResponse {\n  created_at_display?: string;\n  doc_form_display?: string;\n}\n\nexport function formatFileMeta(file: IFile) {\n  file.icon = fileTypeIconMap[file.extension];\n\n  if ('created_at' in file) {\n    file.created_at_display = file.created_at ? format(new Date(file.created_at * 1000), 'yyyy-MM-dd HH:mm:ss') : '';\n  }\n}\n\nexport interface IDocumentMeta extends IDocument {\n  doc_form_display?: string;\n}\n\nexport function formatDocumentMeta(document: IDocumentMeta) {\n  if ('doc_form' in document) {\n    document.doc_form_display = document.doc_form ? IndexTypeDisplayMap[document.doc_form] : ''\n  }\n}\n\nexport const StreamStatusIconMap = {\n  'default': ['loading', 'status-icon loading'],\n  'failed': ['question-circle', 'status-icon error'],\n  'succeeded': ['check-circle', 'status-icon success'],\n  'start': ['icons:node-start', 'node-icon start'],\n  'llm': ['icons:node-llm', 'node-icon llm'],\n  'if-else': ['icons:node-branch', 'node-icon if-else'],\n  'http-request': ['icons:node-http', 'node-icon http-request'],\n  'code': ['icons:script', 'node-icon code'],\n  'tool': ['icons:node-iteration', 'node-icon iteration'],\n  'iteration': ['icons:node-iteration', 'node-icon iteration'],\n  'answer': ['icons:node-answer', 'node-icon answer']\n}\nexport function formatSreamMeta(stream) {\n  stream.status = stream.status || 'default';\n  const [icon, className] = StreamStatusIconMap[stream.status];\n  stream.status_icon = icon;\n  stream.status_className = className;\n\n\n  if (stream.node_type) {\n    const [node_icon, node_className] = StreamStatusIconMap[stream.node_type] || ['', ''];\n    stream.node_icon = node_icon;\n    stream.node_className = node_className;\n  }\n}",
-            "properties": [
-                {
-                    "name": "created_at_display",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "string",
-                    "indexKey": "",
-                    "optional": true,
-                    "description": "",
-                    "line": 32
-                },
-                {
-                    "name": "doc_form_display",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "string",
-                    "indexKey": "",
-                    "optional": true,
-                    "description": "",
-                    "line": 33
-                }
-            ],
-            "indexSignatures": [],
-            "kind": 171,
-            "methods": [],
-            "extends": [
-                "IFileUploadResponse"
-            ]
-        },
-        {
             "name": "ISelectorOption",
             "id": "interface-ISelectorOption-cd796fe185fe233fb76574eda3e62c0aefc636cdaf47e49127be47bbc0e5e843adec888a29ca2fcf01203790e5d16fb7cd9717f7338427d41ea7d0bb1ceccdd3",
             "file": "src/utils/validators.ts",
@@ -929,12 +865,12 @@
         },
         {
             "name": "PollingDirective",
-            "id": "directive-PollingDirective-da30f6ad53022a33f0a7fa5de67752628cef02249a611d1b09e93e0093dc8d02bded99f1bb66abc78aa1d899f8ff911ba617351f025bc398ac0a99c627fdbd31",
+            "id": "directive-PollingDirective-b38f45e31095f8936b0c03cb5420ae736462d633228ba985e0c04a368c3bd4cf96ad032b1b31dff09b406d49b7596eb96bd20651693cd79c05e516d8afbabd85",
             "file": "src/directives/polling.directive.ts",
             "type": "directive",
             "description": "",
             "rawdescription": "\n",
-            "sourceCode": "import { Directive, Input, OnDestroy } from '@angular/core';\nimport { catchError, EMPTY, Observable, retry, Subscription, switchMap, takeWhile, timer } from 'rxjs';\n\n@Directive()\nexport class PollingDirective implements OnDestroy {\n    polling$: Observable<void>;\n    private subscription: Subscription;\n    @Input() interval: number = 2000;\n\n    ngOnDestroy(): void {\n        if (this.subscription) {\n            this.subscription.unsubscribe();\n        }\n    }\n\n    protected polling(source: Observable<any>, condition: (response: any) => boolean) {\n        this.polling$ = timer(0, this.interval)\n            .pipe(\n                switchMap(() => source.pipe(\n                    retry(4),\n                    // 错误时静默继续轮询\n                    catchError(error => {\n                        console.error('请求失败:', error);\n                        return EMPTY; // 不终止流\n                    })\n                )\n                ),\n                // 停止条件逻辑\n                takeWhile(\n                    // 使用 some 检查未完成项\n                    response => condition(response),\n                    true // 包含最后一个符合条件的响应\n                )\n            );\n    }\n\n    protected listenPolling() {\n        this.polling$.subscribe({\n            next: (response) => this.pollingNext(response),\n            error: (err) => this.pollingError(err),\n            complete: () => this.pollingComplete()\n        });\n    }\n\n    protected pollingNext(response: any) {\n        console.log(response);\n    }\n    protected pollingError(err: any) {\n        console.log(err);\n    }\n    protected pollingComplete() {\n        console.log('轮询完成');\n    }\n}\n",
+            "sourceCode": "import { Directive, Input, OnDestroy } from '@angular/core';\nimport { catchError, EMPTY, Observable, retry, Subscription, switchMap, takeWhile, timer } from 'rxjs';\n\n@Directive()\nexport class PollingDirective implements OnDestroy {\n    // 轮询间隔时间，默认2秒\n    @Input() interval: number = 2000;\n    // 轮询的Observable流\n    polling$: Observable<void>;\n    // 订阅对象，用于管理轮询的订阅\n    private subscription: Subscription;\n\n    /**\n     * 组件销毁时取消订阅\n     */\n    ngOnDestroy(): void {\n        if (this.subscription) {\n            this.subscription.unsubscribe();\n        }\n    }\n\n    /**\n     * 设置轮询\n     * @param source 数据源Observable，每次轮询都会调用\n     * @param minRetry 最小重试次数，当请求失败时重试\n     * @param condition 轮询条件函数，返回true继续轮询，false停止轮询\n     */\n    protected polling(source: Observable<any>, minRetry: number, condition: (response: any) => boolean) {\n        // 创建定时器Observable，立即开始，每隔interval时间触发一次\n        this.polling$ = timer(0, this.interval)\n            .pipe(\n                // 每次定时器触发时，切换到新的数据源Observable\n                switchMap(() => {\n                    return source.pipe(\n                        // 请求失败时重试指定次数\n                        retry(minRetry),\n                        // 错误处理，发生错误时继续轮询\n                        catchError(error => {\n                            console.error('请求失败:', error);\n                            return EMPTY; // 返回空Observable，不终止流\n                        })\n                    );\n                }),\n                // 根据条件决定是否继续轮询\n                takeWhile(\n                    // 检查响应是否满足继续轮询的条件\n                    response => condition(response),\n                    true // 包含最后一个符合条件的响应\n                )\n            );\n    }\n\n    /**\n     * 开始监听轮询结果\n     */\n    protected listenPolling() {\n        this.polling$.subscribe({\n            next: (response) => this.pollingNext(response),\n            error: (err) => this.pollingError(err),\n            complete: () => this.pollingComplete()\n        });\n    }\n\n    /**\n     * 处理轮询数据\n     * @param response 轮询返回的数据\n     */\n    protected pollingNext(response: any) {\n        console.log(response);\n    }\n\n    /**\n     * 处理轮询错误\n     * @param err 错误信息\n     */\n    protected pollingError(err: any) {\n        console.log(err);\n    }\n\n    /**\n     * 轮询完成时的处理\n     */\n    protected pollingComplete() {\n        console.log('轮询完成');\n    }\n}\n",
             "providers": [],
             "hostDirectives": [],
             "standalone": false,
@@ -944,7 +880,7 @@
                     "defaultValue": "2000",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 11,
+                    "line": 12,
                     "type": "number",
                     "decorators": []
                 }
@@ -963,7 +899,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 9
+                    "line": 14
                 },
                 {
                     "name": "subscription",
@@ -973,7 +909,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 10,
+                    "line": 16,
                     "modifierKind": [
                         123
                     ]
@@ -986,9 +922,11 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 40,
+                    "line": 61,
                     "deprecated": false,
                     "deprecationMessage": "",
+                    "rawdescription": "\n\n开始监听轮询结果\n",
+                    "description": "<p>开始监听轮询结果</p>\n",
                     "modifierKind": [
                         124
                     ]
@@ -999,9 +937,11 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 13,
+                    "line": 21,
                     "deprecated": false,
-                    "deprecationMessage": ""
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\n组件销毁时取消订阅\n",
+                    "description": "<p>组件销毁时取消订阅</p>\n"
                 },
                 {
                     "name": "polling",
@@ -1009,6 +949,12 @@
                         {
                             "name": "source",
                             "type": "Observable<any>",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "minRetry",
+                            "type": "number",
                             "deprecated": false,
                             "deprecationMessage": ""
                         },
@@ -1030,24 +976,73 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 19,
+                    "line": 33,
                     "deprecated": false,
                     "deprecationMessage": "",
+                    "rawdescription": "\n\n设置轮询\n",
+                    "description": "<p>设置轮询</p>\n",
                     "modifierKind": [
                         124
                     ],
                     "jsdoctags": [
                         {
-                            "name": "source",
+                            "name": {
+                                "pos": 651,
+                                "end": 657,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16842752,
+                                "transformFlags": 0,
+                                "escapedText": "source"
+                            },
                             "type": "Observable<any>",
                             "deprecated": false,
                             "deprecationMessage": "",
                             "tagName": {
-                                "text": "param"
-                            }
+                                "pos": 645,
+                                "end": 650,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16842752,
+                                "transformFlags": 0,
+                                "escapedText": "param"
+                            },
+                            "comment": "<p>数据源Observable，每次轮询都会调用</p>\n"
                         },
                         {
-                            "name": "condition",
+                            "name": {
+                                "pos": 695,
+                                "end": 703,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16842752,
+                                "transformFlags": 0,
+                                "escapedText": "minRetry"
+                            },
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "pos": 689,
+                                "end": 694,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16842752,
+                                "transformFlags": 0,
+                                "escapedText": "param"
+                            },
+                            "comment": "<p>最小重试次数，当请求失败时重试</p>\n"
+                        },
+                        {
+                            "name": {
+                                "pos": 734,
+                                "end": 743,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16842752,
+                                "transformFlags": 0,
+                                "escapedText": "condition"
+                            },
                             "type": "function",
                             "deprecated": false,
                             "deprecationMessage": "",
@@ -1060,8 +1055,15 @@
                                 }
                             ],
                             "tagName": {
-                                "text": "param"
-                            }
+                                "pos": 728,
+                                "end": 733,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16842752,
+                                "transformFlags": 0,
+                                "escapedText": "param"
+                            },
+                            "comment": "<p>轮询条件函数，返回true继续轮询，false停止轮询</p>\n"
                         }
                     ]
                 },
@@ -1071,9 +1073,11 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 54,
+                    "line": 88,
                     "deprecated": false,
                     "deprecationMessage": "",
+                    "rawdescription": "\n\n轮询完成时的处理\n",
+                    "description": "<p>轮询完成时的处理</p>\n",
                     "modifierKind": [
                         124
                     ]
@@ -1091,21 +1095,38 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 51,
+                    "line": 81,
                     "deprecated": false,
                     "deprecationMessage": "",
+                    "rawdescription": "\n\n处理轮询错误\n",
+                    "description": "<p>处理轮询错误</p>\n",
                     "modifierKind": [
                         124
                     ],
                     "jsdoctags": [
                         {
-                            "name": "err",
+                            "name": {
+                                "pos": 2175,
+                                "end": 2178,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16842752,
+                                "transformFlags": 0,
+                                "escapedText": "err"
+                            },
                             "type": "any",
                             "deprecated": false,
                             "deprecationMessage": "",
                             "tagName": {
-                                "text": "param"
-                            }
+                                "pos": 2169,
+                                "end": 2174,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16842752,
+                                "transformFlags": 0,
+                                "escapedText": "param"
+                            },
+                            "comment": "<p>错误信息</p>\n"
                         }
                     ]
                 },
@@ -1122,21 +1143,38 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 48,
+                    "line": 73,
                     "deprecated": false,
                     "deprecationMessage": "",
+                    "rawdescription": "\n\n处理轮询数据\n",
+                    "description": "<p>处理轮询数据</p>\n",
                     "modifierKind": [
                         124
                     ],
                     "jsdoctags": [
                         {
-                            "name": "response",
+                            "name": {
+                                "pos": 2033,
+                                "end": 2041,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16842752,
+                                "transformFlags": 0,
+                                "escapedText": "response"
+                            },
                             "type": "any",
                             "deprecated": false,
                             "deprecationMessage": "",
                             "tagName": {
-                                "text": "param"
-                            }
+                                "pos": 2027,
+                                "end": 2032,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16842752,
+                                "transformFlags": 0,
+                                "escapedText": "param"
+                            },
+                            "comment": "<p>轮询返回的数据</p>\n"
                         }
                     ]
                 }
@@ -2718,90 +2756,6 @@
                 ]
             },
             {
-                "name": "formatDocumentMeta",
-                "file": "src/utils/index.ts",
-                "ctype": "miscellaneous",
-                "subtype": "function",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "args": [
-                    {
-                        "name": "document",
-                        "type": "IDocumentMeta",
-                        "deprecated": false,
-                        "deprecationMessage": ""
-                    }
-                ],
-                "jsdoctags": [
-                    {
-                        "name": "document",
-                        "type": "IDocumentMeta",
-                        "deprecated": false,
-                        "deprecationMessage": "",
-                        "tagName": {
-                            "text": "param"
-                        }
-                    }
-                ]
-            },
-            {
-                "name": "formatFileMeta",
-                "file": "src/utils/index.ts",
-                "ctype": "miscellaneous",
-                "subtype": "function",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "args": [
-                    {
-                        "name": "file",
-                        "type": "IFile",
-                        "deprecated": false,
-                        "deprecationMessage": ""
-                    }
-                ],
-                "jsdoctags": [
-                    {
-                        "name": "file",
-                        "type": "IFile",
-                        "deprecated": false,
-                        "deprecationMessage": "",
-                        "tagName": {
-                            "text": "param"
-                        }
-                    }
-                ]
-            },
-            {
-                "name": "formatSreamMeta",
-                "file": "src/utils/index.ts",
-                "ctype": "miscellaneous",
-                "subtype": "function",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "args": [
-                    {
-                        "name": "stream",
-                        "type": "",
-                        "deprecated": false,
-                        "deprecationMessage": ""
-                    }
-                ],
-                "jsdoctags": [
-                    {
-                        "name": "stream",
-                        "type": "",
-                        "deprecated": false,
-                        "deprecationMessage": "",
-                        "tagName": {
-                            "text": "param"
-                        }
-                    }
-                ]
-            },
-            {
                 "name": "generateUid",
                 "file": "src/utils/index.ts",
                 "ctype": "miscellaneous",
@@ -2964,7 +2918,7 @@
                     },
                     {
                         "name": "item",
-                        "type": "",
+                        "type": "any",
                         "deprecated": false,
                         "deprecationMessage": ""
                     },
@@ -2998,7 +2952,7 @@
                     },
                     {
                         "name": "item",
-                        "type": "",
+                        "type": "any",
                         "deprecated": false,
                         "deprecationMessage": "",
                         "tagName": {
@@ -3082,7 +3036,6 @@
                 "args": [
                     {
                         "name": "promises",
-                        "type": "",
                         "deprecated": false,
                         "deprecationMessage": ""
                     }
@@ -3090,7 +3043,6 @@
                 "jsdoctags": [
                     {
                         "name": "promises",
-                        "type": "",
                         "deprecated": false,
                         "deprecationMessage": "",
                         "tagName": {
@@ -3156,6 +3108,16 @@
                         }
                     }
                 ]
+            },
+            {
+                "name": "uuidv4",
+                "file": "src/utils/uuid.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": []
             },
             {
                 "name": "validateForm",
@@ -3650,90 +3612,6 @@
             ],
             "src/utils/index.ts": [
                 {
-                    "name": "formatDocumentMeta",
-                    "file": "src/utils/index.ts",
-                    "ctype": "miscellaneous",
-                    "subtype": "function",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "args": [
-                        {
-                            "name": "document",
-                            "type": "IDocumentMeta",
-                            "deprecated": false,
-                            "deprecationMessage": ""
-                        }
-                    ],
-                    "jsdoctags": [
-                        {
-                            "name": "document",
-                            "type": "IDocumentMeta",
-                            "deprecated": false,
-                            "deprecationMessage": "",
-                            "tagName": {
-                                "text": "param"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "name": "formatFileMeta",
-                    "file": "src/utils/index.ts",
-                    "ctype": "miscellaneous",
-                    "subtype": "function",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "args": [
-                        {
-                            "name": "file",
-                            "type": "IFile",
-                            "deprecated": false,
-                            "deprecationMessage": ""
-                        }
-                    ],
-                    "jsdoctags": [
-                        {
-                            "name": "file",
-                            "type": "IFile",
-                            "deprecated": false,
-                            "deprecationMessage": "",
-                            "tagName": {
-                                "text": "param"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "name": "formatSreamMeta",
-                    "file": "src/utils/index.ts",
-                    "ctype": "miscellaneous",
-                    "subtype": "function",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "args": [
-                        {
-                            "name": "stream",
-                            "type": "",
-                            "deprecated": false,
-                            "deprecationMessage": ""
-                        }
-                    ],
-                    "jsdoctags": [
-                        {
-                            "name": "stream",
-                            "type": "",
-                            "deprecated": false,
-                            "deprecationMessage": "",
-                            "tagName": {
-                                "text": "param"
-                            }
-                        }
-                    ]
-                },
-                {
                     "name": "generateUid",
                     "file": "src/utils/index.ts",
                     "ctype": "miscellaneous",
@@ -3754,7 +3632,6 @@
                     "args": [
                         {
                             "name": "promises",
-                            "type": "",
                             "deprecated": false,
                             "deprecationMessage": ""
                         }
@@ -3762,7 +3639,6 @@
                     "jsdoctags": [
                         {
                             "name": "promises",
-                            "type": "",
                             "deprecated": false,
                             "deprecationMessage": "",
                             "tagName": {
@@ -3857,7 +3733,7 @@
                         },
                         {
                             "name": "item",
-                            "type": "",
+                            "type": "any",
                             "deprecated": false,
                             "deprecationMessage": ""
                         },
@@ -3891,7 +3767,7 @@
                         },
                         {
                             "name": "item",
-                            "type": "",
+                            "type": "any",
                             "deprecated": false,
                             "deprecationMessage": "",
                             "tagName": {
@@ -3973,6 +3849,18 @@
                 {
                     "name": "ngZorroIconCategoryNames",
                     "file": "src/components/assets/util/index.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": []
+                }
+            ],
+            "src/utils/uuid.ts": [
+                {
+                    "name": "uuidv4",
+                    "file": "src/utils/uuid.ts",
                     "ctype": "miscellaneous",
                     "subtype": "function",
                     "deprecated": false,
@@ -4120,7 +4008,7 @@
     },
     "routes": [],
     "coverage": {
-        "count": 6,
+        "count": 8,
         "status": "low",
         "files": [
             {
@@ -4269,9 +4157,9 @@
                 "type": "directive",
                 "linktype": "directive",
                 "name": "PollingDirective",
-                "coveragePercent": 0,
-                "coverageCount": "0/10",
-                "status": "low"
+                "coveragePercent": 60,
+                "coverageCount": "6/10",
+                "status": "good"
             },
             {
                 "filePath": "src/directives/visible-observer.directive.ts",
@@ -4397,54 +4285,6 @@
             },
             {
                 "filePath": "src/utils/index.ts",
-                "type": "interface",
-                "linktype": "interface",
-                "name": "IDocumentMeta",
-                "coveragePercent": 0,
-                "coverageCount": "0/2",
-                "status": "low"
-            },
-            {
-                "filePath": "src/utils/index.ts",
-                "type": "interface",
-                "linktype": "interface",
-                "name": "IFile",
-                "coveragePercent": 0,
-                "coverageCount": "0/3",
-                "status": "low"
-            },
-            {
-                "filePath": "src/utils/index.ts",
-                "type": "function",
-                "linktype": "miscellaneous",
-                "linksubtype": "function",
-                "name": "formatDocumentMeta",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/utils/index.ts",
-                "type": "function",
-                "linktype": "miscellaneous",
-                "linksubtype": "function",
-                "name": "formatFileMeta",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/utils/index.ts",
-                "type": "function",
-                "linktype": "miscellaneous",
-                "linksubtype": "function",
-                "name": "formatSreamMeta",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/utils/index.ts",
                 "type": "function",
                 "linktype": "miscellaneous",
                 "linksubtype": "function",
@@ -4529,6 +4369,16 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "function",
                 "name": "chooseFileToUpload",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/uuid.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "uuidv4",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"

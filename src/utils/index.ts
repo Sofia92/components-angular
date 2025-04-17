@@ -3,6 +3,7 @@ export * from './select.util';
 export * from './validators';
 export * from './form-validator';
 export * from './uuid';
+export * from './typings';
 export { isAllChecked, isHalfChecked, getListCheckedStatus, type ICheckedStatus} from './list-checked';
 
 export async function racePromises(promises: Promise<any>[]) {

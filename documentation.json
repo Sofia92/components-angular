@@ -374,6 +374,116 @@
             "extends": []
         },
         {
+            "name": "IOperator",
+            "id": "interface-IOperator-f9aa5faf2d799e4c2bfa80c1bf2bcaa0541122dec1f771374334aff62d983a3927b952d610e72a82dc5fdc4e572b8f99832c7d6a4e2a370f9458a09699cbe2ed",
+            "file": "src/utils/typings.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "interface",
+            "sourceCode": "export enum EOperator {\n    GreaterThan = 0,\n    LessThan = 1,\n    EqualTo = 2,\n    NotEqualTo = 3,\n    Between = 4,\n    Contains = 5,\n    NotContains = 6\n}\nexport enum ECmpTypeOperatorMap {\n    number = 1,\n    char = 2,\n    select_single = 3,\n    select_multiple = 4,\n    select_cascader = 5,\n    date = 6,\n}\nexport interface IOperator {\n    value: EOperator;\n    label: string;\n    dataTypes: ECmpTypeOperatorMap[];\n    isRange: boolean;\n}\nexport const operators: IOperator[] = [\n    {\n        value: EOperator.GreaterThan, label: '大于', dataTypes: [ECmpTypeOperatorMap.number, ECmpTypeOperatorMap.date], isRange: false\n    },\n    {\n        value: EOperator.LessThan, label: '小于', dataTypes: [ECmpTypeOperatorMap.number, ECmpTypeOperatorMap.date], isRange: false\n    },\n    {\n        value: EOperator.EqualTo, label: '等于', dataTypes: [ECmpTypeOperatorMap.number, ECmpTypeOperatorMap.char, ECmpTypeOperatorMap.select_single, ECmpTypeOperatorMap.select_cascader], isRange: false\n    },\n    {\n        value: EOperator.NotEqualTo, label: '不等于', dataTypes: [ECmpTypeOperatorMap.number, ECmpTypeOperatorMap.char, ECmpTypeOperatorMap.select_single, ECmpTypeOperatorMap.select_cascader], isRange: false\n    },\n    {\n        value: EOperator.Between, label: '范围', dataTypes: [ECmpTypeOperatorMap.number, ECmpTypeOperatorMap.date], isRange: true\n    }, {\n        value: EOperator.Contains, label: '包含', dataTypes: [ECmpTypeOperatorMap.char, ECmpTypeOperatorMap.select_multiple], isRange: false\n    },\n    {\n        value: EOperator.NotContains, label: '不包含', dataTypes: [ECmpTypeOperatorMap.char, ECmpTypeOperatorMap.select_multiple], isRange: false\n    }\n];\n\nexport interface ISelectOption {\n    value: string;\n    label: string;\n    isLeaf?: boolean;\n    children?: ISelectOption[];\n}",
+            "properties": [
+                {
+                    "name": "dataTypes",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "ECmpTypeOperatorMap[]",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 21
+                },
+                {
+                    "name": "isRange",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "boolean",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 22
+                },
+                {
+                    "name": "label",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 20
+                },
+                {
+                    "name": "value",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "EOperator",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 19
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 171,
+            "methods": [],
+            "extends": []
+        },
+        {
+            "name": "ISelectOption",
+            "id": "interface-ISelectOption-f9aa5faf2d799e4c2bfa80c1bf2bcaa0541122dec1f771374334aff62d983a3927b952d610e72a82dc5fdc4e572b8f99832c7d6a4e2a370f9458a09699cbe2ed",
+            "file": "src/utils/typings.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "interface",
+            "sourceCode": "export enum EOperator {\n    GreaterThan = 0,\n    LessThan = 1,\n    EqualTo = 2,\n    NotEqualTo = 3,\n    Between = 4,\n    Contains = 5,\n    NotContains = 6\n}\nexport enum ECmpTypeOperatorMap {\n    number = 1,\n    char = 2,\n    select_single = 3,\n    select_multiple = 4,\n    select_cascader = 5,\n    date = 6,\n}\nexport interface IOperator {\n    value: EOperator;\n    label: string;\n    dataTypes: ECmpTypeOperatorMap[];\n    isRange: boolean;\n}\nexport const operators: IOperator[] = [\n    {\n        value: EOperator.GreaterThan, label: '大于', dataTypes: [ECmpTypeOperatorMap.number, ECmpTypeOperatorMap.date], isRange: false\n    },\n    {\n        value: EOperator.LessThan, label: '小于', dataTypes: [ECmpTypeOperatorMap.number, ECmpTypeOperatorMap.date], isRange: false\n    },\n    {\n        value: EOperator.EqualTo, label: '等于', dataTypes: [ECmpTypeOperatorMap.number, ECmpTypeOperatorMap.char, ECmpTypeOperatorMap.select_single, ECmpTypeOperatorMap.select_cascader], isRange: false\n    },\n    {\n        value: EOperator.NotEqualTo, label: '不等于', dataTypes: [ECmpTypeOperatorMap.number, ECmpTypeOperatorMap.char, ECmpTypeOperatorMap.select_single, ECmpTypeOperatorMap.select_cascader], isRange: false\n    },\n    {\n        value: EOperator.Between, label: '范围', dataTypes: [ECmpTypeOperatorMap.number, ECmpTypeOperatorMap.date], isRange: true\n    }, {\n        value: EOperator.Contains, label: '包含', dataTypes: [ECmpTypeOperatorMap.char, ECmpTypeOperatorMap.select_multiple], isRange: false\n    },\n    {\n        value: EOperator.NotContains, label: '不包含', dataTypes: [ECmpTypeOperatorMap.char, ECmpTypeOperatorMap.select_multiple], isRange: false\n    }\n];\n\nexport interface ISelectOption {\n    value: string;\n    label: string;\n    isLeaf?: boolean;\n    children?: ISelectOption[];\n}",
+            "properties": [
+                {
+                    "name": "children",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "ISelectOption[]",
+                    "indexKey": "",
+                    "optional": true,
+                    "description": "",
+                    "line": 51
+                },
+                {
+                    "name": "isLeaf",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "boolean",
+                    "indexKey": "",
+                    "optional": true,
+                    "description": "",
+                    "line": 50
+                },
+                {
+                    "name": "label",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 49
+                },
+                {
+                    "name": "value",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 48
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 171,
+            "methods": [],
+            "extends": []
+        },
+        {
             "name": "ISelectorOption",
             "id": "interface-ISelectorOption-cd796fe185fe233fb76574eda3e62c0aefc636cdaf47e49127be47bbc0e5e843adec888a29ca2fcf01203790e5d16fb7cd9717f7338427d41ea7d0bb1ceccdd3",
             "file": "src/utils/validators.ts",
@@ -2325,6 +2435,357 @@
             }
         },
         {
+            "name": "FormOperatorCompactComponent",
+            "id": "component-FormOperatorCompactComponent-548b1c6e95299515d4d21fc280deeee60f0ce60532562364b1d6e9561e17cf442c5e0653eeec2c4b92e099ee77a94ff65231a5816cd692277e97f0e9e650dbad",
+            "file": "src/components/form-operator-compact/form-operator-compact.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "host": {},
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "form-operator-compact",
+            "styleUrls": [],
+            "styles": [
+                "\n  .values {\n    display: flex;\n  }\n  "
+            ],
+            "templateUrl": [
+                "./form-operator-compact.html"
+            ],
+            "viewProviders": [],
+            "hostDirectives": [],
+            "inputsClass": [
+                {
+                    "name": "dataType",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 23,
+                    "type": "ECmpTypeOperatorMap",
+                    "decorators": []
+                },
+                {
+                    "name": "extraOptions",
+                    "defaultValue": "[]",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 29,
+                    "type": "ISelectOption[]",
+                    "decorators": []
+                },
+                {
+                    "name": "isReadonly",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 30,
+                    "type": "boolean",
+                    "decorators": []
+                },
+                {
+                    "name": "min",
+                    "defaultValue": "undefined",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 28,
+                    "type": "number",
+                    "decorators": []
+                },
+                {
+                    "name": "operator",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 25,
+                    "type": "EOperator",
+                    "decorators": []
+                },
+                {
+                    "name": "operators",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 24,
+                    "type": "IOperator[]",
+                    "decorators": []
+                },
+                {
+                    "name": "values",
+                    "defaultValue": "new Array(2)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 27,
+                    "type": "any",
+                    "decorators": []
+                }
+            ],
+            "outputsClass": [
+                {
+                    "name": "operatorChange",
+                    "defaultValue": "new EventEmitter<EOperator>()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 26,
+                    "type": "EventEmitter"
+                },
+                {
+                    "name": "valuesChange",
+                    "defaultValue": "new EventEmitter<any[]>()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 31,
+                    "type": "EventEmitter"
+                }
+            ],
+            "propertiesClass": [
+                {
+                    "name": "ECmpTypeOperatorMap",
+                    "defaultValue": "ECmpTypeOperatorMap",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 34,
+                    "modifierKind": [
+                        125
+                    ]
+                },
+                {
+                    "name": "EOperator",
+                    "defaultValue": "EOperator",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 33,
+                    "modifierKind": [
+                        125
+                    ]
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "getDisplayValue",
+                    "args": [
+                        {
+                            "name": "isEndValue",
+                            "type": "boolean",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "any",
+                    "typeParameters": [],
+                    "line": 67,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        125
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "isEndValue",
+                            "type": "boolean",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "ngOnChanges",
+                    "args": [
+                        {
+                            "name": "changes",
+                            "type": "SimpleChanges",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 43,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        125
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "changes",
+                            "type": "SimpleChanges",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "setOperator",
+                    "args": [
+                        {
+                            "name": "operator",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 50,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        125
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "operator",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "updateDateRangeValue",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 63,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        125
+                    ]
+                },
+                {
+                    "name": "updateValue",
+                    "args": [
+                        {
+                            "name": "value",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "isEndValue",
+                            "type": "boolean",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 56,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        125
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "value",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "isEndValue",
+                            "type": "boolean",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "standalone": false,
+            "imports": [
+                {
+                    "name": "CommonModule",
+                    "type": "module"
+                },
+                {
+                    "name": "FormsModule",
+                    "type": "module"
+                },
+                {
+                    "name": "NzInputModule",
+                    "type": "module"
+                },
+                {
+                    "name": "NzInputNumberModule",
+                    "type": "module"
+                },
+                {
+                    "name": "NzSelectModule",
+                    "type": "module"
+                },
+                {
+                    "name": "NzDatePickerModule",
+                    "type": "module"
+                },
+                {
+                    "name": "NzCascaderModule",
+                    "type": "module"
+                }
+            ],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { CommonModule } from \"@angular/common\";\nimport { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from \"@angular/core\";\nimport { FormsModule } from \"@angular/forms\";\nimport { ECmpTypeOperatorMap, EOperator, IOperator, ISelectOption } from \"@Utils\";\nimport { NzCascaderModule } from \"ng-zorro-antd/cascader\";\nimport { NzDatePickerModule } from \"ng-zorro-antd/date-picker\";\nimport { NzInputModule } from \"ng-zorro-antd/input\";\nimport { NzInputNumberModule } from \"ng-zorro-antd/input-number\";\nimport { NzSelectModule } from \"ng-zorro-antd/select\";\n\n@Component({\n  selector: 'form-operator-compact',\n  templateUrl: './form-operator-compact.html',\n  styles: [`\n  .values {\n    display: flex;\n  }\n  `],\n  host: { class: 'full-width' },\n  imports: [CommonModule, FormsModule, NzInputModule, NzInputNumberModule, NzSelectModule, NzDatePickerModule, NzCascaderModule]\n})\nexport class FormOperatorCompactComponent implements OnChanges {\n  @Input() public dataType: ECmpTypeOperatorMap;\n  @Input() public operators: IOperator[];\n  @Input() public operator: EOperator;\n  @Output() public operatorChange = new EventEmitter<EOperator>();\n  @Input() public values = new Array(2);\n  @Input() public min?: number = undefined;\n  @Input() public extraOptions: ISelectOption[] = [];\n  @Input() public isReadonly = false;\n  @Output() public valuesChange = new EventEmitter<any[]>();\n\n  public EOperator = EOperator;\n  public ECmpTypeOperatorMap = ECmpTypeOperatorMap;\n\n  constructor() { }\n\n  public get isRange(): boolean {\n    const currentOperator = this.operators.find(o => o.value === this.operator);\n    return currentOperator && currentOperator.isRange || false;\n  }\n\n  public ngOnChanges(changes: SimpleChanges) {\n    const { dataType } = changes;\n    if (dataType && !!dataType.previousValue) {\n      this.values = new Array(2);\n    }\n  }\n\n  public setOperator(operator: any) {\n    this.values = new Array(2);\n    this.operator = operator;\n    this.operatorChange.emit(operator);\n  }\n\n  public updateValue(value: any, isEndValue: boolean) {\n    isEndValue\n      ? this.values[1] = value\n      : this.values[0] = value;\n    this.valuesChange.emit(this.values)\n  }\n\n  public updateDateRangeValue() {\n    this.valuesChange.emit(this.values)\n  }\n\n  public getDisplayValue(isEndValue: boolean): any {\n    if (isEndValue) {\n      return this.values[1]\n    }\n\n    if (this.dataType === ECmpTypeOperatorMap.date) {\n      if (Array.isArray(this.values[0])) {\n        if (this.isRange) {\n          return this.values;\n        }\n        return this.values[0][0]\n      }\n    }\n    return this.values[0];\n  }\n}\n\n",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "\n  .values {\n    display: flex;\n  }\n  \n",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [],
+                "line": 34
+            },
+            "extends": [],
+            "implements": [
+                "OnChanges"
+            ],
+            "accessors": {
+                "isRange": {
+                    "name": "isRange",
+                    "getSignature": {
+                        "name": "isRange",
+                        "type": "boolean",
+                        "returnType": "boolean",
+                        "line": 38
+                    }
+                }
+            },
+            "templateData": "<nz-input-group nzCompact\n                 class=\"values flex-1\">\n  <nz-select [(ngModel)]=\"operator\"\n              (ngModelChange)=\"setOperator($event)\"\n              nzPlaceHolder=\"请选择\"\n              [nzDisabled]=\"isReadonly\"\n              [style.width.px]=\"84\"\n              [nzOptions]=\"operators\">\n  </nz-select>\n  <ng-container *ngTemplateOutlet=\"valueTpl;context: {$implicit: false, isEndValue:false}\"></ng-container>\n  <ng-container *ngIf=\"isRange&&dataType!==ECmpTypeOperatorMap.date\">\n    <input type=\"text\"\n           disabled\n           nz-input\n           placeholder=\"~\"\n           style=\"width: 30px; border-right: 0; pointer-events: none; background-color: #fff;\" />\n    <ng-container *ngTemplateOutlet=\"valueTpl;context: {$implicit: true, isEndValue:true}\"></ng-container>\n  </ng-container>\n</nz-input-group>\n<ng-template #valueTpl\n             let-isEndValue=\"isEndValue\">\n  <ng-container [ngSwitch]=\"dataType\">\n    <nz-input-number *ngSwitchCase=\"ECmpTypeOperatorMap.number\"\n                      class=\"valueInput flex-1\"\n                      [nzDisabled]=\"isReadonly\"\n                      [ngModel]=\"getDisplayValue(isEndValue)\"\n                      (ngModelChange)=\"updateValue($event,isEndValue)\"\n                      [nzMin]=\"min===undefined?'null':min\"></nz-input-number>\n    <input *ngSwitchCase=\"ECmpTypeOperatorMap.char\"\n           class=\"valueInput flex-1\"\n           nz-input\n           placeholder=\"请输入\"\n           [ngModel]=\"getDisplayValue(isEndValue)\"\n           (ngModelChange)=\"updateValue($event,isEndValue)\"\n           [disabled]=\"isReadonly\" />\n    <nz-cascader *ngSwitchCase=\"ECmpTypeOperatorMap.select_cascader\"\n                  class=\"valueInput flex-1\"\n                  [nzDisabled]=\"isReadonly\"\n                  [nzOptions]=\"extraOptions\"\n                  [ngModel]=\"getDisplayValue(isEndValue)\"\n                  (ngModelChange)=\"updateValue($event,isEndValue)\"></nz-cascader>\n    <ng-container *ngSwitchCase=\"ECmpTypeOperatorMap.date\">\n      <nz-date-picker *ngIf=\"!isRange\"\n                       class=\"valueInput flex-1\"\n                       [nzDisabled]=\"isReadonly\"\n                       [ngModel]=\"getDisplayValue(isEndValue)\"\n                       (ngModelChange)=\"updateValue($event,isEndValue)\"></nz-date-picker>\n      <nz-range-picker *ngIf=\"isRange\"\n                        class=\"flex-1\"\n                        [nzDisabled]=\"isReadonly\"\n                        nzFormat=\"yyyy-MM-dd\"\n                        [(ngModel)]=\"values\"\n                        (ngModelChange)=\"updateDateRangeValue($event,isEndValue)\">\n      </nz-range-picker>\n    </ng-container>\n    <nz-select *ngSwitchCase=\"ECmpTypeOperatorMap.select_single\"\n                class=\"valueInput flex-1\"\n                [nzDisabled]=\"isReadonly\"\n                [ngModel]=\"getDisplayValue(isEndValue)\"\n                (ngModelChange)=\"updateValue($event,isEndValue)\"\n                nzPlaceHolder=\"请选择\"\n                [nzOptions]=\"extraOptions\">\n    </nz-select>\n    <nz-select *ngSwitchCase=\"ECmpTypeOperatorMap.select_multiple\"\n                class=\"valueInput flex-1\"\n                [nzDisabled]=\"isReadonly\"\n                [nzMode]=\"'multiple'\"\n                [ngModel]=\"getDisplayValue(isEndValue)\"\n                (ngModelChange)=\"updateValue($event,isEndValue)\"\n                nzPlaceHolder=\"请选择\"\n                [nzOptions]=\"extraOptions\">\n    </nz-select>\n  </ng-container>\n</ng-template>"
+        },
+        {
             "name": "IconRenderComponent",
             "id": "component-IconRenderComponent-4dea0b225cdd69f4bf143621982559fbdc1b582b82267f35b64d4e4bb155281121cb709fa7fd8531677380beb99dadc1418b031a4465bb614c0d9eadebb1c7e9",
             "file": "src/components/assets/icon-render.component.ts",
@@ -3184,6 +3645,16 @@
                 "deprecationMessage": "",
                 "type": "",
                 "defaultValue": "1024 * kb"
+            },
+            {
+                "name": "operators",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/utils/typings.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "IOperator[]",
+                "defaultValue": "[\n    {\n        value: EOperator.GreaterThan, label: '大于', dataTypes: [ECmpTypeOperatorMap.number, ECmpTypeOperatorMap.date], isRange: false\n    },\n    {\n        value: EOperator.LessThan, label: '小于', dataTypes: [ECmpTypeOperatorMap.number, ECmpTypeOperatorMap.date], isRange: false\n    },\n    {\n        value: EOperator.EqualTo, label: '等于', dataTypes: [ECmpTypeOperatorMap.number, ECmpTypeOperatorMap.char, ECmpTypeOperatorMap.select_single, ECmpTypeOperatorMap.select_cascader], isRange: false\n    },\n    {\n        value: EOperator.NotEqualTo, label: '不等于', dataTypes: [ECmpTypeOperatorMap.number, ECmpTypeOperatorMap.char, ECmpTypeOperatorMap.select_single, ECmpTypeOperatorMap.select_cascader], isRange: false\n    },\n    {\n        value: EOperator.Between, label: '范围', dataTypes: [ECmpTypeOperatorMap.number, ECmpTypeOperatorMap.date], isRange: true\n    }, {\n        value: EOperator.Contains, label: '包含', dataTypes: [ECmpTypeOperatorMap.char, ECmpTypeOperatorMap.select_multiple], isRange: false\n    },\n    {\n        value: EOperator.NotContains, label: '不包含', dataTypes: [ECmpTypeOperatorMap.char, ECmpTypeOperatorMap.select_multiple], isRange: false\n    }\n]"
             },
             {
                 "name": "REGEXP",
@@ -4468,6 +4939,106 @@
         ],
         "enumerations": [
             {
+                "name": "ECmpTypeOperatorMap",
+                "childs": [
+                    {
+                        "name": "number",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": 1
+                    },
+                    {
+                        "name": "char",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": 2
+                    },
+                    {
+                        "name": "select_single",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": 3
+                    },
+                    {
+                        "name": "select_multiple",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": 4
+                    },
+                    {
+                        "name": "select_cascader",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": 5
+                    },
+                    {
+                        "name": "date",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": 6
+                    }
+                ],
+                "ctype": "miscellaneous",
+                "subtype": "enum",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "file": "src/utils/typings.ts"
+            },
+            {
+                "name": "EOperator",
+                "childs": [
+                    {
+                        "name": "GreaterThan",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": 0
+                    },
+                    {
+                        "name": "LessThan",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": 1
+                    },
+                    {
+                        "name": "EqualTo",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": 2
+                    },
+                    {
+                        "name": "NotEqualTo",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": 3
+                    },
+                    {
+                        "name": "Between",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": 4
+                    },
+                    {
+                        "name": "Contains",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": 5
+                    },
+                    {
+                        "name": "NotContains",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": 6
+                    }
+                ],
+                "ctype": "miscellaneous",
+                "subtype": "enum",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "file": "src/utils/typings.ts"
+            },
+            {
                 "name": "IconType",
                 "childs": [
                     {
@@ -4616,6 +5187,18 @@
                     "deprecationMessage": "",
                     "type": "",
                     "defaultValue": "1024 * kb"
+                }
+            ],
+            "src/utils/typings.ts": [
+                {
+                    "name": "operators",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/utils/typings.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "IOperator[]",
+                    "defaultValue": "[\n    {\n        value: EOperator.GreaterThan, label: '大于', dataTypes: [ECmpTypeOperatorMap.number, ECmpTypeOperatorMap.date], isRange: false\n    },\n    {\n        value: EOperator.LessThan, label: '小于', dataTypes: [ECmpTypeOperatorMap.number, ECmpTypeOperatorMap.date], isRange: false\n    },\n    {\n        value: EOperator.EqualTo, label: '等于', dataTypes: [ECmpTypeOperatorMap.number, ECmpTypeOperatorMap.char, ECmpTypeOperatorMap.select_single, ECmpTypeOperatorMap.select_cascader], isRange: false\n    },\n    {\n        value: EOperator.NotEqualTo, label: '不等于', dataTypes: [ECmpTypeOperatorMap.number, ECmpTypeOperatorMap.char, ECmpTypeOperatorMap.select_single, ECmpTypeOperatorMap.select_cascader], isRange: false\n    },\n    {\n        value: EOperator.Between, label: '范围', dataTypes: [ECmpTypeOperatorMap.number, ECmpTypeOperatorMap.date], isRange: true\n    }, {\n        value: EOperator.Contains, label: '包含', dataTypes: [ECmpTypeOperatorMap.char, ECmpTypeOperatorMap.select_multiple], isRange: false\n    },\n    {\n        value: EOperator.NotContains, label: '不包含', dataTypes: [ECmpTypeOperatorMap.char, ECmpTypeOperatorMap.select_multiple], isRange: false\n    }\n]"
                 }
             ],
             "src/utils/validators.ts": [
@@ -5667,6 +6250,108 @@
             ]
         },
         "groupedEnumerations": {
+            "src/utils/typings.ts": [
+                {
+                    "name": "ECmpTypeOperatorMap",
+                    "childs": [
+                        {
+                            "name": "number",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": 1
+                        },
+                        {
+                            "name": "char",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": 2
+                        },
+                        {
+                            "name": "select_single",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": 3
+                        },
+                        {
+                            "name": "select_multiple",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": 4
+                        },
+                        {
+                            "name": "select_cascader",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": 5
+                        },
+                        {
+                            "name": "date",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": 6
+                        }
+                    ],
+                    "ctype": "miscellaneous",
+                    "subtype": "enum",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "file": "src/utils/typings.ts"
+                },
+                {
+                    "name": "EOperator",
+                    "childs": [
+                        {
+                            "name": "GreaterThan",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": 0
+                        },
+                        {
+                            "name": "LessThan",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": 1
+                        },
+                        {
+                            "name": "EqualTo",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": 2
+                        },
+                        {
+                            "name": "NotEqualTo",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": 3
+                        },
+                        {
+                            "name": "Between",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": 4
+                        },
+                        {
+                            "name": "Contains",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": 5
+                        },
+                        {
+                            "name": "NotContains",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": 6
+                        }
+                    ],
+                    "ctype": "miscellaneous",
+                    "subtype": "enum",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "file": "src/utils/typings.ts"
+                }
+            ],
             "src/components/assets/util/index.ts": [
                 {
                     "name": "IconType",
@@ -5943,7 +6628,7 @@
     },
     "routes": [],
     "coverage": {
-        "count": 19,
+        "count": 18,
         "status": "low",
         "files": [
             {
@@ -6059,6 +6744,15 @@
                 "coveragePercent": 83,
                 "coverageCount": "5/6",
                 "status": "very-good"
+            },
+            {
+                "filePath": "src/components/form-operator-compact/form-operator-compact.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "FormOperatorCompactComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/18",
+                "status": "low"
             },
             {
                 "filePath": "src/components/search-box/search-box.component.ts",
@@ -6575,6 +7269,34 @@
                 "coveragePercent": 100,
                 "coverageCount": "1/1",
                 "status": "very-good"
+            },
+            {
+                "filePath": "src/utils/typings.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "IOperator",
+                "coveragePercent": 0,
+                "coverageCount": "0/5",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/typings.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "ISelectOption",
+                "coveragePercent": 0,
+                "coverageCount": "0/5",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/typings.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "operators",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
             },
             {
                 "filePath": "src/utils/upload.file.ts",

@@ -1,8 +1,7 @@
 import { type Meta, type StoryObj } from '@storybook/angular';
-import { IconSelectComponent, IconType } from '@Components/assets';
+import { IconSelectComponent, IconType } from '@Components';
 
 const meta: Meta<IconSelectComponent> = {
-    title: 'Components/Icon-select',
     component: IconSelectComponent,
     tags: ['autodocs'],
     args: {

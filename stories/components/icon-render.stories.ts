@@ -1,5 +1,5 @@
 import { type Meta, type StoryObj } from '@storybook/angular';
-import { IconRenderComponent, IconType } from '@Components/assets';
+import { IconRenderComponent, IconType } from '@Components';
 
 const meta: Meta<IconRenderComponent> = {
     title: 'Components/Icon-render',

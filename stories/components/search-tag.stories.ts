@@ -1,5 +1,5 @@
 import { type Meta, type StoryObj } from '@storybook/angular';
-import { SearchTagComponent } from '@Components/search-tag';
+import { SearchTagComponent } from '@Components';
 
 const meta: Meta<SearchTagComponent> = {
     title: 'Components/search tag',

@@ -1,0 +1,74 @@
+<nz-input-group nzCompact
+                 class="values flex-1">
+  <nz-select [(ngModel)]="operator"
+              (ngModelChange)="setOperator($event)"
+              nzPlaceHolder="请选择"
+              [nzDisabled]="isReadonly"
+              [style.width.px]="84"
+              [nzOptions]="operators">
+  </nz-select>
+  <ng-container *ngTemplateOutlet="valueTpl;context: {$implicit: false, isEndValue:false}"></ng-container>
+  <ng-container *ngIf="isRange&&dataType!==ECmpTypeOperatorMap.date">
+    <input type="text"
+           disabled
+           nz-input
+           placeholder="~"
+           style="width: 30px; border-right: 0; pointer-events: none; background-color: #fff;" />
+    <ng-container *ngTemplateOutlet="valueTpl;context: {$implicit: true, isEndValue:true}"></ng-container>
+  </ng-container>
+</nz-input-group>
+<ng-template #valueTpl
+             let-isEndValue="isEndValue">
+  <ng-container [ngSwitch]="dataType">
+    <nz-input-number *ngSwitchCase="ECmpTypeOperatorMap.number"
+                      class="valueInput flex-1"
+                      [nzDisabled]="isReadonly"
+                      [ngModel]="getDisplayValue(isEndValue)"
+                      (ngModelChange)="updateValue($event,isEndValue)"
+                      [nzMin]="min===undefined?'null':min"></nz-input-number>
+    <input *ngSwitchCase="ECmpTypeOperatorMap.char"
+           class="valueInput flex-1"
+           nz-input
+           placeholder="请输入"
+           [ngModel]="getDisplayValue(isEndValue)"
+           (ngModelChange)="updateValue($event,isEndValue)"
+           [disabled]="isReadonly" />
+    <nz-cascader *ngSwitchCase="ECmpTypeOperatorMap.select_cascader"
+                  class="valueInput flex-1"
+                  [nzDisabled]="isReadonly"
+                  [nzOptions]="extraOptions"
+                  [ngModel]="getDisplayValue(isEndValue)"
+                  (ngModelChange)="updateValue($event,isEndValue)"></nz-cascader>
+    <ng-container *ngSwitchCase="ECmpTypeOperatorMap.date">
+      <nz-date-picker *ngIf="!isRange"
+                       class="valueInput flex-1"
+                       [nzDisabled]="isReadonly"
+                       [ngModel]="getDisplayValue(isEndValue)"
+                       (ngModelChange)="updateValue($event,isEndValue)"></nz-date-picker>
+      <nz-range-picker *ngIf="isRange"
+                        class="flex-1"
+                        [nzDisabled]="isReadonly"
+                        nzFormat="yyyy-MM-dd"
+                        [(ngModel)]="values"
+                        (ngModelChange)="updateDateRangeValue($event,isEndValue)">
+      </nz-range-picker>
+    </ng-container>
+    <nz-select *ngSwitchCase="ECmpTypeOperatorMap.select_single"
+                class="valueInput flex-1"
+                [nzDisabled]="isReadonly"
+                [ngModel]="getDisplayValue(isEndValue)"
+                (ngModelChange)="updateValue($event,isEndValue)"
+                nzPlaceHolder="请选择"
+                [nzOptions]="extraOptions">
+    </nz-select>
+    <nz-select *ngSwitchCase="ECmpTypeOperatorMap.select_multiple"
+                class="valueInput flex-1"
+                [nzDisabled]="isReadonly"
+                [nzMode]="'multiple'"
+                [ngModel]="getDisplayValue(isEndValue)"
+                (ngModelChange)="updateValue($event,isEndValue)"
+                nzPlaceHolder="请选择"
+                [nzOptions]="extraOptions">
+    </nz-select>
+  </ng-container>
+</ng-template>

@@ -31,9 +31,9 @@ export class MutationObserverDirective implements AfterViewInit, OnDestroy {
     @Output() public mutationChange = new EventEmitter<MutationRecord>();
     private mutationObserver: MutationObserver;
     private readonly config: MutationObserverInit = {
-        attributes: true,    // Watch for attribute changes
-        childList: true,   // Don't watch for child node changes
-        subtree: false      // Don't watch for changes in descendants
+        attributes: true,
+        childList: true,
+        subtree: false
     };
 
     constructor(private elementRef: ElementRef) {

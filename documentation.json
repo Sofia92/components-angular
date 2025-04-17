@@ -437,31 +437,6 @@
             "kind": 171,
             "methods": [],
             "extends": []
-        },
-        {
-            "name": "User",
-            "id": "interface-User-d4821beac0e4a852e513391b7470981c4353fdd95a18628bb68136c8695b489ee15b926e2e5031bc26cf30e1508e0a362c3ee13a06734702b4d15af140e485d5",
-            "file": "src/stories/header/user.ts",
-            "deprecated": false,
-            "deprecationMessage": "",
-            "type": "interface",
-            "sourceCode": "export interface User {\n  name: string;\n}\n",
-            "properties": [
-                {
-                    "name": "name",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "string",
-                    "indexKey": "",
-                    "optional": false,
-                    "description": "",
-                    "line": 2
-                }
-            ],
-            "indexSignatures": [],
-            "kind": 171,
-            "methods": [],
-            "extends": []
         }
     ],
     "injectables": [
@@ -1239,12 +1214,12 @@
         },
         {
             "name": "MutationObserverDirective",
-            "id": "directive-MutationObserverDirective-fd0f734f188575999ca8003da910231baeb761dad365899533d6e24b90adb6daf7c249558595d50dc7e8b97f190b05ced25736c1dac22b08f38bfe5f573b5dcc",
+            "id": "directive-MutationObserverDirective-01a9ff57b32bacfa6033803767de9e2e223f323dc7a5a777b9d389d587c19932753c7cfe437bfc34aadee23b5598bfd2acbf33132e5f22c90432b14ddf67f4ca",
             "file": "src/directives/mutationObserver.directive.ts",
             "type": "directive",
             "description": "",
             "rawdescription": "\n",
-            "sourceCode": "import { AfterViewInit, Directive, ElementRef, EventEmitter, OnDestroy, Output } from \"@angular/core\";\n\n@Directive({\n    selector: '[appMutationObserver]'\n})\nexport class MutationObserverDirective implements AfterViewInit, OnDestroy {\n    @Output() public mutationChange = new EventEmitter<MutationRecord>();\n    private mutationObserver: MutationObserver;\n    private readonly config: MutationObserverInit = {\n        attributes: true,    // Watch for attribute changes\n        childList: true,   // Don't watch for child node changes\n        subtree: false      // Don't watch for changes in descendants\n    };\n\n    constructor(private elementRef: ElementRef) {\n        const callback = (mutationList: MutationRecord[]) => {\n            for (const mutation of mutationList) {\n                if (mutation.type === \"attributes\" || mutation.type === \"childList\") {\n                    this.mutationChange.emit(mutation);\n                }\n            }\n        };\n\n        this.mutationObserver = new MutationObserver(callback);\n    }\n\n    /**\n     * Start observing the element after view initialization\n     */\n    public ngAfterViewInit(): void {\n        this.mutationObserver.observe(this.elementRef.nativeElement, this.config);\n    }\n\n    /**\n     * Clean up by disconnecting the observer when directive is destroyed\n     */\n    public ngOnDestroy(): void {\n        this.mutationObserver.disconnect();\n    }\n}\n",
+            "sourceCode": "import { AfterViewInit, Directive, ElementRef, EventEmitter, OnDestroy, Output } from \"@angular/core\";\n\n@Directive({\n    selector: '[appMutationObserver]'\n})\nexport class MutationObserverDirective implements AfterViewInit, OnDestroy {\n    @Output() public mutationChange = new EventEmitter<MutationRecord>();\n    private mutationObserver: MutationObserver;\n    private readonly config: MutationObserverInit = {\n        attributes: true,\n        childList: true,\n        subtree: false\n    };\n\n    constructor(private elementRef: ElementRef) {\n        const callback = (mutationList: MutationRecord[]) => {\n            for (const mutation of mutationList) {\n                if (mutation.type === \"attributes\" || mutation.type === \"childList\") {\n                    this.mutationChange.emit(mutation);\n                }\n            }\n        };\n\n        this.mutationObserver = new MutationObserver(callback);\n    }\n\n    /**\n     * Start observing the element after view initialization\n     */\n    public ngAfterViewInit(): void {\n        this.mutationObserver.observe(this.elementRef.nativeElement, this.config);\n    }\n\n    /**\n     * Clean up by disconnecting the observer when directive is destroyed\n     */\n    public ngOnDestroy(): void {\n        this.mutationObserver.disconnect();\n    }\n}\n",
             "selector": "[appMutationObserver]",
             "providers": [],
             "hostDirectives": [],
@@ -1267,7 +1242,7 @@
             "propertiesClass": [
                 {
                     "name": "config",
-                    "defaultValue": "{\n        attributes: true,    // Watch for attribute changes\n        childList: true,   // Don't watch for child node changes\n        subtree: false      // Don't watch for changes in descendants\n    }",
+                    "defaultValue": "{\n        attributes: true,\n        childList: true,\n        subtree: false\n    }",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "MutationObserverInit",
@@ -2094,92 +2069,6 @@
                     }
                 }
             }
-        },
-        {
-            "name": "HeaderComponent",
-            "id": "component-HeaderComponent-9b571fd3d77fe8dd92f839f95556e0aa5cd2de2b4aa1565d3b5d0942e4802b17ae7ae510d5c85c4edb11aa7974c6751ee8fee5c4a11e9eab141a8530989cac3e",
-            "file": "src/stories/header/header.component.ts",
-            "encapsulation": [],
-            "entryComponents": [],
-            "inputs": [],
-            "outputs": [],
-            "providers": [],
-            "selector": "storybook-header",
-            "styleUrls": [
-                "./header.css"
-            ],
-            "styles": [],
-            "template": "<header>  <div class=\"storybook-header\">\n    <div>\n      <svg width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\">\n        <g fill=\"none\" fillRule=\"evenodd\">\n          <path\n            d=\"M10 0h12a10 10 0 0110 10v12a10 10 0 01-10 10H10A10 10 0 010 22V10A10 10 0 0110 0z\"\n            fill=\"#FFF\"\n          />\n          <path\n            d=\"M5.3 10.6l10.4 6v11.1l-10.4-6v-11zm11.4-6.2l9.7 5.5-9.7 5.6V4.4z\"\n            fill=\"#555AB9\"\n          />\n          <path d=\"M27.2 10.6v11.2l-10.5 6V16.5l10.5-6zM15.7 4.4v11L6 10l9.7-5.5z\" fill=\"#91BAF8\" />\n        </g>\n      </svg>\n      <h1>Acme</h1>\n    </div>\n    <div>\n      <div *ngIf=\"user\">\n        <span class=\"welcome\">\n          Welcome, <b>{{ user.name }}</b\n          >!\n        </span>\n        <storybook-button\n          *ngIf=\"user\"\n          size=\"small\"\n          (onClick)=\"onLogout.emit($event)\"\n          label=\"Log out\"\n        ></storybook-button>\n      </div>\n      <div *ngIf=\"!user\">\n        <storybook-button\n          *ngIf=\"!user\"\n          size=\"small\"\n          class=\"margin-left\"\n          (onClick)=\"onLogin.emit($event)\"\n          label=\"Log in\"\n        ></storybook-button>\n        <storybook-button\n          *ngIf=\"!user\"\n          size=\"small\"\n          [primary]=\"true\"\n          class=\"margin-left\"\n          (onClick)=\"onCreateAccount.emit($event)\"\n          label=\"Sign up\"\n        ></storybook-button>\n      </div>\n    </div>\n  </div>\n</header>",
-            "templateUrl": [],
-            "viewProviders": [],
-            "hostDirectives": [],
-            "inputsClass": [
-                {
-                    "name": "user",
-                    "defaultValue": "null",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "line": 65,
-                    "type": "User | null",
-                    "decorators": []
-                }
-            ],
-            "outputsClass": [
-                {
-                    "name": "onCreateAccount",
-                    "defaultValue": "new EventEmitter<Event>()",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "line": 74,
-                    "type": "EventEmitter"
-                },
-                {
-                    "name": "onLogin",
-                    "defaultValue": "new EventEmitter<Event>()",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "line": 68,
-                    "type": "EventEmitter"
-                },
-                {
-                    "name": "onLogout",
-                    "defaultValue": "new EventEmitter<Event>()",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "line": 71,
-                    "type": "EventEmitter"
-                }
-            ],
-            "propertiesClass": [],
-            "methodsClass": [],
-            "deprecated": false,
-            "deprecationMessage": "",
-            "hostBindings": [],
-            "hostListeners": [],
-            "standalone": false,
-            "imports": [
-                {
-                    "name": "CommonModule",
-                    "type": "module"
-                },
-                {
-                    "name": "ButtonComponent",
-                    "type": "component"
-                }
-            ],
-            "description": "",
-            "rawdescription": "\n",
-            "type": "component",
-            "sourceCode": "import { Component, Input, Output, EventEmitter } from '@angular/core';\nimport { CommonModule } from '@angular/common';\n\nimport { ButtonComponent } from '../../components';\nimport type { User } from './user';\n\n@Component({\n  selector: 'storybook-header',\n  imports: [CommonModule, ButtonComponent],\n  template: `<header>\n  <div class=\"storybook-header\">\n    <div>\n      <svg width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\">\n        <g fill=\"none\" fillRule=\"evenodd\">\n          <path\n            d=\"M10 0h12a10 10 0 0110 10v12a10 10 0 01-10 10H10A10 10 0 010 22V10A10 10 0 0110 0z\"\n            fill=\"#FFF\"\n          />\n          <path\n            d=\"M5.3 10.6l10.4 6v11.1l-10.4-6v-11zm11.4-6.2l9.7 5.5-9.7 5.6V4.4z\"\n            fill=\"#555AB9\"\n          />\n          <path d=\"M27.2 10.6v11.2l-10.5 6V16.5l10.5-6zM15.7 4.4v11L6 10l9.7-5.5z\" fill=\"#91BAF8\" />\n        </g>\n      </svg>\n      <h1>Acme</h1>\n    </div>\n    <div>\n      <div *ngIf=\"user\">\n        <span class=\"welcome\">\n          Welcome, <b>{{ user.name }}</b\n          >!\n        </span>\n        <storybook-button\n          *ngIf=\"user\"\n          size=\"small\"\n          (onClick)=\"onLogout.emit($event)\"\n          label=\"Log out\"\n        ></storybook-button>\n      </div>\n      <div *ngIf=\"!user\">\n        <storybook-button\n          *ngIf=\"!user\"\n          size=\"small\"\n          class=\"margin-left\"\n          (onClick)=\"onLogin.emit($event)\"\n          label=\"Log in\"\n        ></storybook-button>\n        <storybook-button\n          *ngIf=\"!user\"\n          size=\"small\"\n          [primary]=\"true\"\n          class=\"margin-left\"\n          (onClick)=\"onCreateAccount.emit($event)\"\n          label=\"Sign up\"\n        ></storybook-button>\n      </div>\n    </div>\n  </div>\n</header>`,\n  styleUrls: ['./header.css'],\n})\nexport class HeaderComponent {\n  @Input()\n  user: User | null = null;\n\n  @Output()\n  onLogin = new EventEmitter<Event>();\n\n  @Output()\n  onLogout = new EventEmitter<Event>();\n\n  @Output()\n  onCreateAccount = new EventEmitter<Event>();\n}\n",
-            "assetsDirs": [],
-            "styleUrlsData": [
-                {
-                    "data": ".storybook-header {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  border-bottom: 1px solid rgba(0, 0, 0, 0.1);\n  padding: 15px 20px;\n  font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;\n}\n\n.storybook-header svg {\n  display: inline-block;\n  vertical-align: top;\n}\n\n.storybook-header h1 {\n  display: inline-block;\n  vertical-align: top;\n  margin: 6px 0 6px 10px;\n  font-weight: 700;\n  font-size: 20px;\n  line-height: 1;\n}\n\n.storybook-header button + button {\n  margin-left: 10px;\n}\n\n.storybook-header .welcome {\n  margin-right: 10px;\n  color: #333;\n  font-size: 14px;\n}\n",
-                    "styleUrl": "./header.css"
-                }
-            ],
-            "stylesData": "",
-            "extends": []
         },
         {
             "name": "IconRenderComponent",
@@ -5800,7 +5689,7 @@
     },
     "routes": [],
     "coverage": {
-        "count": 18,
+        "count": 19,
         "status": "low",
         "files": [
             {
@@ -6063,24 +5952,6 @@
                 "name": "MyModalService",
                 "coveragePercent": 0,
                 "coverageCount": "0/4",
-                "status": "low"
-            },
-            {
-                "filePath": "src/stories/header/header.component.ts",
-                "type": "component",
-                "linktype": "component",
-                "name": "HeaderComponent",
-                "coveragePercent": 0,
-                "coverageCount": "0/5",
-                "status": "low"
-            },
-            {
-                "filePath": "src/stories/header/user.ts",
-                "type": "interface",
-                "linktype": "interface",
-                "name": "User",
-                "coveragePercent": 0,
-                "coverageCount": "0/2",
                 "status": "low"
             },
             {

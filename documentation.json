@@ -339,6 +339,41 @@
             "extends": []
         },
         {
+            "name": "ICheckedStatus",
+            "id": "interface-ICheckedStatus-2535f7d0635284b28c3dc60938e88dd03bfd347c36cf3cf9661c838c9e53dab62901a5f9ecc101f19041dd436e8cba047852f1516d5626e24464ceb13aa5d3f8",
+            "file": "src/utils/list-checked.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "interface",
+            "sourceCode": "import { selectBy, Selector } from './object';\r\n\r\nfunction getCheckedCount<T>(list: T[], checkedSelector: Selector<T, boolean>): number {\r\n  return list.reduce((acc, cur) => (selectBy(cur, checkedSelector) ? acc + 1 : acc), 0);\r\n}\r\n\r\nfunction _isAllChecked(checkedCount: number, totalCount: number): boolean {\r\n  // 若勾选数量或总数有0，不认为是全选\r\n  return !!(checkedCount && totalCount) && totalCount === checkedCount;\r\n}\r\n/**\r\n * 通用列表全勾选计算逻辑\r\n * @param list 列表\r\n * @param checkedSelector 列表项勾选状态选择器\r\n * @returns 列表状态是否为全勾选\r\n */\r\nexport function isAllChecked<T>(list: T[], checkedSelector: Selector<T, boolean>): boolean {\r\n  const checkedCount = getCheckedCount(list, checkedSelector);\r\n  const totalCount = list.length;\r\n  return _isAllChecked(checkedCount, totalCount);\r\n}\r\n\r\nfunction _isHalfChecked(checkedCount: number, totalCount: number): boolean {\r\n  // 若勾选数量或总数有0，不认为是半选\r\n  return !!(checkedCount && totalCount) && totalCount !== checkedCount;\r\n}\r\n/**\r\n * 通用列表半勾选计算逻辑\r\n * @param list 列表\r\n * @param checkedSelector 列表项勾选状态选择器\r\n * @returns 列表状态是否为半勾选\r\n */\r\nexport function isHalfChecked<T>(list: T[], checkedSelector: Selector<T, boolean>): boolean {\r\n  const checkedCount = getCheckedCount(list, checkedSelector);\r\n  const totalCount = list.length;\r\n  return _isHalfChecked(checkedCount, totalCount);\r\n}\r\n\r\nexport interface ICheckedStatus {\r\n  isAllChecked: boolean;\r\n  isHalfChecked: boolean;\r\n}\r\n/**\r\n * 通用列表勾选状态计算\r\n * @param list 列表\r\n * @param checkedSelector 列表项勾选状态选择器\r\n * @returns 列表勾选状态\r\n */\r\nexport function getListCheckedStatus<T>(list: T[], checkedSelector: Selector<T, boolean>): ICheckedStatus {\r\n  const checkedCount = getCheckedCount(list, checkedSelector);\r\n  const totalCount = list.length;\r\n  return {\r\n    isAllChecked: _isAllChecked(checkedCount, totalCount),\r\n    isHalfChecked: _isHalfChecked(checkedCount, totalCount),\r\n  };\r\n}\r\n",
+            "properties": [
+                {
+                    "name": "isAllChecked",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "boolean",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 40
+                },
+                {
+                    "name": "isHalfChecked",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "boolean",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 41
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 171,
+            "methods": [],
+            "extends": []
+        },
+        {
             "name": "ISelectorOption",
             "id": "interface-ISelectorOption-cd796fe185fe233fb76574eda3e62c0aefc636cdaf47e49127be47bbc0e5e843adec888a29ca2fcf01203790e5d16fb7cd9717f7338427d41ea7d0bb1ceccdd3",
             "file": "src/utils/validators.ts",
@@ -1098,12 +1133,12 @@
         },
         {
             "name": "IntersectionObserverDirective",
-            "id": "directive-IntersectionObserverDirective-66beecbb6bd1d9603fc30756cbe34169e8c60e1ff4199dfc5992eb3bd5f88cf30ac39f4d5085b5ef4e184ee6989be5b800b5908036576303bab32535734f50b0",
+            "id": "directive-IntersectionObserverDirective-0af27f170ca604cccfa52ead1e5b3d4e644ef6d3f05b6dd97642b54379ea90ea843b3c87539c37b32b9e27284a6c004a768f69445eb9d501ebd2e9505e7c4eb0",
             "file": "src/directives/intersectionObserver.directive.ts",
             "type": "directive",
             "description": "",
             "rawdescription": "\n",
-            "sourceCode": "import {\n    AfterViewInit,\n    Directive,\n    ElementRef,\n    EventEmitter,\n    OnDestroy,\n    Output\n} from \"@angular/core\";\n\n@Directive({\n    selector: '[appIntersectionObserver]'\n})\nexport class IntersectionObserverDirective implements AfterViewInit, OnDestroy {\n    /**\n     * Event emitter that triggers when the element becomes visible\n     */\n    @Output() public visible = new EventEmitter<void>();\n\n    /**\n     * Intersection Observer instance\n     */\n    private intersectionObserver: IntersectionObserver;\n\n    constructor(private elementRef: ElementRef) {\n        // Create Intersection Observer with callback\n        const callback = (entries: IntersectionObserverEntry[]) => {\n            entries.forEach(({ intersectionRatio }) => {\n                // Only emit when element is actually visible (intersectionRatio > 0)\n                if (intersectionRatio > 0) {\n                    this.visible.emit();\n                }\n            });\n        };\n\n        // Initialize observer with default options\n        // Trigger when at least 10% of the element is visible\n        this.intersectionObserver = new IntersectionObserver(callback, { threshold: 0.1 });\n    }\n\n    /**\n     * Start observing the element after view initialization\n     */\n    public ngAfterViewInit(): void {\n        this.intersectionObserver.observe(this.elementRef.nativeElement);\n    }\n\n    /**\n     * Clean up by disconnecting the observer when directive is destroyed\n     */\n    public ngOnDestroy(): void {\n        this.intersectionObserver.disconnect();\n    }\n}",
+            "sourceCode": "import { AfterViewInit, Directive, ElementRef, EventEmitter, OnDestroy, Output } from \"@angular/core\";\n\n@Directive({\n    selector: '[appIntersectionObserver]'\n})\nexport class IntersectionObserverDirective implements AfterViewInit, OnDestroy {\n    @Output() public visible = new EventEmitter<void>();\n    private intersectionObserver: IntersectionObserver; // Intersection Observer instance\n\n    constructor(private elementRef: ElementRef) {\n        const callback = (entries: IntersectionObserverEntry[]) => {\n            entries.forEach(({ intersectionRatio }) => {\n                // Only emit when element is actually visible (intersectionRatio > 0)\n                if (intersectionRatio > 0) {\n                    this.visible.emit();\n                }\n            });\n        };\n        this.intersectionObserver = new IntersectionObserver(callback, { threshold: 0.1 });\n    }\n\n    /**\n     * Start observing the element after view initialization\n     */\n    public ngAfterViewInit(): void {\n        this.intersectionObserver.observe(this.elementRef.nativeElement);\n    }\n\n    /**\n     * Clean up by disconnecting the observer when directive is destroyed\n     */\n    public ngOnDestroy(): void {\n        this.intersectionObserver.disconnect();\n    }\n}",
             "selector": "[appIntersectionObserver]",
             "providers": [],
             "hostDirectives": [],
@@ -1115,9 +1150,7 @@
                     "defaultValue": "new EventEmitter<void>()",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "rawdescription": "\n\nEvent emitter that triggers when the element becomes visible\n",
-                    "description": "<p>Event emitter that triggers when the element becomes visible</p>\n",
-                    "line": 39,
+                    "line": 29,
                     "type": "EventEmitter"
                 }
             ],
@@ -1133,9 +1166,8 @@
                     "type": "IntersectionObserver",
                     "indexKey": "",
                     "optional": false,
-                    "description": "<p>Intersection Observer instance</p>\n",
-                    "line": 44,
-                    "rawdescription": "\n\nIntersection Observer instance\n",
+                    "description": "",
+                    "line": 30,
                     "modifierKind": [
                         123
                     ]
@@ -1148,7 +1180,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 65,
+                    "line": 47,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "rawdescription": "\n\nStart observing the element after view initialization\n",
@@ -1163,7 +1195,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 72,
+                    "line": 54,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "rawdescription": "\n\nClean up by disconnecting the observer when directive is destroyed\n",
@@ -1191,7 +1223,128 @@
                         "deprecationMessage": ""
                     }
                 ],
-                "line": 44,
+                "line": 30,
+                "jsdoctags": [
+                    {
+                        "name": "elementRef",
+                        "type": "ElementRef",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "MutationObserverDirective",
+            "id": "directive-MutationObserverDirective-fd0f734f188575999ca8003da910231baeb761dad365899533d6e24b90adb6daf7c249558595d50dc7e8b97f190b05ced25736c1dac22b08f38bfe5f573b5dcc",
+            "file": "src/directives/mutationObserver.directive.ts",
+            "type": "directive",
+            "description": "",
+            "rawdescription": "\n",
+            "sourceCode": "import { AfterViewInit, Directive, ElementRef, EventEmitter, OnDestroy, Output } from \"@angular/core\";\n\n@Directive({\n    selector: '[appMutationObserver]'\n})\nexport class MutationObserverDirective implements AfterViewInit, OnDestroy {\n    @Output() public mutationChange = new EventEmitter<MutationRecord>();\n    private mutationObserver: MutationObserver;\n    private readonly config: MutationObserverInit = {\n        attributes: true,    // Watch for attribute changes\n        childList: true,   // Don't watch for child node changes\n        subtree: false      // Don't watch for changes in descendants\n    };\n\n    constructor(private elementRef: ElementRef) {\n        const callback = (mutationList: MutationRecord[]) => {\n            for (const mutation of mutationList) {\n                if (mutation.type === \"attributes\" || mutation.type === \"childList\") {\n                    this.mutationChange.emit(mutation);\n                }\n            }\n        };\n\n        this.mutationObserver = new MutationObserver(callback);\n    }\n\n    /**\n     * Start observing the element after view initialization\n     */\n    public ngAfterViewInit(): void {\n        this.mutationObserver.observe(this.elementRef.nativeElement, this.config);\n    }\n\n    /**\n     * Clean up by disconnecting the observer when directive is destroyed\n     */\n    public ngOnDestroy(): void {\n        this.mutationObserver.disconnect();\n    }\n}\n",
+            "selector": "[appMutationObserver]",
+            "providers": [],
+            "hostDirectives": [],
+            "standalone": false,
+            "inputsClass": [],
+            "outputsClass": [
+                {
+                    "name": "mutationChange",
+                    "defaultValue": "new EventEmitter<MutationRecord>()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 31,
+                    "type": "EventEmitter"
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "propertiesClass": [
+                {
+                    "name": "config",
+                    "defaultValue": "{\n        attributes: true,    // Watch for attribute changes\n        childList: true,   // Don't watch for child node changes\n        subtree: false      // Don't watch for changes in descendants\n    }",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "MutationObserverInit",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 33,
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
+                },
+                {
+                    "name": "mutationObserver",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "MutationObserver",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 32,
+                    "modifierKind": [
+                        123
+                    ]
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "ngAfterViewInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 54,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\nStart observing the element after view initialization\n",
+                    "description": "<p>Start observing the element after view initialization</p>\n",
+                    "modifierKind": [
+                        125
+                    ]
+                },
+                {
+                    "name": "ngOnDestroy",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 61,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\nClean up by disconnecting the observer when directive is destroyed\n",
+                    "description": "<p>Clean up by disconnecting the observer when directive is destroyed</p>\n",
+                    "modifierKind": [
+                        125
+                    ]
+                }
+            ],
+            "extends": [],
+            "implements": [
+                "AfterViewInit",
+                "OnDestroy"
+            ],
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [
+                    {
+                        "name": "elementRef",
+                        "type": "ElementRef",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "line": 37,
                 "jsdoctags": [
                     {
                         "name": "elementRef",
@@ -2922,6 +3075,94 @@
         ],
         "functions": [
             {
+                "name": "_isAllChecked",
+                "file": "src/utils/list-checked.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [
+                    {
+                        "name": "checkedCount",
+                        "type": "number",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "totalCount",
+                        "type": "number",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "returnType": "boolean",
+                "jsdoctags": [
+                    {
+                        "name": "checkedCount",
+                        "type": "number",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "totalCount",
+                        "type": "number",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "_isHalfChecked",
+                "file": "src/utils/list-checked.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [
+                    {
+                        "name": "checkedCount",
+                        "type": "number",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "totalCount",
+                        "type": "number",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "returnType": "boolean",
+                "jsdoctags": [
+                    {
+                        "name": "checkedCount",
+                        "type": "number",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "totalCount",
+                        "type": "number",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            {
                 "name": "certificateCodeValidator",
                 "file": "src/utils/validators.ts",
                 "ctype": "miscellaneous",
@@ -3041,6 +3282,216 @@
                 "args": []
             },
             {
+                "name": "getCheckedCount",
+                "file": "src/utils/list-checked.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [
+                    {
+                        "name": "list",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "checkedSelector",
+                        "type": "Selector",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "returnType": "number",
+                "jsdoctags": [
+                    {
+                        "name": "list",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "checkedSelector",
+                        "type": "Selector",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "getListCheckedStatus",
+                "file": "src/utils/list-checked.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "<p>通用列表勾选状态计算</p>\n",
+                "args": [
+                    {
+                        "name": "list",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "checkedSelector",
+                        "type": "Selector",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "returnType": "ICheckedStatus",
+                "jsdoctags": [
+                    {
+                        "name": {
+                            "pos": 1424,
+                            "end": 1428,
+                            "kind": 80,
+                            "id": 0,
+                            "flags": 16777216,
+                            "transformFlags": 0,
+                            "escapedText": "list"
+                        },
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "pos": 1418,
+                            "end": 1423,
+                            "kind": 80,
+                            "id": 0,
+                            "flags": 16777216,
+                            "transformFlags": 0,
+                            "escapedText": "param"
+                        },
+                        "comment": "<p>列表</p>\n"
+                    },
+                    {
+                        "name": {
+                            "pos": 1443,
+                            "end": 1458,
+                            "kind": 80,
+                            "id": 0,
+                            "flags": 16777216,
+                            "transformFlags": 0,
+                            "escapedText": "checkedSelector"
+                        },
+                        "type": "Selector",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "pos": 1437,
+                            "end": 1442,
+                            "kind": 80,
+                            "id": 0,
+                            "flags": 16777216,
+                            "transformFlags": 0,
+                            "escapedText": "param"
+                        },
+                        "comment": "<p>列表项勾选状态选择器</p>\n"
+                    },
+                    {
+                        "tagName": {
+                            "pos": 1475,
+                            "end": 1482,
+                            "kind": 80,
+                            "id": 0,
+                            "flags": 16777216,
+                            "transformFlags": 0,
+                            "escapedText": "returns"
+                        },
+                        "comment": "<p>列表勾选状态</p>\n"
+                    }
+                ]
+            },
+            {
+                "name": "isAllChecked",
+                "file": "src/utils/list-checked.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "<p>通用列表全勾选计算逻辑</p>\n",
+                "args": [
+                    {
+                        "name": "list",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "checkedSelector",
+                        "type": "Selector",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "returnType": "boolean",
+                "jsdoctags": [
+                    {
+                        "name": {
+                            "pos": 442,
+                            "end": 446,
+                            "kind": 80,
+                            "id": 0,
+                            "flags": 16777216,
+                            "transformFlags": 0,
+                            "escapedText": "list"
+                        },
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "pos": 436,
+                            "end": 441,
+                            "kind": 80,
+                            "id": 0,
+                            "flags": 16777216,
+                            "transformFlags": 0,
+                            "escapedText": "param"
+                        },
+                        "comment": "<p>列表</p>\n"
+                    },
+                    {
+                        "name": {
+                            "pos": 461,
+                            "end": 476,
+                            "kind": 80,
+                            "id": 0,
+                            "flags": 16777216,
+                            "transformFlags": 0,
+                            "escapedText": "checkedSelector"
+                        },
+                        "type": "Selector",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "pos": 455,
+                            "end": 460,
+                            "kind": 80,
+                            "id": 0,
+                            "flags": 16777216,
+                            "transformFlags": 0,
+                            "escapedText": "param"
+                        },
+                        "comment": "<p>列表项勾选状态选择器</p>\n"
+                    },
+                    {
+                        "tagName": {
+                            "pos": 493,
+                            "end": 500,
+                            "kind": 80,
+                            "id": 0,
+                            "flags": 16777216,
+                            "transformFlags": 0,
+                            "escapedText": "returns"
+                        },
+                        "comment": "<p>列表状态是否为全勾选</p>\n"
+                    }
+                ]
+            },
+            {
                 "name": "isEmptyInputValue",
                 "file": "src/utils/validators.ts",
                 "ctype": "miscellaneous",
@@ -3066,6 +3517,90 @@
                         "tagName": {
                             "text": "param"
                         }
+                    }
+                ]
+            },
+            {
+                "name": "isHalfChecked",
+                "file": "src/utils/list-checked.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "<p>通用列表半勾选计算逻辑</p>\n",
+                "args": [
+                    {
+                        "name": "list",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "checkedSelector",
+                        "type": "Selector",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "returnType": "boolean",
+                "jsdoctags": [
+                    {
+                        "name": {
+                            "pos": 976,
+                            "end": 980,
+                            "kind": 80,
+                            "id": 0,
+                            "flags": 16777216,
+                            "transformFlags": 0,
+                            "escapedText": "list"
+                        },
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "pos": 970,
+                            "end": 975,
+                            "kind": 80,
+                            "id": 0,
+                            "flags": 16777216,
+                            "transformFlags": 0,
+                            "escapedText": "param"
+                        },
+                        "comment": "<p>列表</p>\n"
+                    },
+                    {
+                        "name": {
+                            "pos": 995,
+                            "end": 1010,
+                            "kind": 80,
+                            "id": 0,
+                            "flags": 16777216,
+                            "transformFlags": 0,
+                            "escapedText": "checkedSelector"
+                        },
+                        "type": "Selector",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "pos": 989,
+                            "end": 994,
+                            "kind": 80,
+                            "id": 0,
+                            "flags": 16777216,
+                            "transformFlags": 0,
+                            "escapedText": "param"
+                        },
+                        "comment": "<p>列表项勾选状态选择器</p>\n"
+                    },
+                    {
+                        "tagName": {
+                            "pos": 1027,
+                            "end": 1034,
+                            "kind": 80,
+                            "id": 0,
+                            "flags": 16777216,
+                            "transformFlags": 0,
+                            "escapedText": "returns"
+                        },
+                        "comment": "<p>列表状态是否为半勾选</p>\n"
                     }
                 ]
             },
@@ -3327,6 +3862,92 @@
                 ]
             },
             {
+                "name": "selectBy",
+                "file": "src/utils/object/selector.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "<p>选择映射</p>\n",
+                "args": [
+                    {
+                        "name": "item",
+                        "type": "T",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "selector",
+                        "type": "Selector",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "returnType": "P",
+                "jsdoctags": [
+                    {
+                        "name": {
+                            "pos": 66,
+                            "end": 70,
+                            "kind": 80,
+                            "id": 0,
+                            "flags": 16777216,
+                            "transformFlags": 0,
+                            "escapedText": "item"
+                        },
+                        "type": "T",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "pos": 60,
+                            "end": 65,
+                            "kind": 80,
+                            "id": 0,
+                            "flags": 16777216,
+                            "transformFlags": 0,
+                            "escapedText": "param"
+                        },
+                        "comment": "<p>输入</p>\n"
+                    },
+                    {
+                        "name": {
+                            "pos": 84,
+                            "end": 92,
+                            "kind": 80,
+                            "id": 0,
+                            "flags": 16777216,
+                            "transformFlags": 0,
+                            "escapedText": "selector"
+                        },
+                        "type": "Selector",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "pos": 78,
+                            "end": 83,
+                            "kind": 80,
+                            "id": 0,
+                            "flags": 16777216,
+                            "transformFlags": 0,
+                            "escapedText": "param"
+                        },
+                        "comment": "<p>结果选择器，传映射函数则用函数映射，传字符串键则获取输入的该属性</p>\n"
+                    },
+                    {
+                        "tagName": {
+                            "pos": 130,
+                            "end": 137,
+                            "kind": 80,
+                            "id": 0,
+                            "flags": 16777216,
+                            "transformFlags": 0,
+                            "escapedText": "returns"
+                        },
+                        "comment": "<p>映射结果</p>\n"
+                    }
+                ]
+            },
+            {
                 "name": "selectCompareFn",
                 "file": "src/utils/select.util.ts",
                 "ctype": "miscellaneous",
@@ -3471,6 +4092,105 @@
         ],
         "typealiases": [
             {
+                "name": "Action",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "function",
+                "file": "src/utils/type-utils/common.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "AnyFunc",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "function",
+                "file": "src/utils/type-utils/common.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "AnyParam",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "",
+                "file": "src/utils/type-utils/common.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 198
+            },
+            {
+                "name": "CleanUp",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "PureAction",
+                "file": "src/utils/type-utils/common.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 183
+            },
+            {
+                "name": "EnumUnderlayingType",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "string | number",
+                "file": "src/utils/type-utils/common.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 192
+            },
+            {
+                "name": "ExcludeKey",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "Exclude<Keys | K>",
+                "file": "src/utils/type-utils/key-operations.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "<p>排除一些key，且具有类型约束</p>\n",
+                "kind": 183
+            },
+            {
+                "name": "ExtractKey",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "K",
+                "file": "src/utils/type-utils/key-operations.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "<p>获取key联合的子联合</p>\n",
+                "kind": 183
+            },
+            {
+                "name": "FunctionSelector",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "function",
+                "file": "src/utils/object/selector.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            },
+            {
+                "name": "KeySelector",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "",
+                "file": "src/utils/object/selector.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 199
+            },
+            {
                 "name": "MyErrorsOptions",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
@@ -3490,6 +4210,116 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
+                "kind": 183
+            },
+            {
+                "name": "OmitKey",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "Omit<T | K>",
+                "file": "src/utils/type-utils/key-operations.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "<p>键约束强化版Omit</p>\n",
+                "kind": 183
+            },
+            {
+                "name": "PlainObject",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "Record<string | PrimitiveTypes>",
+                "file": "src/utils/type-utils/common.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 183
+            },
+            {
+                "name": "PrimitiveTypes",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "string | number | boolean | null | undefined |  | symbol",
+                "file": "src/utils/type-utils/common.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 192
+            },
+            {
+                "name": "PromiseOr",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "T | PromiseLike<T>",
+                "file": "src/utils/type-utils/common.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 192
+            },
+            {
+                "name": "PropertyKeys",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "",
+                "file": "src/utils/type-utils/key-operations.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "<p>属性的键，目前无法区分方法与回调</p>\n",
+                "kind": 199
+            },
+            {
+                "name": "PropertyPart",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "Pick<T | PropertyKeys<T>>",
+                "file": "src/utils/type-utils/key-operations.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 183
+            },
+            {
+                "name": "PureAction",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "Action<>",
+                "file": "src/utils/type-utils/common.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 183
+            },
+            {
+                "name": "Replace",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "",
+                "file": "src/utils/type-utils/key-operations.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "<p>替换部分属性生成新类型</p>\n",
+                "kind": 200
+            },
+            {
+                "name": "Selector",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "KeySelector<T | P> | FunctionSelector<T | P>",
+                "file": "src/utils/object/selector.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 192
+            },
+            {
+                "name": "StringKey",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "Extract<T | string>",
+                "file": "src/utils/type-utils/key-operations.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "<p>仅字符串键类型</p>\n",
                 "kind": 183
             }
         ],
@@ -3659,6 +4489,390 @@
             ]
         },
         "groupedFunctions": {
+            "src/utils/list-checked.ts": [
+                {
+                    "name": "_isAllChecked",
+                    "file": "src/utils/list-checked.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [
+                        {
+                            "name": "checkedCount",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "totalCount",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "returnType": "boolean",
+                    "jsdoctags": [
+                        {
+                            "name": "checkedCount",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "totalCount",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "_isHalfChecked",
+                    "file": "src/utils/list-checked.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [
+                        {
+                            "name": "checkedCount",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "totalCount",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "returnType": "boolean",
+                    "jsdoctags": [
+                        {
+                            "name": "checkedCount",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "totalCount",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "getCheckedCount",
+                    "file": "src/utils/list-checked.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [
+                        {
+                            "name": "list",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "checkedSelector",
+                            "type": "Selector",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "returnType": "number",
+                    "jsdoctags": [
+                        {
+                            "name": "list",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "checkedSelector",
+                            "type": "Selector",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "getListCheckedStatus",
+                    "file": "src/utils/list-checked.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "<p>通用列表勾选状态计算</p>\n",
+                    "args": [
+                        {
+                            "name": "list",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "checkedSelector",
+                            "type": "Selector",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "returnType": "ICheckedStatus",
+                    "jsdoctags": [
+                        {
+                            "name": {
+                                "pos": 1424,
+                                "end": 1428,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16777216,
+                                "transformFlags": 0,
+                                "escapedText": "list"
+                            },
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "pos": 1418,
+                                "end": 1423,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16777216,
+                                "transformFlags": 0,
+                                "escapedText": "param"
+                            },
+                            "comment": "<p>列表</p>\n"
+                        },
+                        {
+                            "name": {
+                                "pos": 1443,
+                                "end": 1458,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16777216,
+                                "transformFlags": 0,
+                                "escapedText": "checkedSelector"
+                            },
+                            "type": "Selector",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "pos": 1437,
+                                "end": 1442,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16777216,
+                                "transformFlags": 0,
+                                "escapedText": "param"
+                            },
+                            "comment": "<p>列表项勾选状态选择器</p>\n"
+                        },
+                        {
+                            "tagName": {
+                                "pos": 1475,
+                                "end": 1482,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16777216,
+                                "transformFlags": 0,
+                                "escapedText": "returns"
+                            },
+                            "comment": "<p>列表勾选状态</p>\n"
+                        }
+                    ]
+                },
+                {
+                    "name": "isAllChecked",
+                    "file": "src/utils/list-checked.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "<p>通用列表全勾选计算逻辑</p>\n",
+                    "args": [
+                        {
+                            "name": "list",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "checkedSelector",
+                            "type": "Selector",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "returnType": "boolean",
+                    "jsdoctags": [
+                        {
+                            "name": {
+                                "pos": 442,
+                                "end": 446,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16777216,
+                                "transformFlags": 0,
+                                "escapedText": "list"
+                            },
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "pos": 436,
+                                "end": 441,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16777216,
+                                "transformFlags": 0,
+                                "escapedText": "param"
+                            },
+                            "comment": "<p>列表</p>\n"
+                        },
+                        {
+                            "name": {
+                                "pos": 461,
+                                "end": 476,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16777216,
+                                "transformFlags": 0,
+                                "escapedText": "checkedSelector"
+                            },
+                            "type": "Selector",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "pos": 455,
+                                "end": 460,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16777216,
+                                "transformFlags": 0,
+                                "escapedText": "param"
+                            },
+                            "comment": "<p>列表项勾选状态选择器</p>\n"
+                        },
+                        {
+                            "tagName": {
+                                "pos": 493,
+                                "end": 500,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16777216,
+                                "transformFlags": 0,
+                                "escapedText": "returns"
+                            },
+                            "comment": "<p>列表状态是否为全勾选</p>\n"
+                        }
+                    ]
+                },
+                {
+                    "name": "isHalfChecked",
+                    "file": "src/utils/list-checked.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "<p>通用列表半勾选计算逻辑</p>\n",
+                    "args": [
+                        {
+                            "name": "list",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "checkedSelector",
+                            "type": "Selector",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "returnType": "boolean",
+                    "jsdoctags": [
+                        {
+                            "name": {
+                                "pos": 976,
+                                "end": 980,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16777216,
+                                "transformFlags": 0,
+                                "escapedText": "list"
+                            },
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "pos": 970,
+                                "end": 975,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16777216,
+                                "transformFlags": 0,
+                                "escapedText": "param"
+                            },
+                            "comment": "<p>列表</p>\n"
+                        },
+                        {
+                            "name": {
+                                "pos": 995,
+                                "end": 1010,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16777216,
+                                "transformFlags": 0,
+                                "escapedText": "checkedSelector"
+                            },
+                            "type": "Selector",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "pos": 989,
+                                "end": 994,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16777216,
+                                "transformFlags": 0,
+                                "escapedText": "param"
+                            },
+                            "comment": "<p>列表项勾选状态选择器</p>\n"
+                        },
+                        {
+                            "tagName": {
+                                "pos": 1027,
+                                "end": 1034,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16777216,
+                                "transformFlags": 0,
+                                "escapedText": "returns"
+                            },
+                            "comment": "<p>列表状态是否为半勾选</p>\n"
+                        }
+                    ]
+                }
+            ],
             "src/utils/validators.ts": [
                 {
                     "name": "certificateCodeValidator",
@@ -4132,6 +5346,94 @@
                     "args": []
                 }
             ],
+            "src/utils/object/selector.ts": [
+                {
+                    "name": "selectBy",
+                    "file": "src/utils/object/selector.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "<p>选择映射</p>\n",
+                    "args": [
+                        {
+                            "name": "item",
+                            "type": "T",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "selector",
+                            "type": "Selector",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "returnType": "P",
+                    "jsdoctags": [
+                        {
+                            "name": {
+                                "pos": 66,
+                                "end": 70,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16777216,
+                                "transformFlags": 0,
+                                "escapedText": "item"
+                            },
+                            "type": "T",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "pos": 60,
+                                "end": 65,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16777216,
+                                "transformFlags": 0,
+                                "escapedText": "param"
+                            },
+                            "comment": "<p>输入</p>\n"
+                        },
+                        {
+                            "name": {
+                                "pos": 84,
+                                "end": 92,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16777216,
+                                "transformFlags": 0,
+                                "escapedText": "selector"
+                            },
+                            "type": "Selector",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "pos": 78,
+                                "end": 83,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16777216,
+                                "transformFlags": 0,
+                                "escapedText": "param"
+                            },
+                            "comment": "<p>结果选择器，传映射函数则用函数映射，传字符串键则获取输入的该属性</p>\n"
+                        },
+                        {
+                            "tagName": {
+                                "pos": 130,
+                                "end": 137,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16777216,
+                                "transformFlags": 0,
+                                "escapedText": "returns"
+                            },
+                            "comment": "<p>映射结果</p>\n"
+                        }
+                    ]
+                }
+            ],
             "src/utils/uuid.ts": [
                 {
                     "name": "uuidv4",
@@ -4255,6 +5557,221 @@
             ]
         },
         "groupedTypeAliases": {
+            "src/utils/type-utils/common.ts": [
+                {
+                    "name": "Action",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "function",
+                    "file": "src/utils/type-utils/common.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                },
+                {
+                    "name": "AnyFunc",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "function",
+                    "file": "src/utils/type-utils/common.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                },
+                {
+                    "name": "AnyParam",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "",
+                    "file": "src/utils/type-utils/common.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 198
+                },
+                {
+                    "name": "CleanUp",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "PureAction",
+                    "file": "src/utils/type-utils/common.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 183
+                },
+                {
+                    "name": "EnumUnderlayingType",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "string | number",
+                    "file": "src/utils/type-utils/common.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 192
+                },
+                {
+                    "name": "PlainObject",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "Record<string | PrimitiveTypes>",
+                    "file": "src/utils/type-utils/common.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 183
+                },
+                {
+                    "name": "PrimitiveTypes",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "string | number | boolean | null | undefined |  | symbol",
+                    "file": "src/utils/type-utils/common.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 192
+                },
+                {
+                    "name": "PromiseOr",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "T | PromiseLike<T>",
+                    "file": "src/utils/type-utils/common.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 192
+                },
+                {
+                    "name": "PureAction",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "Action<>",
+                    "file": "src/utils/type-utils/common.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 183
+                }
+            ],
+            "src/utils/type-utils/key-operations.ts": [
+                {
+                    "name": "ExcludeKey",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "Exclude<Keys | K>",
+                    "file": "src/utils/type-utils/key-operations.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "<p>排除一些key，且具有类型约束</p>\n",
+                    "kind": 183
+                },
+                {
+                    "name": "ExtractKey",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "K",
+                    "file": "src/utils/type-utils/key-operations.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "<p>获取key联合的子联合</p>\n",
+                    "kind": 183
+                },
+                {
+                    "name": "OmitKey",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "Omit<T | K>",
+                    "file": "src/utils/type-utils/key-operations.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "<p>键约束强化版Omit</p>\n",
+                    "kind": 183
+                },
+                {
+                    "name": "PropertyKeys",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "",
+                    "file": "src/utils/type-utils/key-operations.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "<p>属性的键，目前无法区分方法与回调</p>\n",
+                    "kind": 199
+                },
+                {
+                    "name": "PropertyPart",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "Pick<T | PropertyKeys<T>>",
+                    "file": "src/utils/type-utils/key-operations.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 183
+                },
+                {
+                    "name": "Replace",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "",
+                    "file": "src/utils/type-utils/key-operations.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "<p>替换部分属性生成新类型</p>\n",
+                    "kind": 200
+                },
+                {
+                    "name": "StringKey",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "Extract<T | string>",
+                    "file": "src/utils/type-utils/key-operations.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "<p>仅字符串键类型</p>\n",
+                    "kind": 183
+                }
+            ],
+            "src/utils/object/selector.ts": [
+                {
+                    "name": "FunctionSelector",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "function",
+                    "file": "src/utils/object/selector.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                },
+                {
+                    "name": "KeySelector",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "",
+                    "file": "src/utils/object/selector.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 199
+                },
+                {
+                    "name": "Selector",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "KeySelector<T | P> | FunctionSelector<T | P>",
+                    "file": "src/utils/object/selector.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 192
+                }
+            ],
             "src/utils/validators.ts": [
                 {
                     "name": "MyErrorsOptions",
@@ -4283,7 +5800,7 @@
     },
     "routes": [],
     "coverage": {
-        "count": 9,
+        "count": 18,
         "status": "low",
         "files": [
             {
@@ -4432,9 +5949,18 @@
                 "type": "directive",
                 "linktype": "directive",
                 "name": "IntersectionObserverDirective",
-                "coveragePercent": 66,
-                "coverageCount": "4/6",
-                "status": "good"
+                "coveragePercent": 33,
+                "coverageCount": "2/6",
+                "status": "medium"
+            },
+            {
+                "filePath": "src/directives/mutationObserver.directive.ts",
+                "type": "directive",
+                "linktype": "directive",
+                "name": "MutationObserverDirective",
+                "coveragePercent": 28,
+                "coverageCount": "2/7",
+                "status": "medium"
             },
             {
                 "filePath": "src/directives/polling.directive.ts",
@@ -4608,6 +6134,115 @@
                 "status": "low"
             },
             {
+                "filePath": "src/utils/list-checked.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "ICheckedStatus",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/list-checked.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "_isAllChecked",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/list-checked.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "_isHalfChecked",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/list-checked.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "getCheckedCount",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/list-checked.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "getListCheckedStatus",
+                "coveragePercent": 100,
+                "coverageCount": "1/1",
+                "status": "very-good"
+            },
+            {
+                "filePath": "src/utils/list-checked.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "isAllChecked",
+                "coveragePercent": 100,
+                "coverageCount": "1/1",
+                "status": "very-good"
+            },
+            {
+                "filePath": "src/utils/list-checked.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "isHalfChecked",
+                "coveragePercent": 100,
+                "coverageCount": "1/1",
+                "status": "very-good"
+            },
+            {
+                "filePath": "src/utils/object/selector.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "selectBy",
+                "coveragePercent": 100,
+                "coverageCount": "1/1",
+                "status": "very-good"
+            },
+            {
+                "filePath": "src/utils/object/selector.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "FunctionSelector",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/object/selector.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "KeySelector",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/object/selector.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "Selector",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
                 "filePath": "src/utils/select.util.ts",
                 "type": "function",
                 "linktype": "miscellaneous",
@@ -4646,6 +6281,166 @@
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
+            },
+            {
+                "filePath": "src/utils/type-utils/common.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "Action",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/type-utils/common.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "AnyFunc",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/type-utils/common.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "AnyParam",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/type-utils/common.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "CleanUp",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/type-utils/common.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "EnumUnderlayingType",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/type-utils/common.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "PlainObject",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/type-utils/common.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "PrimitiveTypes",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/type-utils/common.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "PromiseOr",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/type-utils/common.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "PureAction",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/type-utils/key-operations.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "ExcludeKey",
+                "coveragePercent": 100,
+                "coverageCount": "1/1",
+                "status": "very-good"
+            },
+            {
+                "filePath": "src/utils/type-utils/key-operations.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "ExtractKey",
+                "coveragePercent": 100,
+                "coverageCount": "1/1",
+                "status": "very-good"
+            },
+            {
+                "filePath": "src/utils/type-utils/key-operations.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "OmitKey",
+                "coveragePercent": 100,
+                "coverageCount": "1/1",
+                "status": "very-good"
+            },
+            {
+                "filePath": "src/utils/type-utils/key-operations.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "PropertyKeys",
+                "coveragePercent": 100,
+                "coverageCount": "1/1",
+                "status": "very-good"
+            },
+            {
+                "filePath": "src/utils/type-utils/key-operations.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "PropertyPart",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/type-utils/key-operations.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "Replace",
+                "coveragePercent": 100,
+                "coverageCount": "1/1",
+                "status": "very-good"
+            },
+            {
+                "filePath": "src/utils/type-utils/key-operations.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "StringKey",
+                "coveragePercent": 100,
+                "coverageCount": "1/1",
+                "status": "very-good"
             },
             {
                 "filePath": "src/utils/upload.file.ts",

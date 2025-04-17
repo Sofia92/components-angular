@@ -79,55 +79,55 @@ export const AttributeChanges: Story = {
 export const ChildListChanges: Story = {
     render: (args) => ({
         props: {
-            onMutationChange: function (mutation: MutationRecord) {
-                console.log('Child list changed:', mutation);
-            },
             items: ['Item 1', 'Item 2', 'Item 3'],
+            domChanges: [],
+            reset: function () {
+                this.items = ['Item 1', 'Item 2', 'Item 3'];
+                this.domChanges = this.domChanges || [];
+            },
+            onMutationChange: function (mutation: MutationRecord) {
+                const change = {
+                    type: mutation.type,
+                    addedNodes: [...mutation.addedNodes].map(d => (d as HTMLElement).innerText).join(', '),
+                    removedNodes: [...mutation.removedNodes].map(d => (d as HTMLElement).innerText).join(', ')
+                };
+                this.domChanges.push(change);
+            },
             addItem: function () {
-                if (this.items) {
-                    this.items.push(`Item ${this.items.length + 1}`);
-                }
+                this.items.push(`Item ${this.items.length + 1}`);
             },
             removeItem: function () {
-                if (this.items && this.items.length > 0) {
-                    this.items.pop();
-                }
+                this.items.pop();
             }
         },
         template: `
             <div class="demo-container">
-                <div 
+                <div class="bordered padding-md"
                     appMutationObserver 
                     (mutationChange)="onMutationChange($event)"
-                    class="observable-element"
                 >
                     <div *ngFor="let item of items">{{item}}</div>
                 </div>
                 
-                <div class="controls">
-                    <button (click)="addItem()">Add Item</button>
-                    <button (click)="removeItem()">Remove Item</button>
+                <div class="flex gap-md">
+                    <button nz-button nzType="primary" (click)="addItem()">Add Item</button>
+                    <button nz-button nzType="primary" [disabled]="!items.length" (click)="removeItem()">Remove Item</button>
                 </div>
             </div>
-        `,
-        styles: [`
-            .demo-container {
-                padding: 20px;
-            }
-            .observable-element {
-                padding: 10px;
-                margin: 10px 0;
-                border: 1px solid #ccc;
-            }
-            .controls {
-                display: flex;
-                gap: 10px;
-                margin-top: 10px;
-            }
-            button {
-                padding: 8px 16px;
-                cursor: pointer;
-            }
-        `]
+            <div class="padding-top-lg">
+                <table>
+                    <tr>
+                        <th>Type</th>
+                        <th>addedNodes</th>
+                        <th>removedNodes</th>
+                    </tr>
+                    <tr *ngFor="let change of domChanges">
+                        <td class="padding-xs">{{change.type}}</td>
+                        <td class="padding-xs">{{change.addedNodes}}</td>
+                        <td class="padding-xs">{{change.removedNodes}}</td>
+                    </tr>
+                </table>
+            </div>
+        `
     })
 };

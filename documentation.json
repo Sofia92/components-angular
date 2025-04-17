@@ -441,6 +441,260 @@
     ],
     "injectables": [
         {
+            "name": "CountdownService",
+            "id": "injectable-CountdownService-bf55fb7204f73c0db2e12b8987c8ddb97a46c10ec97cee0a6a861d1afce32d9854034f29eee24d933ebfcec6af476562720e25decbc6f6c625882e4afe5e4b43",
+            "file": "src/services/countdown.service.ts",
+            "properties": [
+                {
+                    "name": "countdown$",
+                    "defaultValue": "this.countdownSubject.asObservable()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Observable<string>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 12,
+                    "modifierKind": [
+                        125
+                    ]
+                },
+                {
+                    "name": "countdownSubject",
+                    "defaultValue": "new BehaviorSubject<string>('')",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 7,
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
+                    "name": "isPaused$",
+                    "defaultValue": "this.pauseSubject.asObservable()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Observable<boolean>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 13,
+                    "modifierKind": [
+                        125
+                    ]
+                },
+                {
+                    "name": "pauseSubject",
+                    "defaultValue": "new BehaviorSubject<boolean>(false)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 9,
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
+                    "name": "remainingTime",
+                    "defaultValue": "0",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 10,
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
+                    "name": "timerSubscription",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Subscription",
+                    "indexKey": "",
+                    "optional": true,
+                    "description": "",
+                    "line": 8,
+                    "modifierKind": [
+                        123
+                    ]
+                }
+            ],
+            "methods": [
+                {
+                    "name": "cleanup",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 82,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
+                    "name": "ngOnDestroy",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 89,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "pauseCountdown",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 26,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\n暂停\n",
+                    "description": "<p>暂停</p>\n",
+                    "modifierKind": [
+                        125
+                    ]
+                },
+                {
+                    "name": "resumeCountdown",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 36,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\n恢复\n",
+                    "description": "<p>恢复</p>\n",
+                    "modifierKind": [
+                        125
+                    ]
+                },
+                {
+                    "name": "startCountdown",
+                    "args": [
+                        {
+                            "name": "duration",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "defaultValue": "5"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 17,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        125
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "duration",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "defaultValue": "5",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "startTimer",
+                    "args": [
+                        {
+                            "name": "duration",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 50,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\n开始计时\n",
+                    "description": "<p>开始计时</p>\n",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": {
+                                "pos": 1401,
+                                "end": 1409,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16842752,
+                                "transformFlags": 0,
+                                "escapedText": "duration"
+                            },
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "pos": 1395,
+                                "end": 1400,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16842752,
+                                "transformFlags": 0,
+                                "escapedText": "param"
+                            },
+                            "comment": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "stopCountdown",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 75,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        125
+                    ]
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "description": "",
+            "rawdescription": "\n",
+            "sourceCode": "import { Injectable, OnDestroy } from '@angular/core';\nimport { BehaviorSubject, Observable, Subscription, timer } from 'rxjs';\nimport { take, map } from 'rxjs/operators';\n\n@Injectable({ providedIn: 'root' })\nexport class CountdownService implements OnDestroy {\n    private countdownSubject = new BehaviorSubject<string>('');\n    private timerSubscription?: Subscription;\n    private pauseSubject = new BehaviorSubject<boolean>(false);\n    private remainingTime: number = 0;\n\n    public countdown$: Observable<string> = this.countdownSubject.asObservable();\n    public isPaused$: Observable<boolean> = this.pauseSubject.asObservable();\n\n    constructor() { }\n\n    public startCountdown(duration: number = 5): void {\n        this.cleanup();\n        this.remainingTime = duration;\n        this.startTimer(duration);\n    }\n\n    /**\n     * 暂停\n     */\n    public pauseCountdown(): void {\n        if (this.timerSubscription && !this.pauseSubject.value) {\n            this.pauseSubject.next(true);\n            this.timerSubscription.unsubscribe();\n        }\n    }\n\n    /**\n     * 恢复\n     */\n    public resumeCountdown(): void {\n        if (this.pauseSubject.value) {\n            this.pauseSubject.next(false);\n            this.startTimer(this.remainingTime);\n        }\n        if (!this.timerSubscription) {\n            this.startTimer(this.remainingTime);\n        }\n    }\n\n    /**\n     * 开始计时\n     * @param duration \n     */\n    private startTimer(duration: number): void {\n        this.timerSubscription = timer(0, 1000)\n            .pipe(\n                take(duration + 2),\n                map(value => {\n                    const remaining = duration - value;\n                    this.remainingTime = remaining;\n                    return `${remaining}s`;\n                })\n            )\n            .subscribe({\n                next: (text) => {\n                    this.countdownSubject.next(text);\n                },\n                complete: () => {\n                    this.countdownSubject.next('');\n                    this.cleanup();\n                },\n                error: (error) => {\n                    console.error('Countdown error:', error);\n                    this.cleanup();\n                }\n            });\n    }\n\n    public stopCountdown(): void {\n        this.cleanup();\n        this.countdownSubject.next('');\n        this.pauseSubject.next(false);\n        this.remainingTime = 0;\n    }\n\n    private cleanup(): void {\n        if (this.timerSubscription) {\n            this.timerSubscription.unsubscribe();\n            this.timerSubscription = undefined;\n        }\n    }\n\n    ngOnDestroy(): void {\n        this.cleanup();\n    }\n}",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [],
+                "line": 13
+            },
+            "extends": [],
+            "type": "injectable"
+        },
+        {
             "name": "FileService",
             "id": "injectable-FileService-1af955bb3c189641c9daf18cd6221f933351ce2f57e392cfc1dbb36d0377cb6efc7166de27271fea71c9512f78a524f0a4797dad6ecd6c09737851a7ac5af28c",
             "file": "src/services/file.service.ts",
@@ -5934,6 +6188,15 @@
                 "name": "CanComponentDeactivateGuard",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/services/countdown.service.ts",
+                "type": "injectable",
+                "linktype": "injectable",
+                "name": "CountdownService",
+                "coveragePercent": 20,
+                "coverageCount": "3/15",
                 "status": "low"
             },
             {

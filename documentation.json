@@ -806,7 +806,7 @@
         },
         {
             "name": "FileService",
-            "id": "injectable-FileService-1af955bb3c189641c9daf18cd6221f933351ce2f57e392cfc1dbb36d0377cb6efc7166de27271fea71c9512f78a524f0a4797dad6ecd6c09737851a7ac5af28c",
+            "id": "injectable-FileService-c9b6bdaebd1ea9e21b3f4901e5e57f687332fb2b21e991ed282b2e7fe05cf2f3650b234c4dcd7cc27ef2b610a25cecd7a7d2a0373ed358acf3aaac52b1e94112",
             "file": "src/services/file.service.ts",
             "properties": [],
             "methods": [
@@ -829,7 +829,7 @@
                     "optional": false,
                     "returnType": "any",
                     "typeParameters": [],
-                    "line": 52,
+                    "line": 295,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -873,7 +873,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 14,
+                    "line": 15,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -920,7 +920,7 @@
                     "optional": false,
                     "returnType": "Promise<any>",
                     "typeParameters": [],
-                    "line": 25,
+                    "line": 26,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -948,12 +948,134 @@
                     ]
                 },
                 {
+                    "name": "exportPDF",
+                    "args": [
+                        {
+                            "name": "element",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "pdfName",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "callback",
+                            "type": "function",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "optional": true,
+                            "function": []
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "any",
+                    "typeParameters": [],
+                    "line": 53,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "element",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "pdfName",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "callback",
+                            "type": "function",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "optional": true,
+                            "function": [],
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "getHtmlPDFBlob",
+                    "args": [
+                        {
+                            "name": "element",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "pdfName",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "callback",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "optional": true
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "any",
+                    "typeParameters": [],
+                    "line": 175,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "element",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "pdfName",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "callback",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "optional": true,
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
                     "name": "prepareHeaders",
                     "args": [],
                     "optional": false,
                     "returnType": "HttpHeaders",
                     "typeParameters": [],
-                    "line": 84,
+                    "line": 327,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -973,7 +1095,7 @@
                     "optional": false,
                     "returnType": "literal type[]",
                     "typeParameters": [],
-                    "line": 67,
+                    "line": 310,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -996,7 +1118,7 @@
             "deprecationMessage": "",
             "description": "",
             "rawdescription": "\n",
-            "sourceCode": "import { HttpClient, HttpHeaders } from \"@angular/common/http\";\nimport { Injectable } from \"@angular/core\";\nimport html2canvas from \"html2canvas\";\nimport { catchError, map, of } from \"rxjs\";\n\n@Injectable({ providedIn: 'root' })\nexport class FileService {\n    constructor(private http: HttpClient) { }\n\n    public get signatureToken(): string | null {\n        return localStorage.getItem('signatureToken');\n    }\n\n    public downloadFile(url: string, fileName: string = 'export'): void {\n        let alink;\n        alink = document.createElement('a');\n        alink.setAttribute('href', url);\n        alink.setAttribute('download', fileName);\n        alink.style.visibility = 'hidden';\n        document.body.appendChild(alink);\n        alink.click();\n        document.body.removeChild(alink);\n    }\n\n    public downloadFileWithBlob(url: string, fileName: string): Promise<any> {\n        const headers = this.prepareHeaders();\n        return new Promise((resolve, reject) => {\n            this.http.post(url, {}, { headers, responseType: 'blob' })\n                .pipe(\n                    map(res => {\n                        const path = URL.createObjectURL(res);\n                        let link = document.createElement('a');\n\n                        link.style.display = 'none';\n                        link.href = path;\n                        link.download = fileName;\n                        document.body.appendChild(link);\n                        link.click();\n                        document.body.removeChild(link);\n                        // link = null;\n                        URL.revokeObjectURL(path);\n                        resolve(true)\n                    }),\n                    catchError((err) => {\n                        reject(err);\n                        return of(err);\n                    })\n                )\n        })\n    }\n\n    downloadDom(dom: HTMLElement, fileName: string,) {\n        return html2canvas(dom).then((canvas: any) => {\n            canvas.toBlob((blob: string) => {\n                const href = window.URL.createObjectURL(new Blob([blob]))\n                const link = document.createElement('a')\n                link.href = href;\n                link.download = `${fileName}.png`;\n                document.body.appendChild(link)\n                link.click()\n                document.body.removeChild(link)\n            }, 'image/png')\n        })\n    }\n\n    // 处理文件类型\n    public setFilesType(filesList: { sourceName: string, fileType: string }[]): { sourceName: string, fileType: string }[] {\n        const regPic = /\\.(?:jpeg|png|gif|jpg)/i;\n        const regDoc = /\\.(?:doc|docx)/i;\n        const regXls = /\\.(?:xls|xlsx)/i;\n        const newFileLists = filesList.map((item) => {\n            if (regPic.test(item.sourceName)) {\n                item.fileType = 'img';\n            } else if (regDoc.test(item.sourceName)) {\n                item.fileType = 'doc';\n            } else if (regXls.test(item.sourceName)) {\n                item.fileType = 'xls';\n            }\n            return item;\n        });\n        return newFileLists;\n    }\n\n    private prepareHeaders(): HttpHeaders {\n        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });\n\n        if (this.signatureToken) {\n            const authorization = `Bearer ${this.signatureToken}`;\n            headers.set('Authorization', authorization);\n        }\n        return headers;\n    }\n}",
+            "sourceCode": "import { HttpClient, HttpHeaders } from \"@angular/common/http\";\nimport { Injectable } from \"@angular/core\";\nimport html2canvas from \"html2canvas\";\nimport JSPDF from \"jspdf\";\nimport { catchError, map, of } from \"rxjs\";\n\n@Injectable({ providedIn: 'root' })\nexport class FileService {\n    constructor(private http: HttpClient) { }\n\n    public get signatureToken(): string | null {\n        return localStorage.getItem('signatureToken');\n    }\n\n    public downloadFile(url: string, fileName: string = 'export'): void {\n        let alink;\n        alink = document.createElement('a');\n        alink.setAttribute('href', url);\n        alink.setAttribute('download', fileName);\n        alink.style.visibility = 'hidden';\n        document.body.appendChild(alink);\n        alink.click();\n        document.body.removeChild(alink);\n    }\n\n    public downloadFileWithBlob(url: string, fileName: string): Promise<any> {\n        const headers = this.prepareHeaders();\n        return new Promise((resolve, reject) => {\n            this.http.post(url, {}, { headers, responseType: 'blob' })\n                .pipe(\n                    map(res => {\n                        const path = URL.createObjectURL(res);\n                        let link = document.createElement('a');\n\n                        link.style.display = 'none';\n                        link.href = path;\n                        link.download = fileName;\n                        document.body.appendChild(link);\n                        link.click();\n                        document.body.removeChild(link);\n                        // link = null;\n                        URL.revokeObjectURL(path);\n                        resolve(true)\n                    }),\n                    catchError((err) => {\n                        reject(err);\n                        return of(err);\n                    })\n                )\n        })\n    }\n\n    exportPDF(element: any, pdfName: string, callback?: () => void) {\n       return html2canvas(element, { scale: 1, logging: false, backgroundColor: '#FFFFFF' })\n            .then(function (canvas) {\n                const pdf = new JSPDF(\"p\", \"mm\", \"a4\") // A4纸，纵向\n                const ctx = canvas.getContext(\"2d\");\n                //未生成pdf的html页面高度\n                let htmlHeight = canvas.height;\n                const a4w = 190;\n                const a4h = 257 // A4大小，210mm x 297mm，四边各保留20mm的边距\n                const a4Width = 595.28\n                const a4Height = 841.89 //A4大小，210mm x 297mm，四边各保留10mm的边距，显示区域190x277\n                const imgHeight = Math.floor(a4h * canvas.width / a4w) // 按A4显示比例换算一页图像的像素高度\n                let renderedHeight = 0;\n                let index = 0;\n                //pdf页面偏移\n                let position = 0;\n                let height = 0;\n                let canvas1 = document.createElement(\"canvas\");\n                let pageData = canvas.toDataURL('image/jpeg', 1.0)\n                function createImpl(canvas: any) {\n                    if (htmlHeight > 0) {\n                        index++;\n                        let checkCount = 0\n                        //设置背景色为白色，然后转成图片后，获取截断处图片像素点，从截断处往上一行行扫描像素点颜色，\n                        //碰到这一行颜色都是全白的，代表是从这里开始截断，将这个高度开始将往下的内容都放到下一页\n                        if (htmlHeight > imgHeight) {\n                            let i = position + imgHeight;\n                            for (i; i >= position; i--) {\n                                let isNullLine = true; // 是否是空白像素行\n                                for (var j = 0; j < canvas.width; j++) {\n                                    let c = canvas.getContext('2d').getImageData(j, i, 1, 1).data\n\n                                    if (c[0] != 0xff || c[1] != 0xff || c[2] != 0xff) {\n                                        isNullLine = false; // 只要有一个像素点不是白色，就代表该像素行是连续的\n                                        break\n                                    }\n                                }\n                                if (isNullLine) {\n                                    checkCount++;\n                                    if (checkCount >= 10) { // 连续超过10个空白像素行就换页\n                                        break\n                                    }\n                                } else {\n                                    checkCount = 0\n                                }\n                            }\n                            height = Math.round(i - position) || Math.min(htmlHeight, imgHeight)\n                            if (height <= 0) {\n                                height = imgHeight\n                            }\n                        } else {\n                            height = htmlHeight\n                        }\n\n                        canvas1.width = canvas.width;\n                        canvas1.height = height;\n\n\n                        let ctx = canvas1.getContext('2d');\n                        if (!ctx) return;\n\n                        ctx.drawImage(\n                            canvas,\n                            0,\n                            position,\n                            canvas.width,\n                            height,\n                            0,\n                            0,\n                            canvas.width,\n                            height,\n                        )\n\n                        var pageHeight = Math.round((a4Width / canvas.width) * height)\n                        // pdf.setPageSize(null, pageHeight)\n                        if (position != 0) {\n                            pdf.addPage()\n                        }\n                        pdf.addImage(\n                            canvas1.toDataURL('image/jpeg', 1.0),\n                            'JPEG',\n                            10,\n                            10,\n                            a4w, Math.min(a4h, a4w * canvas1.height / canvas1.width)\n                        )\n                        htmlHeight -= height\n                        position += height\n                        if (htmlHeight > 0) {\n                            setTimeout(createImpl, 500, canvas)\n                        } else {\n                            if (!!callback) {\n                                callback();\n                            }\n                            pdf.save(pdfName + '.pdf')\n                        }\n                    }\n                }\n\n                //当内容未超过pdf一页显示的范围，无需分页\n                if (htmlHeight < imgHeight) {\n                    pdf.addImage(\n                        pageData,\n                        'JPEG',\n                        10,\n                        10,\n                        a4w, Math.min(a4h, a4w * canvas1.height / canvas1.width)\n                    )\n                    if (!!callback) {\n                        callback();\n                    }\n                    pdf.save(pdfName + '.pdf')\n                } else {\n                    try {\n                        pdf.deletePage(0)\n                        setTimeout(createImpl, 500, canvas)\n                    } catch (err) {\n                        // console.log(err);\n                    }\n                }\n            })\n    }\n\n    getHtmlPDFBlob(element: any, pdfName: string, callback?: any) {\n        return html2canvas(element, { logging: false, backgroundColor: '#FFFFFF' })\n            .then(function (canvas) {\n                const pdf = new JSPDF(\"p\", \"mm\", \"a4\") // A4纸，纵向\n                const ctx = canvas.getContext(\"2d\");\n                //未生成pdf的html页面高度\n                let htmlHeight = canvas.height;\n                const a4w = 190;\n                const a4h = 257 // A4大小，210mm x 297mm，四边各保留20mm的边距\n                const a4Width = 595.28\n                const a4Height = 841.89 //A4大小，210mm x 297mm，四边各保留10mm的边距，显示区域190x277\n                const imgHeight = Math.floor(a4h * canvas.width / a4w) // 按A4显示比例换算一页图像的像素高度\n                let renderedHeight = 0;\n                let index = 0;\n                //pdf页面偏移\n                let position = 0;\n                let height = 0;\n                let canvas1 = document.createElement(\"canvas\");\n                let pageData = canvas.toDataURL('image/jpeg', 1.0)\n                function createImpl(canvas: any) {\n                    if (htmlHeight > 0) {\n                        index++;\n                        let checkCount = 0\n                        //设置背景色为白色，然后转成图片后，获取截断处图片像素点，从截断处往上一行行扫描像素点颜色，\n                        //碰到这一行颜色都是全白的，代表是从这里开始截断，将这个高度开始将往下的内容都放到下一页\n                        if (htmlHeight > imgHeight) {\n                            let i = position + imgHeight\n                            for (i; i >= position; i--) {\n                                let isNullLine = true\n                                for (var j = 0; j < canvas.width; j++) {\n                                    let c = canvas.getContext('2d').getImageData(j, i, 1, 1).data\n\n                                    if (c[0] != 0xff || c[1] != 0xff || c[2] != 0xff) {\n                                        isNullLine = false\n                                        break\n                                    }\n                                }\n                                if (isNullLine) {\n                                    checkCount++\n                                    if (checkCount >= 10) {\n                                        break\n                                    }\n                                } else {\n                                    checkCount = 0\n                                }\n                            }\n                            height = Math.round(i - position) || Math.min(htmlHeight, imgHeight)\n                            if (height <= 0) {\n                                height = imgHeight\n                            }\n                        } else {\n                            height = htmlHeight\n                        }\n\n                        canvas1.width = canvas.width;\n                        canvas1.height = height;\n\n\n                        let ctx = canvas1.getContext('2d');\n                        if (!ctx) return;\n\n                        ctx.drawImage(\n                            canvas,\n                            0,\n                            position,\n                            canvas.width,\n                            height,\n                            0,\n                            0,\n                            canvas.width,\n                            height,\n                        )\n\n                        var pageHeight = Math.round((a4Width / canvas.width) * height)\n                        // pdf.setPageSize(null, pageHeight)\n                        if (position != 0) {\n                            pdf.addPage()\n                        }\n                        pdf.addImage(\n                            canvas1.toDataURL('image/jpeg', 1.0),\n                            'JPEG',\n                            10,\n                            10,\n                            a4w, Math.min(a4h, a4w * canvas1.height / canvas1.width)\n                        )\n                        htmlHeight -= height\n                        position += height\n                        if (htmlHeight > 0) {\n                            setTimeout(createImpl, 500, canvas)\n                        } else {\n                            const blob = pdf.output('blob');\n                            const file = new File([blob], pdfName, { type: blob.type });\n                            callback && callback(file);\n                        }\n                    }\n                }\n\n                //当内容未超过pdf一页显示的范围，无需分页\n                if (htmlHeight < imgHeight) {\n                    pdf.addImage(\n                        pageData,\n                        'JPEG',\n                        10,\n                        10,\n                        a4w, Math.min(a4h, a4w * canvas1.height / canvas1.width)\n                    )\n                    const blob = pdf.output('blob');\n                    const file = new File([blob], pdfName, { type: blob.type });\n                    return file;\n                } else {\n                    try {\n                        pdf.deletePage(0)\n                        setTimeout(createImpl, 500, canvas)\n                    } catch (err) {\n                    }\n                }\n                return null;\n            })\n    }\n\n    downloadDom(dom: HTMLElement, fileName: string) {\n        return html2canvas(dom).then((canvas: any) => {\n            canvas.toBlob((blob: string) => {\n                const href = window.URL.createObjectURL(new Blob([blob]))\n                const link = document.createElement('a')\n                link.href = href;\n                link.download = `${fileName}.png`;\n                document.body.appendChild(link)\n                link.click()\n                document.body.removeChild(link)\n            }, 'image/png')\n        })\n    }\n\n    // 处理文件类型\n    public setFilesType(filesList: { sourceName: string, fileType: string }[]): { sourceName: string, fileType: string }[] {\n        const regPic = /\\.(?:jpeg|png|gif|jpg)/i;\n        const regDoc = /\\.(?:doc|docx)/i;\n        const regXls = /\\.(?:xls|xlsx)/i;\n        const newFileLists = filesList.map((item) => {\n            if (regPic.test(item.sourceName)) {\n                item.fileType = 'img';\n            } else if (regDoc.test(item.sourceName)) {\n                item.fileType = 'doc';\n            } else if (regXls.test(item.sourceName)) {\n                item.fileType = 'xls';\n            }\n            return item;\n        });\n        return newFileLists;\n    }\n\n    private prepareHeaders(): HttpHeaders {\n        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });\n\n        if (this.signatureToken) {\n            const authorization = `Bearer ${this.signatureToken}`;\n            headers.set('Authorization', authorization);\n        }\n        return headers;\n    }\n}",
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
@@ -1010,7 +1132,7 @@
                         "deprecationMessage": ""
                     }
                 ],
-                "line": 7,
+                "line": 8,
                 "jsdoctags": [
                     {
                         "name": "http",
@@ -1030,7 +1152,7 @@
                         "name": "signatureToken",
                         "type": "",
                         "returnType": "string | null",
-                        "line": 10
+                        "line": 11
                     }
                 }
             },
@@ -6899,7 +7021,7 @@
                 "linktype": "injectable",
                 "name": "FileService",
                 "coveragePercent": 0,
-                "coverageCount": "0/7",
+                "coverageCount": "0/9",
                 "status": "low"
             },
             {

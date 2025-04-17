@@ -21,7 +21,7 @@ const meta: Meta<any> = {
 export default meta;
 type Story = StoryObj<any>;
 
-export const AllChecked: Story = {
+export const base: Story = {
     render: () => ({
         props: {
             isAllChecked: false,

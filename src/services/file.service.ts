@@ -50,141 +50,12 @@ export class FileService {
         })
     }
 
-    exportPDF(element: any) {
-        return html2canvas(element, { scale: 1, logging: false, backgroundColor: '#FFFFFF' })
-            .then((canvas) => {
-                const pdf = new JSPDF("p", "mm", "a4") // A4纸，纵向
-                const ctx = canvas.getContext("2d");
-                //未生成pdf的html页面高度
-                let htmlHeight = canvas.height;
-                const a4w = 190;
-                const a4h = 257 // A4大小，210mm x 297mm，四边各保留20mm的边距
-                const imgHeight = Math.floor(a4h * canvas.width / a4w) // 按A4显示比例换算一页图像的像素高度
-                let renderedHeight = 0;
-                let index = 0;
-                //pdf页面偏移
-                let position = 0;
-                let canvas1 = document.createElement("canvas");
-                let pageData = canvas.toDataURL('image/jpeg', 1.0)
-
-
-                //当内容未超过pdf一页显示的范围，无需分页
-                if (htmlHeight < imgHeight) {
-                    pdf.addImage(
-                        pageData,
-                        'JPEG',
-                        10,
-                        10,
-                        a4w, Math.min(a4h, a4w * canvas1.height / canvas1.width)
-                    );
-                    return pdf;
-                } else {
-                    try {
-                        pdf.deletePage(0)
-                        return this.createImpl(canvas, index, pdf, htmlHeight, imgHeight, position, canvas1);
-                    } catch (err) {
-                        return pdf;
-                    }
-                }
-            })
-    }
-
     exportPDFFile(element: HTMLElement, pdfName: string) {
         this.exportPDF(element).then((pdf: any) => {
             debugger;
             if (!pdf) return;
             pdf.save(pdfName + '.pdf')
         });
-    }
-
-    private createImpl(
-        canvas: any, index: number, pdf: any, htmlHeight: number, imgHeight: number,
-        position: number,
-        canvas1: any): any {
-        const a4Width = 595.28
-        const a4Height = 841.89 //A4大小，210mm x 297mm，四边各保留10mm的边距，显示区域190x277
-        const a4w = 190;
-        const a4h = 257 // A4大小，210mm x 297mm，四边各保留20mm的边距
-        let height = 0;
-        if (htmlHeight > 0) {
-            index++;
-            let checkCount = 0
-            //设置背景色为白色，然后转成图片后，获取截断处图片像素点，从截断处往上一行行扫描像素点颜色，
-            //碰到这一行颜色都是全白的，代表是从这里开始截断，将这个高度开始将往下的内容都放到下一页
-            if (htmlHeight > imgHeight) {
-                let i = position + imgHeight;
-                for (i; i >= position; i--) {
-                    let isNullLine = true; // 是否是空白像素行
-                    for (var j = 0; j < canvas.width; j++) {
-                        let c = canvas.getContext('2d').getImageData(j, i, 1, 1).data
-
-                        if (c[0] != 0xff || c[1] != 0xff || c[2] != 0xff) {
-                            isNullLine = false; // 只要有一个像素点不是白色，就代表该像素行是连续的
-                            break
-                        }
-                    }
-                    if (isNullLine) {
-                        checkCount++;
-                        if (checkCount >= 10) { // 连续超过10个空白像素行就换页
-                            break
-                        }
-                    } else {
-                        checkCount = 0
-                    }
-                }
-                height = Math.round(i - position) || Math.min(htmlHeight, imgHeight)
-                if (height <= 0) {
-                    height = imgHeight
-                }
-            } else {
-                height = htmlHeight
-            }
-
-            canvas1.width = canvas.width;
-            canvas1.height = height;
-
-
-            let ctx = canvas1.getContext('2d');
-            if (!ctx) return;
-
-            ctx.drawImage(
-                canvas,
-                0,
-                position,
-                canvas.width,
-                height,
-                0,
-                0,
-                canvas.width,
-                height,
-            )
-
-            var pageHeight = Math.round((a4Width / canvas.width) * height)
-            // pdf.setPageSize(null, pageHeight)
-            if (position != 0) {
-                pdf.addPage()
-            }
-            pdf.addImage(
-                canvas1.toDataURL('image/jpeg', 1.0),
-                'JPEG',
-                10,
-                10,
-                a4w, Math.min(a4h, a4w * canvas1.height / canvas1.width)
-            )
-            htmlHeight -= height
-            position += height
-            if (htmlHeight > 0) {
-                return this.createImpl(canvas, index, pdf, htmlHeight, imgHeight, position, canvas1);
-            } else {
-                // if (!!callback) {
-                //     callback();
-                // }
-                // pdf.save(pdfName + '.pdf')
-                return pdf;
-            }
-        } else {
-            return pdf;
-        }
     }
 
     exportWord(contentNode: any, pagetitle: string, callback?: () => void) {
@@ -296,5 +167,134 @@ export class FileService {
             headers.set('Authorization', authorization);
         }
         return headers;
+    }
+
+
+    private exportPDF(element: any) {
+        return html2canvas(element, { scale: 1, logging: false, backgroundColor: '#FFFFFF' })
+            .then((canvas) => {
+                const pdf = new JSPDF("p", "mm", "a4") // A4纸，纵向
+                const ctx = canvas.getContext("2d");
+                //未生成pdf的html页面高度
+                let htmlHeight = canvas.height;
+                const a4w = 190;
+                const a4h = 257 // A4大小，210mm x 297mm，四边各保留20mm的边距
+                const imgHeight = Math.floor(a4h * canvas.width / a4w) // 按A4显示比例换算一页图像的像素高度
+                let renderedHeight = 0;
+                let index = 0;
+                //pdf页面偏移
+                let position = 0;
+                let canvas1 = document.createElement("canvas");
+                let pageData = canvas.toDataURL('image/jpeg', 1.0)
+
+
+                //当内容未超过pdf一页显示的范围，无需分页
+                if (htmlHeight < imgHeight) {
+                    pdf.addImage(
+                        pageData,
+                        'JPEG',
+                        10,
+                        10,
+                        a4w, Math.min(a4h, a4w * canvas1.height / canvas1.width)
+                    );
+                    return pdf;
+                } else {
+                    try {
+                        pdf.deletePage(0)
+                        return this.createImpl(canvas, index, pdf, htmlHeight, imgHeight, position, canvas1);
+                    } catch (err) {
+                        return pdf;
+                    }
+                }
+            })
+    }
+    private createImpl(
+        canvas: any, index: number, pdf: any, htmlHeight: number, imgHeight: number,
+        position: number,
+        canvas1: any): any {
+        const a4Width = 595.28
+        const a4Height = 841.89 //A4大小，210mm x 297mm，四边各保留10mm的边距，显示区域190x277
+        const a4w = 190;
+        const a4h = 257 // A4大小，210mm x 297mm，四边各保留20mm的边距
+        let height = 0;
+        if (htmlHeight > 0) {
+            index++;
+            let checkCount = 0
+            //设置背景色为白色，然后转成图片后，获取截断处图片像素点，从截断处往上一行行扫描像素点颜色，
+            //碰到这一行颜色都是全白的，代表是从这里开始截断，将这个高度开始将往下的内容都放到下一页
+            if (htmlHeight > imgHeight) {
+                let i = position + imgHeight;
+                for (i; i >= position; i--) {
+                    let isNullLine = true; // 是否是空白像素行
+                    for (var j = 0; j < canvas.width; j++) {
+                        let c = canvas.getContext('2d').getImageData(j, i, 1, 1).data
+
+                        if (c[0] != 0xff || c[1] != 0xff || c[2] != 0xff) {
+                            isNullLine = false; // 只要有一个像素点不是白色，就代表该像素行是连续的
+                            break
+                        }
+                    }
+                    if (isNullLine) {
+                        checkCount++;
+                        if (checkCount >= 10) { // 连续超过10个空白像素行就换页
+                            break
+                        }
+                    } else {
+                        checkCount = 0
+                    }
+                }
+                height = Math.round(i - position) || Math.min(htmlHeight, imgHeight)
+                if (height <= 0) {
+                    height = imgHeight
+                }
+            } else {
+                height = htmlHeight
+            }
+
+            canvas1.width = canvas.width;
+            canvas1.height = height;
+
+
+            let ctx = canvas1.getContext('2d');
+            if (!ctx) return;
+
+            ctx.drawImage(
+                canvas,
+                0,
+                position,
+                canvas.width,
+                height,
+                0,
+                0,
+                canvas.width,
+                height,
+            )
+
+            var pageHeight = Math.round((a4Width / canvas.width) * height)
+            // pdf.setPageSize(null, pageHeight)
+            if (position != 0) {
+                pdf.addPage()
+            }
+            pdf.addImage(
+                canvas1.toDataURL('image/jpeg', 1.0),
+                'JPEG',
+                10,
+                10,
+                a4w, Math.min(a4h, a4w * canvas1.height / canvas1.width)
+            )
+            htmlHeight -= height
+            position += height
+            if (htmlHeight > 0) {
+                return this.createImpl(canvas, index, pdf, htmlHeight, imgHeight, position, canvas1);
+            } else {
+                // if (!!callback) {
+                //     callback();
+                // }
+                // pdf.save(pdfName + '.pdf')
+                return pdf;
+            }
+        } else {
+            return pdf;
+        }
     }
 }

@@ -6,7 +6,8 @@
   - chart-setting
   - bi-dashboard
   - hotLink
-  - eventSource
+  - eventSource 
+  - queryCondition
 
 - 垂直滚动容器，滚动上加载，滚动下加载
 - 水平滚动容器，左侧加载，右侧加载

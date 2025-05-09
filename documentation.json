@@ -806,10 +806,131 @@
         },
         {
             "name": "FileService",
-            "id": "injectable-FileService-c9b6bdaebd1ea9e21b3f4901e5e57f687332fb2b21e991ed282b2e7fe05cf2f3650b234c4dcd7cc27ef2b610a25cecd7a7d2a0373ed358acf3aaac52b1e94112",
+            "id": "injectable-FileService-a186252f5c6149ccc278ce7ba65e6d65dbdbfdcf79e861b6cb956c1a3e92f60a9bf2cf3fd9896a5d5b196ffa0c808466c9ede8436ff884abfd9c968f8097a34a",
             "file": "src/services/file.service.ts",
             "properties": [],
             "methods": [
+                {
+                    "name": "createImpl",
+                    "args": [
+                        {
+                            "name": "canvas",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "index",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "pdf",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "htmlHeight",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "imgHeight",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "position",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "canvas1",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "any",
+                    "typeParameters": [],
+                    "line": 211,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "canvas",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "index",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "pdf",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "htmlHeight",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "imgHeight",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "position",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "canvas1",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
                 {
                     "name": "downloadDom",
                     "args": [
@@ -829,7 +950,7 @@
                     "optional": false,
                     "returnType": "any",
                     "typeParameters": [],
-                    "line": 295,
+                    "line": 130,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -955,9 +1076,83 @@
                             "type": "any",
                             "deprecated": false,
                             "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "any",
+                    "typeParameters": [],
+                    "line": 173,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "element",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "exportPDFFile",
+                    "args": [
+                        {
+                            "name": "element",
+                            "type": "HTMLElement",
+                            "deprecated": false,
+                            "deprecationMessage": ""
                         },
                         {
                             "name": "pdfName",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 53,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "element",
+                            "type": "HTMLElement",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "pdfName",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "exportWord",
+                    "args": [
+                        {
+                            "name": "contentNode",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "pagetitle",
                             "type": "string",
                             "deprecated": false,
                             "deprecationMessage": ""
@@ -972,14 +1167,14 @@
                         }
                     ],
                     "optional": false,
-                    "returnType": "any",
+                    "returnType": "void",
                     "typeParameters": [],
-                    "line": 53,
+                    "line": 61,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
                         {
-                            "name": "element",
+                            "name": "contentNode",
                             "type": "any",
                             "deprecated": false,
                             "deprecationMessage": "",
@@ -988,7 +1183,7 @@
                             }
                         },
                         {
-                            "name": "pdfName",
+                            "name": "pagetitle",
                             "type": "string",
                             "deprecated": false,
                             "deprecationMessage": "",
@@ -1010,72 +1205,12 @@
                     ]
                 },
                 {
-                    "name": "getHtmlPDFBlob",
-                    "args": [
-                        {
-                            "name": "element",
-                            "type": "any",
-                            "deprecated": false,
-                            "deprecationMessage": ""
-                        },
-                        {
-                            "name": "pdfName",
-                            "type": "string",
-                            "deprecated": false,
-                            "deprecationMessage": ""
-                        },
-                        {
-                            "name": "callback",
-                            "type": "any",
-                            "deprecated": false,
-                            "deprecationMessage": "",
-                            "optional": true
-                        }
-                    ],
-                    "optional": false,
-                    "returnType": "any",
-                    "typeParameters": [],
-                    "line": 175,
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "jsdoctags": [
-                        {
-                            "name": "element",
-                            "type": "any",
-                            "deprecated": false,
-                            "deprecationMessage": "",
-                            "tagName": {
-                                "text": "param"
-                            }
-                        },
-                        {
-                            "name": "pdfName",
-                            "type": "string",
-                            "deprecated": false,
-                            "deprecationMessage": "",
-                            "tagName": {
-                                "text": "param"
-                            }
-                        },
-                        {
-                            "name": "callback",
-                            "type": "any",
-                            "deprecated": false,
-                            "deprecationMessage": "",
-                            "optional": true,
-                            "tagName": {
-                                "text": "param"
-                            }
-                        }
-                    ]
-                },
-                {
                     "name": "prepareHeaders",
                     "args": [],
                     "optional": false,
                     "returnType": "HttpHeaders",
                     "typeParameters": [],
-                    "line": 327,
+                    "line": 162,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -1095,7 +1230,7 @@
                     "optional": false,
                     "returnType": "literal type[]",
                     "typeParameters": [],
-                    "line": 310,
+                    "line": 145,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -1118,7 +1253,7 @@
             "deprecationMessage": "",
             "description": "",
             "rawdescription": "\n",
-            "sourceCode": "import { HttpClient, HttpHeaders } from \"@angular/common/http\";\nimport { Injectable } from \"@angular/core\";\nimport html2canvas from \"html2canvas\";\nimport JSPDF from \"jspdf\";\nimport { catchError, map, of } from \"rxjs\";\n\n@Injectable({ providedIn: 'root' })\nexport class FileService {\n    constructor(private http: HttpClient) { }\n\n    public get signatureToken(): string | null {\n        return localStorage.getItem('signatureToken');\n    }\n\n    public downloadFile(url: string, fileName: string = 'export'): void {\n        let alink;\n        alink = document.createElement('a');\n        alink.setAttribute('href', url);\n        alink.setAttribute('download', fileName);\n        alink.style.visibility = 'hidden';\n        document.body.appendChild(alink);\n        alink.click();\n        document.body.removeChild(alink);\n    }\n\n    public downloadFileWithBlob(url: string, fileName: string): Promise<any> {\n        const headers = this.prepareHeaders();\n        return new Promise((resolve, reject) => {\n            this.http.post(url, {}, { headers, responseType: 'blob' })\n                .pipe(\n                    map(res => {\n                        const path = URL.createObjectURL(res);\n                        let link = document.createElement('a');\n\n                        link.style.display = 'none';\n                        link.href = path;\n                        link.download = fileName;\n                        document.body.appendChild(link);\n                        link.click();\n                        document.body.removeChild(link);\n                        // link = null;\n                        URL.revokeObjectURL(path);\n                        resolve(true)\n                    }),\n                    catchError((err) => {\n                        reject(err);\n                        return of(err);\n                    })\n                )\n        })\n    }\n\n    exportPDF(element: any, pdfName: string, callback?: () => void) {\n       return html2canvas(element, { scale: 1, logging: false, backgroundColor: '#FFFFFF' })\n            .then(function (canvas) {\n                const pdf = new JSPDF(\"p\", \"mm\", \"a4\") // A4纸，纵向\n                const ctx = canvas.getContext(\"2d\");\n                //未生成pdf的html页面高度\n                let htmlHeight = canvas.height;\n                const a4w = 190;\n                const a4h = 257 // A4大小，210mm x 297mm，四边各保留20mm的边距\n                const a4Width = 595.28\n                const a4Height = 841.89 //A4大小，210mm x 297mm，四边各保留10mm的边距，显示区域190x277\n                const imgHeight = Math.floor(a4h * canvas.width / a4w) // 按A4显示比例换算一页图像的像素高度\n                let renderedHeight = 0;\n                let index = 0;\n                //pdf页面偏移\n                let position = 0;\n                let height = 0;\n                let canvas1 = document.createElement(\"canvas\");\n                let pageData = canvas.toDataURL('image/jpeg', 1.0)\n                function createImpl(canvas: any) {\n                    if (htmlHeight > 0) {\n                        index++;\n                        let checkCount = 0\n                        //设置背景色为白色，然后转成图片后，获取截断处图片像素点，从截断处往上一行行扫描像素点颜色，\n                        //碰到这一行颜色都是全白的，代表是从这里开始截断，将这个高度开始将往下的内容都放到下一页\n                        if (htmlHeight > imgHeight) {\n                            let i = position + imgHeight;\n                            for (i; i >= position; i--) {\n                                let isNullLine = true; // 是否是空白像素行\n                                for (var j = 0; j < canvas.width; j++) {\n                                    let c = canvas.getContext('2d').getImageData(j, i, 1, 1).data\n\n                                    if (c[0] != 0xff || c[1] != 0xff || c[2] != 0xff) {\n                                        isNullLine = false; // 只要有一个像素点不是白色，就代表该像素行是连续的\n                                        break\n                                    }\n                                }\n                                if (isNullLine) {\n                                    checkCount++;\n                                    if (checkCount >= 10) { // 连续超过10个空白像素行就换页\n                                        break\n                                    }\n                                } else {\n                                    checkCount = 0\n                                }\n                            }\n                            height = Math.round(i - position) || Math.min(htmlHeight, imgHeight)\n                            if (height <= 0) {\n                                height = imgHeight\n                            }\n                        } else {\n                            height = htmlHeight\n                        }\n\n                        canvas1.width = canvas.width;\n                        canvas1.height = height;\n\n\n                        let ctx = canvas1.getContext('2d');\n                        if (!ctx) return;\n\n                        ctx.drawImage(\n                            canvas,\n                            0,\n                            position,\n                            canvas.width,\n                            height,\n                            0,\n                            0,\n                            canvas.width,\n                            height,\n                        )\n\n                        var pageHeight = Math.round((a4Width / canvas.width) * height)\n                        // pdf.setPageSize(null, pageHeight)\n                        if (position != 0) {\n                            pdf.addPage()\n                        }\n                        pdf.addImage(\n                            canvas1.toDataURL('image/jpeg', 1.0),\n                            'JPEG',\n                            10,\n                            10,\n                            a4w, Math.min(a4h, a4w * canvas1.height / canvas1.width)\n                        )\n                        htmlHeight -= height\n                        position += height\n                        if (htmlHeight > 0) {\n                            setTimeout(createImpl, 500, canvas)\n                        } else {\n                            if (!!callback) {\n                                callback();\n                            }\n                            pdf.save(pdfName + '.pdf')\n                        }\n                    }\n                }\n\n                //当内容未超过pdf一页显示的范围，无需分页\n                if (htmlHeight < imgHeight) {\n                    pdf.addImage(\n                        pageData,\n                        'JPEG',\n                        10,\n                        10,\n                        a4w, Math.min(a4h, a4w * canvas1.height / canvas1.width)\n                    )\n                    if (!!callback) {\n                        callback();\n                    }\n                    pdf.save(pdfName + '.pdf')\n                } else {\n                    try {\n                        pdf.deletePage(0)\n                        setTimeout(createImpl, 500, canvas)\n                    } catch (err) {\n                        // console.log(err);\n                    }\n                }\n            })\n    }\n\n    getHtmlPDFBlob(element: any, pdfName: string, callback?: any) {\n        return html2canvas(element, { logging: false, backgroundColor: '#FFFFFF' })\n            .then(function (canvas) {\n                const pdf = new JSPDF(\"p\", \"mm\", \"a4\") // A4纸，纵向\n                const ctx = canvas.getContext(\"2d\");\n                //未生成pdf的html页面高度\n                let htmlHeight = canvas.height;\n                const a4w = 190;\n                const a4h = 257 // A4大小，210mm x 297mm，四边各保留20mm的边距\n                const a4Width = 595.28\n                const a4Height = 841.89 //A4大小，210mm x 297mm，四边各保留10mm的边距，显示区域190x277\n                const imgHeight = Math.floor(a4h * canvas.width / a4w) // 按A4显示比例换算一页图像的像素高度\n                let renderedHeight = 0;\n                let index = 0;\n                //pdf页面偏移\n                let position = 0;\n                let height = 0;\n                let canvas1 = document.createElement(\"canvas\");\n                let pageData = canvas.toDataURL('image/jpeg', 1.0)\n                function createImpl(canvas: any) {\n                    if (htmlHeight > 0) {\n                        index++;\n                        let checkCount = 0\n                        //设置背景色为白色，然后转成图片后，获取截断处图片像素点，从截断处往上一行行扫描像素点颜色，\n                        //碰到这一行颜色都是全白的，代表是从这里开始截断，将这个高度开始将往下的内容都放到下一页\n                        if (htmlHeight > imgHeight) {\n                            let i = position + imgHeight\n                            for (i; i >= position; i--) {\n                                let isNullLine = true\n                                for (var j = 0; j < canvas.width; j++) {\n                                    let c = canvas.getContext('2d').getImageData(j, i, 1, 1).data\n\n                                    if (c[0] != 0xff || c[1] != 0xff || c[2] != 0xff) {\n                                        isNullLine = false\n                                        break\n                                    }\n                                }\n                                if (isNullLine) {\n                                    checkCount++\n                                    if (checkCount >= 10) {\n                                        break\n                                    }\n                                } else {\n                                    checkCount = 0\n                                }\n                            }\n                            height = Math.round(i - position) || Math.min(htmlHeight, imgHeight)\n                            if (height <= 0) {\n                                height = imgHeight\n                            }\n                        } else {\n                            height = htmlHeight\n                        }\n\n                        canvas1.width = canvas.width;\n                        canvas1.height = height;\n\n\n                        let ctx = canvas1.getContext('2d');\n                        if (!ctx) return;\n\n                        ctx.drawImage(\n                            canvas,\n                            0,\n                            position,\n                            canvas.width,\n                            height,\n                            0,\n                            0,\n                            canvas.width,\n                            height,\n                        )\n\n                        var pageHeight = Math.round((a4Width / canvas.width) * height)\n                        // pdf.setPageSize(null, pageHeight)\n                        if (position != 0) {\n                            pdf.addPage()\n                        }\n                        pdf.addImage(\n                            canvas1.toDataURL('image/jpeg', 1.0),\n                            'JPEG',\n                            10,\n                            10,\n                            a4w, Math.min(a4h, a4w * canvas1.height / canvas1.width)\n                        )\n                        htmlHeight -= height\n                        position += height\n                        if (htmlHeight > 0) {\n                            setTimeout(createImpl, 500, canvas)\n                        } else {\n                            const blob = pdf.output('blob');\n                            const file = new File([blob], pdfName, { type: blob.type });\n                            callback && callback(file);\n                        }\n                    }\n                }\n\n                //当内容未超过pdf一页显示的范围，无需分页\n                if (htmlHeight < imgHeight) {\n                    pdf.addImage(\n                        pageData,\n                        'JPEG',\n                        10,\n                        10,\n                        a4w, Math.min(a4h, a4w * canvas1.height / canvas1.width)\n                    )\n                    const blob = pdf.output('blob');\n                    const file = new File([blob], pdfName, { type: blob.type });\n                    return file;\n                } else {\n                    try {\n                        pdf.deletePage(0)\n                        setTimeout(createImpl, 500, canvas)\n                    } catch (err) {\n                    }\n                }\n                return null;\n            })\n    }\n\n    downloadDom(dom: HTMLElement, fileName: string) {\n        return html2canvas(dom).then((canvas: any) => {\n            canvas.toBlob((blob: string) => {\n                const href = window.URL.createObjectURL(new Blob([blob]))\n                const link = document.createElement('a')\n                link.href = href;\n                link.download = `${fileName}.png`;\n                document.body.appendChild(link)\n                link.click()\n                document.body.removeChild(link)\n            }, 'image/png')\n        })\n    }\n\n    // 处理文件类型\n    public setFilesType(filesList: { sourceName: string, fileType: string }[]): { sourceName: string, fileType: string }[] {\n        const regPic = /\\.(?:jpeg|png|gif|jpg)/i;\n        const regDoc = /\\.(?:doc|docx)/i;\n        const regXls = /\\.(?:xls|xlsx)/i;\n        const newFileLists = filesList.map((item) => {\n            if (regPic.test(item.sourceName)) {\n                item.fileType = 'img';\n            } else if (regDoc.test(item.sourceName)) {\n                item.fileType = 'doc';\n            } else if (regXls.test(item.sourceName)) {\n                item.fileType = 'xls';\n            }\n            return item;\n        });\n        return newFileLists;\n    }\n\n    private prepareHeaders(): HttpHeaders {\n        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });\n\n        if (this.signatureToken) {\n            const authorization = `Bearer ${this.signatureToken}`;\n            headers.set('Authorization', authorization);\n        }\n        return headers;\n    }\n}",
+            "sourceCode": "import { HttpClient, HttpHeaders } from \"@angular/common/http\";\nimport { Injectable } from \"@angular/core\";\nimport html2canvas from \"html2canvas\";\nimport JSPDF from \"jspdf\";\nimport { catchError, map, of } from \"rxjs\";\n\n@Injectable({ providedIn: 'root' })\nexport class FileService {\n    constructor(private http: HttpClient) { }\n\n    public get signatureToken(): string | null {\n        return localStorage.getItem('signatureToken');\n    }\n\n    public downloadFile(url: string, fileName: string = 'export'): void {\n        let alink;\n        alink = document.createElement('a');\n        alink.setAttribute('href', url);\n        alink.setAttribute('download', fileName);\n        alink.style.visibility = 'hidden';\n        document.body.appendChild(alink);\n        alink.click();\n        document.body.removeChild(alink);\n    }\n\n    public downloadFileWithBlob(url: string, fileName: string): Promise<any> {\n        const headers = this.prepareHeaders();\n        return new Promise((resolve, reject) => {\n            this.http.post(url, {}, { headers, responseType: 'blob' })\n                .pipe(\n                    map(res => {\n                        const path = URL.createObjectURL(res);\n                        let link = document.createElement('a');\n\n                        link.style.display = 'none';\n                        link.href = path;\n                        link.download = fileName;\n                        document.body.appendChild(link);\n                        link.click();\n                        document.body.removeChild(link);\n                        // link = null;\n                        URL.revokeObjectURL(path);\n                        resolve(true)\n                    }),\n                    catchError((err) => {\n                        reject(err);\n                        return of(err);\n                    })\n                )\n        })\n    }\n\n    exportPDFFile(element: HTMLElement, pdfName: string) {\n        this.exportPDF(element).then((pdf: any) => {\n            debugger;\n            if (!pdf) return;\n            pdf.save(pdfName + '.pdf')\n        });\n    }\n\n    exportWord(contentNode: any, pagetitle: string, callback?: () => void) {\n        const mhtml = {\n            top: \"Mime-Version: 1.0\\nContent-Base: \" + location.href + \"\\nContent-Type: Multipart/related; boundary=\\\"NEXT.ITEM-BOUNDARY\\\";type=\\\"text/html\\\"\\n\\n--NEXT.ITEM-BOUNDARY\\nContent-Type: text/html; charset=\\\"utf-8\\\"\\nContent-Location: \" + location.href + \"\\n\\n<!DOCTYPE html>\\n<html>\\n_html_</html>\",\n            head: \"<head>\\n<meta http-equiv=\\\"Content-Type\\\" content=\\\"text/html; charset=utf-8\\\">\\n<style>\\n_styles_\\n</style>\\n</head>\\n\",\n            body: \"<body>_body_</body>\"\n        };\n        const options = {\n            maxWidth: 624,\n        }\n        let mhtmlBottom = '\\n';\n        const images: any[] = [];\n        contentNode.querySelectorAll('canvas').forEach((v: any) => {\n            var uri = v.toDataURL(\"image/png\");\n            var downloadUrl = uri.replace(\"image/png\", \"image/octet-stream\");\n            const elemParent = v.parentNode;\n            const elemNew = document.createElement('img');\n            elemNew.setAttribute('src', downloadUrl);\n            elemNew.style.width = 625 + 'px';\n            elemNew.style.height = v.offsetHeight + 'px';\n            elemParent.replaceChild(elemNew, v);\n            // Get data URL encoding of image\n            images.push({\n                type: uri.substring(uri.indexOf(\":\") + 1, uri.indexOf(\";\")),\n                encoding: uri.substring(uri.indexOf(\";\") + 1, uri.indexOf(\",\")),\n                location: downloadUrl,\n                data: uri.substring(uri.indexOf(\",\") + 1)\n            });\n        });\n\n\n        for (var i = 0; i < images.length; i++) {\n            mhtmlBottom += \"--NEXT.ITEM-BOUNDARY\\n\";\n            mhtmlBottom += \"Content-Location: \" + images[i].location + \"\\n\";\n            mhtmlBottom += \"Content-Type: \" + images[i].type + \"\\n\";\n            mhtmlBottom += \"Content-Transfer-Encoding: \" + images[i].encoding + \"\\n\\n\";\n            mhtmlBottom += images[i].data + \"\\n\\n\";\n        }\n        mhtmlBottom += \"--NEXT.ITEM-BOUNDARY--\"\n        const styles = `\n        table {\n          border: none;\n        }\n        table thead tr:last-child {\n          border-bottom: 1px solid #D0D1D2;\n        }\n        table tbody tr:last-child {\n          border-bottom: 1px solid #D0D1D2;\n        }\n        `;\n\n        // Aggregate parts of the file together\n        const fileContent = mhtml.top.replace(\"_html_\", mhtml.head.replace(\"_styles_\", styles) + mhtml.body.replace(\"_body_\", contentNode.innerHTML)) + mhtmlBottom;\n\n        var blob = new Blob([fileContent], {\n            type: \"application/msword;charset=utf-8\"\n        });\n        const url = URL.createObjectURL(blob);\n        const a = document.createElement('a');\n        a.setAttribute('href', url);\n        a.setAttribute('download', `${pagetitle}.doc`);\n        a.style.visibility = 'hidden';\n        document.body.appendChild(a);\n        a.click();\n        document.body.removeChild(a);\n        if (!!callback) {\n            callback();\n        }\n    }\n\n    downloadDom(dom: HTMLElement, fileName: string) {\n        return html2canvas(dom).then((canvas: any) => {\n            canvas.toBlob((blob: string) => {\n                const href = window.URL.createObjectURL(new Blob([blob]))\n                const link = document.createElement('a')\n                link.href = href;\n                link.download = `${fileName}.png`;\n                document.body.appendChild(link)\n                link.click()\n                document.body.removeChild(link)\n            }, 'image/png')\n        })\n    }\n\n    // 处理文件类型\n    public setFilesType(filesList: { sourceName: string, fileType: string }[]): { sourceName: string, fileType: string }[] {\n        const regPic = /\\.(?:jpeg|png|gif|jpg)/i;\n        const regDoc = /\\.(?:doc|docx)/i;\n        const regXls = /\\.(?:xls|xlsx)/i;\n        const newFileLists = filesList.map((item) => {\n            if (regPic.test(item.sourceName)) {\n                item.fileType = 'img';\n            } else if (regDoc.test(item.sourceName)) {\n                item.fileType = 'doc';\n            } else if (regXls.test(item.sourceName)) {\n                item.fileType = 'xls';\n            }\n            return item;\n        });\n        return newFileLists;\n    }\n\n    private prepareHeaders(): HttpHeaders {\n        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });\n\n        if (this.signatureToken) {\n            const authorization = `Bearer ${this.signatureToken}`;\n            headers.set('Authorization', authorization);\n        }\n        return headers;\n    }\n\n\n    private exportPDF(element: any) {\n        return html2canvas(element, { scale: 1, logging: false, backgroundColor: '#FFFFFF' })\n            .then((canvas) => {\n                const pdf = new JSPDF(\"p\", \"mm\", \"a4\") // A4纸，纵向\n                const ctx = canvas.getContext(\"2d\");\n                //未生成pdf的html页面高度\n                let htmlHeight = canvas.height;\n                const a4w = 190;\n                const a4h = 257 // A4大小，210mm x 297mm，四边各保留20mm的边距\n                const imgHeight = Math.floor(a4h * canvas.width / a4w) // 按A4显示比例换算一页图像的像素高度\n                let renderedHeight = 0;\n                let index = 0;\n                //pdf页面偏移\n                let position = 0;\n                let canvas1 = document.createElement(\"canvas\");\n                let pageData = canvas.toDataURL('image/jpeg', 1.0)\n\n\n                //当内容未超过pdf一页显示的范围，无需分页\n                if (htmlHeight < imgHeight) {\n                    pdf.addImage(\n                        pageData,\n                        'JPEG',\n                        10,\n                        10,\n                        a4w, Math.min(a4h, a4w * canvas1.height / canvas1.width)\n                    );\n                    return pdf;\n                } else {\n                    try {\n                        pdf.deletePage(0)\n                        return this.createImpl(canvas, index, pdf, htmlHeight, imgHeight, position, canvas1);\n                    } catch (err) {\n                        return pdf;\n                    }\n                }\n            })\n    }\n    private createImpl(\n        canvas: any, index: number, pdf: any, htmlHeight: number, imgHeight: number,\n        position: number,\n        canvas1: any): any {\n        const a4Width = 595.28\n        const a4Height = 841.89 //A4大小，210mm x 297mm，四边各保留10mm的边距，显示区域190x277\n        const a4w = 190;\n        const a4h = 257 // A4大小，210mm x 297mm，四边各保留20mm的边距\n        let height = 0;\n        if (htmlHeight > 0) {\n            index++;\n            let checkCount = 0\n            //设置背景色为白色，然后转成图片后，获取截断处图片像素点，从截断处往上一行行扫描像素点颜色，\n            //碰到这一行颜色都是全白的，代表是从这里开始截断，将这个高度开始将往下的内容都放到下一页\n            if (htmlHeight > imgHeight) {\n                let i = position + imgHeight;\n                for (i; i >= position; i--) {\n                    let isNullLine = true; // 是否是空白像素行\n                    for (var j = 0; j < canvas.width; j++) {\n                        let c = canvas.getContext('2d').getImageData(j, i, 1, 1).data\n\n                        if (c[0] != 0xff || c[1] != 0xff || c[2] != 0xff) {\n                            isNullLine = false; // 只要有一个像素点不是白色，就代表该像素行是连续的\n                            break\n                        }\n                    }\n                    if (isNullLine) {\n                        checkCount++;\n                        if (checkCount >= 10) { // 连续超过10个空白像素行就换页\n                            break\n                        }\n                    } else {\n                        checkCount = 0\n                    }\n                }\n                height = Math.round(i - position) || Math.min(htmlHeight, imgHeight)\n                if (height <= 0) {\n                    height = imgHeight\n                }\n            } else {\n                height = htmlHeight\n            }\n\n            canvas1.width = canvas.width;\n            canvas1.height = height;\n\n\n            let ctx = canvas1.getContext('2d');\n            if (!ctx) return;\n\n            ctx.drawImage(\n                canvas,\n                0,\n                position,\n                canvas.width,\n                height,\n                0,\n                0,\n                canvas.width,\n                height,\n            )\n\n            var pageHeight = Math.round((a4Width / canvas.width) * height)\n            // pdf.setPageSize(null, pageHeight)\n            if (position != 0) {\n                pdf.addPage()\n            }\n            pdf.addImage(\n                canvas1.toDataURL('image/jpeg', 1.0),\n                'JPEG',\n                10,\n                10,\n                a4w, Math.min(a4h, a4w * canvas1.height / canvas1.width)\n            )\n            htmlHeight -= height\n            position += height\n            if (htmlHeight > 0) {\n                return this.createImpl(canvas, index, pdf, htmlHeight, imgHeight, position, canvas1);\n            } else {\n                // if (!!callback) {\n                //     callback();\n                // }\n                // pdf.save(pdfName + '.pdf')\n                return pdf;\n            }\n        } else {\n            return pdf;\n        }\n    }\n}",
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
@@ -3255,6 +3390,585 @@
                     }
                 }
             }
+        },
+        {
+            "name": "LibAutocompleteComponent",
+            "id": "component-LibAutocompleteComponent-6c9a8f79bdceb39a4c141ec6385592e07de54decdc34bb30d10b9ec026218a9f3631bc781de5d5f434809d65da4519b08f09594b38c2aec8f86cf4842b9da415",
+            "file": "src/components/autocomplete/autocomplete.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [
+                {
+                    "name": "{\n    provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => LibAutocompleteComponent), multi: true,\n}",
+                    "type": "component"
+                }
+            ],
+            "selector": "[LibAutocomplete]",
+            "styleUrls": [],
+            "styles": [],
+            "template": "<input type=\"text\"\n       [placeholder]=\"placeholder\"\n       (compositionstart)=\"isComposition = true; beforeValue = currentValue;\"\n       (compositionend)=\"handleComposition($event)\"\n       (focus)=\"actived=true\"\n       [value]=\"currentValue\"\n       (input)=\"handleInput($event.target.value)\"\n/>\n<div class=\"suggestion-list\" [class.actived]=\"actived\" style=\"max-height: 200px;overflow: auto;z-index:11\"\n     *ngIf=\"suggestions.length\">\n  <ul class=\"vertical suggestions\">\n    <li [class.disabled]=\"true\" *ngIf=\"loading\">\n    <i sds-icon nzType=\"loading\"></i>\n    </li>\n    <li *ngFor=\"let suggestion of suggestions; let i = index\"\n        class=\"suggestion\"\n        [ngClass]=\"{'selected-item': currentValue===suggestion}\"\n        (click)=\"changeCurrentValue(suggestion, true, i); actived = false\">\n        <ng-container *ngIf=\"!isCustom\">\n            <span>{{suggestion}}</span>\n            <span *ngIf=\"subSuggestions[i]\" class=\"sub-suggestion\">{{subSuggestions[i]}}</span>\n            <span *ngIf=\"tips[i]\" class=\"tip\">「{{tips[i]}}」</span>\n        </ng-container>\n        <ng-container *ngIf=\"isCustom\">\n            <span class=\"sub-suggestion\">{{subSuggestions[i]}}</span>\n            <span *ngIf=\"tips[i]\" class=\"tip\">「{{tips[i]}}」</span>\n        </ng-container>\n    </li>\n  </ul>\n</div>\n",
+            "templateUrl": [],
+            "viewProviders": [],
+            "hostDirectives": [],
+            "inputsClass": [
+                {
+                    "name": "isCustom",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 57,
+                    "type": "boolean",
+                    "decorators": []
+                },
+                {
+                    "name": "loading",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 58,
+                    "type": "boolean",
+                    "decorators": []
+                },
+                {
+                    "name": "placeholder",
+                    "defaultValue": "''",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 62,
+                    "type": "string",
+                    "decorators": []
+                },
+                {
+                    "name": "selectedValue",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 63,
+                    "type": "string",
+                    "decorators": []
+                },
+                {
+                    "name": "subSuggestions",
+                    "defaultValue": "[]",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 60,
+                    "type": "string[]",
+                    "decorators": []
+                },
+                {
+                    "name": "suggestions",
+                    "defaultValue": "[]",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 59,
+                    "type": "string[]",
+                    "decorators": []
+                },
+                {
+                    "name": "tips",
+                    "defaultValue": "[]",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 61,
+                    "type": "string[]",
+                    "decorators": []
+                }
+            ],
+            "outputsClass": [
+                {
+                    "name": "changeClickEmitter",
+                    "defaultValue": "new EventEmitter()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 65,
+                    "type": "EventEmitter"
+                },
+                {
+                    "name": "changeEmitter",
+                    "defaultValue": "new EventEmitter()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 64,
+                    "type": "EventEmitter"
+                }
+            ],
+            "propertiesClass": [
+                {
+                    "name": "actived",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 53,
+                    "modifierKind": [
+                        125
+                    ]
+                },
+                {
+                    "name": "beforeValue",
+                    "defaultValue": "''",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 55,
+                    "modifierKind": [
+                        125
+                    ]
+                },
+                {
+                    "name": "classSelector",
+                    "defaultValue": "true",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 68,
+                    "decorators": [
+                        {
+                            "name": "HostBinding",
+                            "stringifiedArguments": "'class.lib-autocomplete'"
+                        }
+                    ],
+                    "modifierKind": [
+                        170,
+                        125
+                    ]
+                },
+                {
+                    "name": "currentValue",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "any",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 52,
+                    "modifierKind": [
+                        125
+                    ]
+                },
+                {
+                    "name": "currentValueChange",
+                    "defaultValue": "() => {...}",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 106,
+                    "modifierKind": [
+                        125
+                    ]
+                },
+                {
+                    "name": "isComposition",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 51,
+                    "modifierKind": [
+                        125
+                    ]
+                },
+                {
+                    "name": "isUsingZh",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "boolean",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 54,
+                    "modifierKind": [
+                        125
+                    ]
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "changeCurrentValue",
+                    "args": [
+                        {
+                            "name": "suggestion",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "isClick",
+                            "type": "boolean",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "defaultValue": "false"
+                        },
+                        {
+                            "name": "i",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "optional": true
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 75,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        125
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "suggestion",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "isClick",
+                            "type": "boolean",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "defaultValue": "false",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "i",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "optional": true,
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "handleComposition",
+                    "args": [
+                        {
+                            "name": "$event",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 117,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        125
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "$event",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "handleInput",
+                    "args": [
+                        {
+                            "name": "value",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 124,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        125
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "value",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "registerOnChange",
+                    "args": [
+                        {
+                            "name": "fn",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 109,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        125
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "fn",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "registerOnTouched",
+                    "args": [
+                        {
+                            "name": "fn",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 114,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        125
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "fn",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "resetSuggestionScrollBar",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 135,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\n解决全选变量栏内的关键词, 切换关键词搜索滚动条还在上一次滚动的位置的bug\n手动将suggestion-list的滚动条重置回顶部位置\n",
+                    "description": "<p>解决全选变量栏内的关键词, 切换关键词搜索滚动条还在上一次滚动的位置的bug\n手动将suggestion-list的滚动条重置回顶部位置</p>\n",
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
+                    "name": "setDisabledSuggestionList",
+                    "args": [
+                        {
+                            "name": "event",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 94,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "decorators": [
+                        {
+                            "name": "HostListener",
+                            "stringifiedArguments": "'document:click', ['$event']"
+                        }
+                    ],
+                    "modifierKind": [
+                        170,
+                        125
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "event",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "writeValue",
+                    "args": [
+                        {
+                            "name": "v",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 100,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        125
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "v",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [
+                {
+                    "name": "class.lib-autocomplete",
+                    "defaultValue": "true",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 68,
+                    "type": "boolean",
+                    "decorators": []
+                }
+            ],
+            "hostListeners": [
+                {
+                    "name": "document:click",
+                    "args": [
+                        {
+                            "name": "event",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "argsDecorator": [
+                        "$event"
+                    ],
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 94
+                }
+            ],
+            "standalone": false,
+            "imports": [
+                {
+                    "name": "CommonModule",
+                    "type": "module"
+                },
+                {
+                    "name": "FormsModule",
+                    "type": "module"
+                }
+            ],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { CommonModule } from '@angular/common';\nimport {\n    NgZone, Component, Input, Output, HostBinding, EventEmitter, forwardRef, HostListener, ElementRef\n} from '@angular/core';\nimport { FormsModule, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';\n\n@Component({\n    selector: '[LibAutocomplete]',\n    providers: [\n        {\n            provide: NG_VALUE_ACCESSOR,\n            useExisting: forwardRef(() => LibAutocompleteComponent),\n            multi: true,\n        },\n    ],\n    template: `\n    <input type=\"text\"\n           [placeholder]=\"placeholder\"\n           (compositionstart)=\"isComposition = true; beforeValue = currentValue;\"\n           (compositionend)=\"handleComposition($event)\"\n           (focus)=\"actived=true\"\n           [value]=\"currentValue\"\n           (input)=\"handleInput($event.target.value)\"\n    />\n    <div class=\"suggestion-list\" [class.actived]=\"actived\" style=\"max-height: 200px;overflow: auto;z-index:11\"\n         *ngIf=\"suggestions.length\">\n      <ul class=\"vertical suggestions\">\n        <li [class.disabled]=\"true\" *ngIf=\"loading\">\n        <i sds-icon nzType=\"loading\"></i>\n        </li>\n        <li *ngFor=\"let suggestion of suggestions; let i = index\"\n            class=\"suggestion\"\n            [ngClass]=\"{'selected-item': currentValue===suggestion}\"\n            (click)=\"changeCurrentValue(suggestion, true, i); actived = false\">\n            <ng-container *ngIf=\"!isCustom\">\n                <span>{{suggestion}}</span>\n                <span *ngIf=\"subSuggestions[i]\" class=\"sub-suggestion\">{{subSuggestions[i]}}</span>\n                <span *ngIf=\"tips[i]\" class=\"tip\">「{{tips[i]}}」</span>\n            </ng-container>\n            <ng-container *ngIf=\"isCustom\">\n                <span class=\"sub-suggestion\">{{subSuggestions[i]}}</span>\n                <span *ngIf=\"tips[i]\" class=\"tip\">「{{tips[i]}}」</span>\n            </ng-container>\n        </li>\n      </ul>\n    </div>\n  `,\n  imports: [CommonModule, FormsModule],\n})\nexport class LibAutocompleteComponent implements ControlValueAccessor {\n    public isComposition = false; // fix中文输入法触发\n    public currentValue: any;\n    public actived = false;\n    public isUsingZh: boolean;\n    public beforeValue = '';\n\n    @Input() public isCustom = false;\n    @Input() public loading = false;\n    @Input() public suggestions: string[] = [];\n    @Input() public subSuggestions: string[] = [];\n    @Input() public tips: string[] = [];\n    @Input() public placeholder = '';\n    @Input() public selectedValue: string;\n    @Output() public changeEmitter = new EventEmitter();\n    @Output() public changeClickEmitter = new EventEmitter();\n\n    @HostBinding('class.lib-autocomplete')\n    public classSelector = true;\n\n    constructor(\n        private eleRef: ElementRef, private zone: NgZone) {\n\n    }\n\n    public changeCurrentValue(suggestion: any, isClick: boolean = false, i?: number): void {\n        this.currentValue = suggestion;\n        this.changeEmitter.emit(this.currentValue);\n        if (this.isCustom && i !== undefined) {\n            this.changeEmitter.emit(this.subSuggestions[i]);\n            if (isClick) {\n                this.changeClickEmitter.emit(this.subSuggestions[i]);\n            }\n        } else {\n            this.changeEmitter.emit(this.currentValue);\n            if (isClick) {\n                this.changeClickEmitter.emit(this.currentValue);\n            }\n        }\n        this.currentValueChange(this.currentValue);\n        this.resetSuggestionScrollBar();\n    }\n\n    @HostListener('document:click', ['$event'])\n    public setDisabledSuggestionList(event: any): void {\n        if (!this.eleRef.nativeElement.contains(event.target)) {\n            this.actived = false;\n        }\n    }\n\n    public writeValue(v: any): void {\n        if (v !== undefined) {\n            this.currentValue = v;\n        }\n    }\n    // tslint:disable-next-line:no-empty\n    public currentValueChange = (_: any) => {\n    }\n\n    public registerOnChange(fn: any): void {\n        this.currentValueChange = fn;\n    }\n\n    // tslint:disable-next-line:no-empty\n    public registerOnTouched(fn: any): void {\n    }\n\n    public handleComposition($event: any): void {\n        setTimeout(() => {\n            this.changeCurrentValue($event.target.value);\n            this.isComposition = false;\n        }, 0);\n    }\n\n    public handleInput(value: any): void {\n        this.actived = true;\n        if (!this.isComposition) {\n            this.changeCurrentValue(value);\n        }\n    }\n\n    /**\n     * 解决全选变量栏内的关键词, 切换关键词搜索滚动条还在上一次滚动的位置的bug\n     * 手动将suggestion-list的滚动条重置回顶部位置\n     */\n    private resetSuggestionScrollBar(): void {\n        const childrenList: any[] = Array.from(this.eleRef.nativeElement.children);\n        const suggestionElement = childrenList.find((child) => child.className.includes('suggestion-list'));\n        if (suggestionElement) {\n            suggestionElement.scrollTop = 0;\n        }\n    }\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [
+                    {
+                        "name": "eleRef",
+                        "type": "ElementRef",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "zone",
+                        "type": "NgZone",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "line": 68,
+                "jsdoctags": [
+                    {
+                        "name": "eleRef",
+                        "type": "ElementRef",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "zone",
+                        "type": "NgZone",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "extends": [],
+            "implements": [
+                "ControlValueAccessor"
+            ]
         },
         {
             "name": "SearchBoxComponent",
@@ -6859,6 +7573,15 @@
                 "status": "low"
             },
             {
+                "filePath": "src/components/autocomplete/autocomplete.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "LibAutocompleteComponent",
+                "coveragePercent": 3,
+                "coverageCount": "1/28",
+                "status": "low"
+            },
+            {
                 "filePath": "src/components/button/button.component.ts",
                 "type": "component",
                 "linktype": "component",
@@ -7021,7 +7744,7 @@
                 "linktype": "injectable",
                 "name": "FileService",
                 "coveragePercent": 0,
-                "coverageCount": "0/9",
+                "coverageCount": "0/11",
                 "status": "low"
             },
             {

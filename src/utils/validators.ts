@@ -4,10 +4,13 @@ import { NzSafeAny } from "ng-zorro-antd/core/types";
 export const REGEXP = {
   phoneNumber: /^1[3-9]\d{9}$/,
   landlineAndPhone: /^((0\d{2,3}-\d{7,8})|(1[3-9]\d{9}))$/,
-  onlyNumber: /^\d+$/,
+  nonNegativeInteger: /^\d+$/,
+  positiveInteger: /^[1-9]\d*$/,
+  decimalNumber: /^[0-9]+(\.[0-9]+)?$/,
   empty: /^\s+$/,
   onlyChinese: /^[\u4e00-\u9fa5_a-zA-Z]+$/,
   certificateCode: /(^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$)|(^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{2}[0-9Xx]$)/,
+  mailbox: /^([a-zA-Z0-9_.-]+)@([a-zA-Z0-9_.-]+).([a-zA-Z.]{2,6})$/
 };
 
 export interface ISelectorOption<T = number, U = unknown> {
@@ -39,12 +42,12 @@ export function checkListRequireValidator(): ValidatorFn {
   };
 }
 
-export function onlyNumberValidator(): ValidatorFn {
+export function nonNegativeIntegerValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     const value = control.value;
-    const errorTip = { 'onlyNumber': { value } };
+    const errorTip = { 'nonNegativeInteger': { value } };
 
-    return value && REGEXP.onlyNumber.test(value) ? null : errorTip;
+    return value && REGEXP.nonNegativeInteger.test(value) ? null : errorTip;
   };
 }
 
@@ -82,6 +85,23 @@ export function certificateCodeValidator(): ValidatorFn {
   };
 }
 
+export function positiveIntegerValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const value = control.value;
+    const errorTip = { 'positiveInteger': { value } };
+
+    return value && REGEXP.positiveInteger.test(value) ? null : errorTip;
+  };
+}
+
+export function decimalNumberValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const value = control.value;
+    const errorTip = { 'decimalNumber': { value } };
+
+    return value && REGEXP.decimalNumber.test(value) ? null : errorTip;
+  };
+}
 
 // 自定义表单校验
 export type MyErrorsOptions = { 'zh-cn': string; en: string } & Record<
@@ -198,6 +218,15 @@ export class MyValidators extends Validators {
     return isValidCard ? null : {
       name: { 'zh-cn': `您输入的身份证号格式有误`, en: `invalid idCardNo` },
     };;
+  }
+
+  static mailboxValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value;
+      const errorTip = { 'mailbox': { value } };
+
+      return value && !REGEXP.mailbox.test(value) ? errorTip : null;
+    };
   }
 }
 

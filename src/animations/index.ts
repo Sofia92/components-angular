@@ -1,1 +1,1 @@
-export { CELLOVERLAYANIMATION } from './overlayAnimation';
+export { COLLAPSE_ANIMATION } from './collapse';

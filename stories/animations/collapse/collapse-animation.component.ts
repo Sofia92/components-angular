@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { CELLOVERLAYANIMATION } from '@Animations';
+import { COLLAPSE_ANIMATION } from '@Animations';
 import { FormsModule } from '@angular/forms';
 @Component({
-  selector: 'app-overlay-animation',
+  selector: 'animation-collapse',
   template: `
     <div class="demo-container">
       <button 
@@ -74,11 +74,11 @@ import { FormsModule } from '@angular/forms';
       padding: 20px;
     }
   `],
-  animations: [CELLOVERLAYANIMATION],
+  animations: [COLLAPSE_ANIMATION],
   standalone: true,
   imports: [CommonModule, FormsModule]
 })
-export class OverlayAnimationComponent {
+export class CollapseAnimationComponent {
   isExpanded = false;
   toggleContent() {
     this.isExpanded = !this.isExpanded;

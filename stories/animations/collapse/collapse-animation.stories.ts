@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { OverlayAnimationComponent } from './overlay-animation.component';
+import { CollapseAnimationComponent } from './collapse-animation.component';
 
-const meta: Meta<OverlayAnimationComponent> = {
-  title: 'Animations/OverlayAnimation',
-  component: OverlayAnimationComponent,
-  parameters: {
-    layout: 'centered',
-  },
+const meta: Meta<CollapseAnimationComponent> = {
+  title: 'Animations/Collapse',
+  component: CollapseAnimationComponent,
+  // parameters: {
+  //   layout: 'centered',
+  // },
 };
 
 export default meta;
-type Story = StoryObj<OverlayAnimationComponent>;
+type Story = StoryObj<CollapseAnimationComponent>;
 
 /**
  * 基础示例：展示展开/收起动画的基本用法
@@ -22,7 +22,7 @@ export const Basic: Story = {
   render: (args) => ({
     props: args,
     template: `
-      <app-overlay-animation>
+      <animation-collapse>
         <div class="content-wrapper">
           <h3>展开内容标题</h3>
           <p>这是展开的内容区域，展示了平滑的展开/收起动画效果。</p>
@@ -42,7 +42,7 @@ export const Basic: Story = {
             </div>
           </div>
         </div>
-      </app-overlay-animation>
+      </animation-collapse>
     `,
     styles: [`
       .content-wrapper {
@@ -82,7 +82,7 @@ export const WithBorder: Story = {
   render: (args) => ({
     props: args,
     template: `
-      <app-overlay-animation>
+      <animation-collapse>
         <div class="content-wrapper bordered">
           <h3>带边框的展开内容</h3>
           <p>这个示例展示了带有边框和阴影效果的展开内容。</p>
@@ -102,7 +102,7 @@ export const WithBorder: Story = {
             </div>
           </div>
         </div>
-      </app-overlay-animation>
+      </animation-collapse>
     `,
     styles: [`
       .content-wrapper {

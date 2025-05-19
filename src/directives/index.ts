@@ -6,3 +6,4 @@ export { PollingDirective } from './polling.directive';
 export { ScrollDirective } from './scroll.directive';
 export { WaterMarkDirective } from './water-mark.directive';
 export { BallParabolaDirective } from './ball-parabola.directive';
+export { TraceHighlightDirective } from './trace-highlight.directive';

@@ -687,6 +687,96 @@
             "kind": 171,
             "methods": [],
             "extends": []
+        },
+        {
+            "name": "ITraceHighLightConf",
+            "id": "interface-ITraceHighLightConf-21564b58e6ff622c70f160b34c65848963ba41d3d84abf87774f390be5ea4050fa27934f9d9ad2ecfbe97ead5bcb6eb93e97e53660cd34a591bcc08c543e0c85",
+            "file": "src/directives/trace-highlight.directive.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "interface",
+            "sourceCode": "import { Directive, ElementRef, EventEmitter, HostBinding, Input, OnChanges, OnDestroy, OnInit, Output, Renderer2, SimpleChanges } from '@angular/core';\nimport { BehaviorSubject, Subject } from 'rxjs';\nimport { filter, takeUntil } from 'rxjs/operators';\n\nexport interface ITraceHighLightConf {\n  isShadowDom?: boolean;\n  shadowDomElement?: HTMLElement;\n  isDisabled?: boolean;\n  onHighlight$: BehaviorSubject<any>;\n}\nexport interface ITraceSourceItemFrontend {\n  keyword?: string;\n  fieldName?: string;\n}\n\n@Directive({\n  selector: '[traceHighlight]',\n  // standalone: true,\n})\nexport class TraceHighlightDirective implements OnChanges, OnInit, OnDestroy {\n  @Input('traceHighlight') highlightConf: ITraceHighLightConf;\n  @Input() highlightId: string;\n  @Output() hightTraceIdSetChange = new EventEmitter<Set<string>>();\n\n  @HostBinding('style.position') public wrapperPos = 'relative';\n  public hightTraceIdSet = new Set<string>();\n  public destroy$: Subject<void> = new Subject<void>();\n  \n  // 添加样式常量\n  private readonly HIGHLIGHT_STYLES = {\n    normal: {\n      background: 'rgba(255, 242, 123, 0.3)',\n      border: '1.5px dashed #FD8701'\n    },\n    active: {\n      background: 'rgba(7, 181, 249, 0.3)',\n      border: 'none'\n    }\n  } as const;\n\n  constructor(\n    private elRef: ElementRef,\n    private render: Renderer2\n  ) { }\n\n  public ngOnChanges(changes: SimpleChanges): void {\n    if (changes['highlightId'] && this.highlightId) {\n      const element = document.getElementById(this.highlightId);\n      if (!element) return;\n\n      this.activeAndScrollToCurPoint(element as HTMLElement);\n    }\n  }\n\n  public ngOnInit(): void {\n    if (this.highlightConf?.isDisabled) return;\n    this.highlightConf.onHighlight$.pipe(\n      takeUntil(this.destroy$),\n      filter(value => value !== false)\n    ).subscribe((value: any) => {\n      // 清除所有高亮\n      this.clearAllHighlights();\n      value.forEach((point: ITraceSourceItemFrontend) => this.handleTracePoint(point));\n      this.hightTraceIdSetChange.emit(this.hightTraceIdSet)\n    });\n  }\n\n  public ngOnDestroy(): void {\n    this.destroy$.next();\n    this.destroy$.complete();\n  }\n\n  /**\n   * 根据单个溯源点信息进行DOM查找\n   * @param tracePoint 单个溯源点信息\n   */\n  private handleTracePoint(tracePoint: ITraceSourceItemFrontend): void {\n    // 兼容一些页面的样式偏移及shadowDom等的生成晚 在视图更新好后再进行高亮等的操作\n    setTimeout(() => {\n      const { isShadowDom, shadowDomElement } = this.highlightConf;\n      // 兼容shadowDom元素的获取\n      const walkerWrapper = isShadowDom ? shadowDomElement : this.elRef.nativeElement;\n      if (!walkerWrapper) {\n        return;\n      }\n      const { keyword, fieldName } = tracePoint;\n      // 处理*等在正则中有特殊含义的字符转义\n      // tslint:disable-next-line: newline-per-chained-call\n      const regxStr = keyword?.replace(/([*+?$^.|\\\\\\)\\(])/g, '\\\\$1');\n      const matchRegx = new RegExp(`${regxStr}`, 'g');\n\n      // 对于关键字匹配方式直接查找匹配的Text节点\n      this.searchMatchTextNode(walkerWrapper, matchRegx);\n    });\n  }\n\n  /**\n   * 搜索指定元素下的匹配文本正则的文本节点，并循环进行相应处理\n   * @param elementNode 要查找的HTML元素\n   * @param matchRegx 需要匹配的文本正则\n   */\n  private searchMatchTextNode(elementNode: Node, matchRegx: RegExp): void {\n    const textNodeFilterFn = (node: Node) => {\n      return node.nodeValue?.match(matchRegx) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP;\n    };\n    const textNodeWalker = document.createTreeWalker(elementNode, NodeFilter.SHOW_TEXT, textNodeFilterFn as any);\n    // 元素节点下匹配的文本节点\n    let curMatchTextNode = textNodeWalker.nextNode();\n\n    while (!!curMatchTextNode) {\n\n      this.searchMatchTextStr(curMatchTextNode, matchRegx);\n\n      curMatchTextNode = textNodeWalker.nextNode();\n    }\n  }\n\n  /**\n   * 对匹配到的文本节点，需要通过正则查找到当前文本节点匹配的文本有哪些，并得出文本的具体位置\n   * 然后才能对每个文本进行高亮的定位\n   * @param textNode 匹配到的文本Node节点\n   * @param matchRegx 需要匹配的文本正则\n   */\n  private searchMatchTextStr(textNode: Node, matchRegx: RegExp): void {\n    const textNodeStr = textNode.textContent;\n    let matchResult = matchRegx.exec(textNodeStr || '');\n\n    while (!!matchResult) {\n      const startIndex = matchResult?.index;\n      const endIndex = matchRegx?.lastIndex;\n      // 根据需要高亮的文本节点以及正则查找获得的文本起始高亮位置进行高亮操作\n      this.highlightTextRange(textNode, startIndex, endIndex);\n\n      matchResult = matchRegx.exec(textNodeStr || '');\n    }\n  }\n\n  /**\n   * 高亮匹配到的溯源文本\n   * @param textNode 需要高亮的文本节点\n   * @param startIndex 高亮文本节点开始下标\n   * @param endIndex 高亮文本节点结束下标\n   */\n  private highlightTextRange(textNode: Node, startIndex: number, endIndex: number): void {\n    try {\n      const range = this.createRange(textNode, startIndex, endIndex);\n      const rects = this.getHighlightRects(range, textNode);\n      const highlightElement = this.createHighlightElement(rects);\n      this.elRef.nativeElement.appendChild(highlightElement);\n    } catch (err) {\n      console.error(`${textNode}, 溯源文本高亮失败，错误信息：${err}`);\n    }\n  }\n\n  /**\n   * 创建文本范围\n   */\n  private createRange(textNode: Node, startIndex: number, endIndex: number): Range {\n    const range = document.createRange();\n    range.setStart(textNode, startIndex);\n    range.setEnd(textNode, endIndex);\n    return range;\n  }\n\n  /**\n   * 获取高亮区域的位置信息\n   */\n  private getHighlightRects(range: Range, textNode: Node): {\n    clientRect: DOMRect;\n    elementClientRect: DOMRect;\n    wrapperClientRect: DOMRect;\n  } {\n    const clientRect = range.getBoundingClientRect();\n    const elementClientRect = textNode.parentElement?.getBoundingClientRect() || clientRect;\n    const wrapperClientRect = this.elRef.nativeElement.getBoundingClientRect();\n    return { clientRect, elementClientRect, wrapperClientRect };\n  }\n\n  /**\n   * 创建高亮元素\n   */\n  private createHighlightElement(rects: {\n    clientRect: DOMRect;\n    elementClientRect: DOMRect;\n    wrapperClientRect: DOMRect;\n  }): HTMLElement {\n    // 使用 DocumentFragment 减少 DOM 操作\n    const fragment = document.createDocumentFragment();\n    const highLightElement = this.render.createElement('div');\n    fragment.appendChild(highLightElement);\n\n    // 使用 requestAnimationFrame 优化样式计算和渲染\n    requestAnimationFrame(() => {\n      const { clientRect, elementClientRect, wrapperClientRect } = rects;\n      const highLightStyle = highLightElement.style;\n\n      // 设置高亮元素ID和样式\n      highLightElement.id = this.generateHighlightId();\n      this.hightTraceIdSet.add(highLightElement.id);\n      highLightElement.className = 'highlight-mask';\n\n      // 计算位置和尺寸\n      const { left, top, width, height } = clientRect;\n      const { width: parentWidth, left: parentLeft, right: parentRight } = elementClientRect;\n      const { left: wrapperLeft, top: wrapperTop } = wrapperClientRect;\n\n      // 处理溢出情况\n      const isOverflow = left > parentRight;\n      const highLightLeft = isOverflow ? parentLeft - wrapperLeft : left - wrapperLeft;\n      const highLightWidth = isOverflow ? parentWidth : width;\n      const highLightTop = top - wrapperTop;\n\n      // 批量设置样式\n      Object.assign(highLightStyle, {\n        position: 'absolute',\n        left: `${highLightLeft}px`,\n        top: `${highLightTop}px`,\n        width: `${highLightWidth}px`,\n        height: `${height}px`,\n        maxWidth: `${parentWidth - (highLightLeft - (parentLeft - wrapperLeft))}px`,\n        pointerEvents: 'none',\n        lineHeight: `${height}px`,\n        ...this.HIGHLIGHT_STYLES.normal\n      });\n\n      // 将元素添加到 DOM\n      this.elRef.nativeElement.appendChild(fragment);\n    });\n\n    return highLightElement;\n  }\n\n  /**\n   * 生成唯一的高亮ID\n   */\n  private generateHighlightId(): string {\n    // 使用更高效的 ID 生成方式\n    return `hl-${performance.now().toString(36)}`;\n  }\n\n  /**\n   * 高亮并定位至当前指向的溯源点\n   * @param curActiveElement 当前定位的溯源点遮罩层元素\n   */\n  private activeAndScrollToCurPoint(curActiveElement?: HTMLElement): void {\n    if (!curActiveElement) return;\n\n    // 使用 requestAnimationFrame 优化滚动和高亮\n    requestAnimationFrame(() => {\n      // 重置其它溯源点样式状态\n      const highlightElements: HTMLElement[] = Array.from(document.querySelectorAll('.highlight-mask'));\n      highlightElements.forEach(element => {\n        Object.assign(element.style, this.HIGHLIGHT_STYLES.normal);\n      });\n\n      // 滚动并高亮当前溯源点\n      curActiveElement.scrollIntoView({ behavior: 'smooth', block: 'center' });\n      Object.assign(curActiveElement.style, this.HIGHLIGHT_STYLES.active);\n    });\n  }\n\n  /**\n   * 清除所有高亮元素\n   */\n  private clearAllHighlights(): void {\n    // 使用 requestAnimationFrame 优化清除操作\n    requestAnimationFrame(() => {\n      const wrapperElement = this.elRef.nativeElement;\n      const highlightElements = wrapperElement.querySelectorAll('.highlight-mask');\n      \n      // 使用 DocumentFragment 批量移除元素\n      const fragment = document.createDocumentFragment();\n      highlightElements.forEach((element: Element) => {\n        fragment.appendChild(element);\n      });\n      \n      // 清空 Set\n      this.hightTraceIdSet.clear();\n    });\n  }\n}\n\n",
+            "properties": [
+                {
+                    "name": "isDisabled",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "boolean",
+                    "indexKey": "",
+                    "optional": true,
+                    "description": "",
+                    "line": 8
+                },
+                {
+                    "name": "isShadowDom",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "boolean",
+                    "indexKey": "",
+                    "optional": true,
+                    "description": "",
+                    "line": 6
+                },
+                {
+                    "name": "onHighlight$",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "BehaviorSubject<any>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 9
+                },
+                {
+                    "name": "shadowDomElement",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "HTMLElement",
+                    "indexKey": "",
+                    "optional": true,
+                    "description": "",
+                    "line": 7
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 171,
+            "methods": [],
+            "extends": []
+        },
+        {
+            "name": "ITraceSourceItemFrontend",
+            "id": "interface-ITraceSourceItemFrontend-21564b58e6ff622c70f160b34c65848963ba41d3d84abf87774f390be5ea4050fa27934f9d9ad2ecfbe97ead5bcb6eb93e97e53660cd34a591bcc08c543e0c85",
+            "file": "src/directives/trace-highlight.directive.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "interface",
+            "sourceCode": "import { Directive, ElementRef, EventEmitter, HostBinding, Input, OnChanges, OnDestroy, OnInit, Output, Renderer2, SimpleChanges } from '@angular/core';\nimport { BehaviorSubject, Subject } from 'rxjs';\nimport { filter, takeUntil } from 'rxjs/operators';\n\nexport interface ITraceHighLightConf {\n  isShadowDom?: boolean;\n  shadowDomElement?: HTMLElement;\n  isDisabled?: boolean;\n  onHighlight$: BehaviorSubject<any>;\n}\nexport interface ITraceSourceItemFrontend {\n  keyword?: string;\n  fieldName?: string;\n}\n\n@Directive({\n  selector: '[traceHighlight]',\n  // standalone: true,\n})\nexport class TraceHighlightDirective implements OnChanges, OnInit, OnDestroy {\n  @Input('traceHighlight') highlightConf: ITraceHighLightConf;\n  @Input() highlightId: string;\n  @Output() hightTraceIdSetChange = new EventEmitter<Set<string>>();\n\n  @HostBinding('style.position') public wrapperPos = 'relative';\n  public hightTraceIdSet = new Set<string>();\n  public destroy$: Subject<void> = new Subject<void>();\n  \n  // 添加样式常量\n  private readonly HIGHLIGHT_STYLES = {\n    normal: {\n      background: 'rgba(255, 242, 123, 0.3)',\n      border: '1.5px dashed #FD8701'\n    },\n    active: {\n      background: 'rgba(7, 181, 249, 0.3)',\n      border: 'none'\n    }\n  } as const;\n\n  constructor(\n    private elRef: ElementRef,\n    private render: Renderer2\n  ) { }\n\n  public ngOnChanges(changes: SimpleChanges): void {\n    if (changes['highlightId'] && this.highlightId) {\n      const element = document.getElementById(this.highlightId);\n      if (!element) return;\n\n      this.activeAndScrollToCurPoint(element as HTMLElement);\n    }\n  }\n\n  public ngOnInit(): void {\n    if (this.highlightConf?.isDisabled) return;\n    this.highlightConf.onHighlight$.pipe(\n      takeUntil(this.destroy$),\n      filter(value => value !== false)\n    ).subscribe((value: any) => {\n      // 清除所有高亮\n      this.clearAllHighlights();\n      value.forEach((point: ITraceSourceItemFrontend) => this.handleTracePoint(point));\n      this.hightTraceIdSetChange.emit(this.hightTraceIdSet)\n    });\n  }\n\n  public ngOnDestroy(): void {\n    this.destroy$.next();\n    this.destroy$.complete();\n  }\n\n  /**\n   * 根据单个溯源点信息进行DOM查找\n   * @param tracePoint 单个溯源点信息\n   */\n  private handleTracePoint(tracePoint: ITraceSourceItemFrontend): void {\n    // 兼容一些页面的样式偏移及shadowDom等的生成晚 在视图更新好后再进行高亮等的操作\n    setTimeout(() => {\n      const { isShadowDom, shadowDomElement } = this.highlightConf;\n      // 兼容shadowDom元素的获取\n      const walkerWrapper = isShadowDom ? shadowDomElement : this.elRef.nativeElement;\n      if (!walkerWrapper) {\n        return;\n      }\n      const { keyword, fieldName } = tracePoint;\n      // 处理*等在正则中有特殊含义的字符转义\n      // tslint:disable-next-line: newline-per-chained-call\n      const regxStr = keyword?.replace(/([*+?$^.|\\\\\\)\\(])/g, '\\\\$1');\n      const matchRegx = new RegExp(`${regxStr}`, 'g');\n\n      // 对于关键字匹配方式直接查找匹配的Text节点\n      this.searchMatchTextNode(walkerWrapper, matchRegx);\n    });\n  }\n\n  /**\n   * 搜索指定元素下的匹配文本正则的文本节点，并循环进行相应处理\n   * @param elementNode 要查找的HTML元素\n   * @param matchRegx 需要匹配的文本正则\n   */\n  private searchMatchTextNode(elementNode: Node, matchRegx: RegExp): void {\n    const textNodeFilterFn = (node: Node) => {\n      return node.nodeValue?.match(matchRegx) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP;\n    };\n    const textNodeWalker = document.createTreeWalker(elementNode, NodeFilter.SHOW_TEXT, textNodeFilterFn as any);\n    // 元素节点下匹配的文本节点\n    let curMatchTextNode = textNodeWalker.nextNode();\n\n    while (!!curMatchTextNode) {\n\n      this.searchMatchTextStr(curMatchTextNode, matchRegx);\n\n      curMatchTextNode = textNodeWalker.nextNode();\n    }\n  }\n\n  /**\n   * 对匹配到的文本节点，需要通过正则查找到当前文本节点匹配的文本有哪些，并得出文本的具体位置\n   * 然后才能对每个文本进行高亮的定位\n   * @param textNode 匹配到的文本Node节点\n   * @param matchRegx 需要匹配的文本正则\n   */\n  private searchMatchTextStr(textNode: Node, matchRegx: RegExp): void {\n    const textNodeStr = textNode.textContent;\n    let matchResult = matchRegx.exec(textNodeStr || '');\n\n    while (!!matchResult) {\n      const startIndex = matchResult?.index;\n      const endIndex = matchRegx?.lastIndex;\n      // 根据需要高亮的文本节点以及正则查找获得的文本起始高亮位置进行高亮操作\n      this.highlightTextRange(textNode, startIndex, endIndex);\n\n      matchResult = matchRegx.exec(textNodeStr || '');\n    }\n  }\n\n  /**\n   * 高亮匹配到的溯源文本\n   * @param textNode 需要高亮的文本节点\n   * @param startIndex 高亮文本节点开始下标\n   * @param endIndex 高亮文本节点结束下标\n   */\n  private highlightTextRange(textNode: Node, startIndex: number, endIndex: number): void {\n    try {\n      const range = this.createRange(textNode, startIndex, endIndex);\n      const rects = this.getHighlightRects(range, textNode);\n      const highlightElement = this.createHighlightElement(rects);\n      this.elRef.nativeElement.appendChild(highlightElement);\n    } catch (err) {\n      console.error(`${textNode}, 溯源文本高亮失败，错误信息：${err}`);\n    }\n  }\n\n  /**\n   * 创建文本范围\n   */\n  private createRange(textNode: Node, startIndex: number, endIndex: number): Range {\n    const range = document.createRange();\n    range.setStart(textNode, startIndex);\n    range.setEnd(textNode, endIndex);\n    return range;\n  }\n\n  /**\n   * 获取高亮区域的位置信息\n   */\n  private getHighlightRects(range: Range, textNode: Node): {\n    clientRect: DOMRect;\n    elementClientRect: DOMRect;\n    wrapperClientRect: DOMRect;\n  } {\n    const clientRect = range.getBoundingClientRect();\n    const elementClientRect = textNode.parentElement?.getBoundingClientRect() || clientRect;\n    const wrapperClientRect = this.elRef.nativeElement.getBoundingClientRect();\n    return { clientRect, elementClientRect, wrapperClientRect };\n  }\n\n  /**\n   * 创建高亮元素\n   */\n  private createHighlightElement(rects: {\n    clientRect: DOMRect;\n    elementClientRect: DOMRect;\n    wrapperClientRect: DOMRect;\n  }): HTMLElement {\n    // 使用 DocumentFragment 减少 DOM 操作\n    const fragment = document.createDocumentFragment();\n    const highLightElement = this.render.createElement('div');\n    fragment.appendChild(highLightElement);\n\n    // 使用 requestAnimationFrame 优化样式计算和渲染\n    requestAnimationFrame(() => {\n      const { clientRect, elementClientRect, wrapperClientRect } = rects;\n      const highLightStyle = highLightElement.style;\n\n      // 设置高亮元素ID和样式\n      highLightElement.id = this.generateHighlightId();\n      this.hightTraceIdSet.add(highLightElement.id);\n      highLightElement.className = 'highlight-mask';\n\n      // 计算位置和尺寸\n      const { left, top, width, height } = clientRect;\n      const { width: parentWidth, left: parentLeft, right: parentRight } = elementClientRect;\n      const { left: wrapperLeft, top: wrapperTop } = wrapperClientRect;\n\n      // 处理溢出情况\n      const isOverflow = left > parentRight;\n      const highLightLeft = isOverflow ? parentLeft - wrapperLeft : left - wrapperLeft;\n      const highLightWidth = isOverflow ? parentWidth : width;\n      const highLightTop = top - wrapperTop;\n\n      // 批量设置样式\n      Object.assign(highLightStyle, {\n        position: 'absolute',\n        left: `${highLightLeft}px`,\n        top: `${highLightTop}px`,\n        width: `${highLightWidth}px`,\n        height: `${height}px`,\n        maxWidth: `${parentWidth - (highLightLeft - (parentLeft - wrapperLeft))}px`,\n        pointerEvents: 'none',\n        lineHeight: `${height}px`,\n        ...this.HIGHLIGHT_STYLES.normal\n      });\n\n      // 将元素添加到 DOM\n      this.elRef.nativeElement.appendChild(fragment);\n    });\n\n    return highLightElement;\n  }\n\n  /**\n   * 生成唯一的高亮ID\n   */\n  private generateHighlightId(): string {\n    // 使用更高效的 ID 生成方式\n    return `hl-${performance.now().toString(36)}`;\n  }\n\n  /**\n   * 高亮并定位至当前指向的溯源点\n   * @param curActiveElement 当前定位的溯源点遮罩层元素\n   */\n  private activeAndScrollToCurPoint(curActiveElement?: HTMLElement): void {\n    if (!curActiveElement) return;\n\n    // 使用 requestAnimationFrame 优化滚动和高亮\n    requestAnimationFrame(() => {\n      // 重置其它溯源点样式状态\n      const highlightElements: HTMLElement[] = Array.from(document.querySelectorAll('.highlight-mask'));\n      highlightElements.forEach(element => {\n        Object.assign(element.style, this.HIGHLIGHT_STYLES.normal);\n      });\n\n      // 滚动并高亮当前溯源点\n      curActiveElement.scrollIntoView({ behavior: 'smooth', block: 'center' });\n      Object.assign(curActiveElement.style, this.HIGHLIGHT_STYLES.active);\n    });\n  }\n\n  /**\n   * 清除所有高亮元素\n   */\n  private clearAllHighlights(): void {\n    // 使用 requestAnimationFrame 优化清除操作\n    requestAnimationFrame(() => {\n      const wrapperElement = this.elRef.nativeElement;\n      const highlightElements = wrapperElement.querySelectorAll('.highlight-mask');\n      \n      // 使用 DocumentFragment 批量移除元素\n      const fragment = document.createDocumentFragment();\n      highlightElements.forEach((element: Element) => {\n        fragment.appendChild(element);\n      });\n      \n      // 清空 Set\n      this.hightTraceIdSet.clear();\n    });\n  }\n}\n\n",
+            "properties": [
+                {
+                    "name": "fieldName",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": true,
+                    "description": "",
+                    "line": 13
+                },
+                {
+                    "name": "keyword",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": true,
+                    "description": "",
+                    "line": 12
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 171,
+            "methods": [],
+            "extends": []
         }
     ],
     "injectables": [
@@ -3439,6 +3529,769 @@
                     {
                         "name": "elementRef",
                         "type": "ElementRef",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "TraceHighlightDirective",
+            "id": "directive-TraceHighlightDirective-21564b58e6ff622c70f160b34c65848963ba41d3d84abf87774f390be5ea4050fa27934f9d9ad2ecfbe97ead5bcb6eb93e97e53660cd34a591bcc08c543e0c85",
+            "file": "src/directives/trace-highlight.directive.ts",
+            "type": "directive",
+            "description": "",
+            "rawdescription": "\n",
+            "sourceCode": "import { Directive, ElementRef, EventEmitter, HostBinding, Input, OnChanges, OnDestroy, OnInit, Output, Renderer2, SimpleChanges } from '@angular/core';\nimport { BehaviorSubject, Subject } from 'rxjs';\nimport { filter, takeUntil } from 'rxjs/operators';\n\nexport interface ITraceHighLightConf {\n  isShadowDom?: boolean;\n  shadowDomElement?: HTMLElement;\n  isDisabled?: boolean;\n  onHighlight$: BehaviorSubject<any>;\n}\nexport interface ITraceSourceItemFrontend {\n  keyword?: string;\n  fieldName?: string;\n}\n\n@Directive({\n  selector: '[traceHighlight]',\n  // standalone: true,\n})\nexport class TraceHighlightDirective implements OnChanges, OnInit, OnDestroy {\n  @Input('traceHighlight') highlightConf: ITraceHighLightConf;\n  @Input() highlightId: string;\n  @Output() hightTraceIdSetChange = new EventEmitter<Set<string>>();\n\n  @HostBinding('style.position') public wrapperPos = 'relative';\n  public hightTraceIdSet = new Set<string>();\n  public destroy$: Subject<void> = new Subject<void>();\n  \n  // 添加样式常量\n  private readonly HIGHLIGHT_STYLES = {\n    normal: {\n      background: 'rgba(255, 242, 123, 0.3)',\n      border: '1.5px dashed #FD8701'\n    },\n    active: {\n      background: 'rgba(7, 181, 249, 0.3)',\n      border: 'none'\n    }\n  } as const;\n\n  constructor(\n    private elRef: ElementRef,\n    private render: Renderer2\n  ) { }\n\n  public ngOnChanges(changes: SimpleChanges): void {\n    if (changes['highlightId'] && this.highlightId) {\n      const element = document.getElementById(this.highlightId);\n      if (!element) return;\n\n      this.activeAndScrollToCurPoint(element as HTMLElement);\n    }\n  }\n\n  public ngOnInit(): void {\n    if (this.highlightConf?.isDisabled) return;\n    this.highlightConf.onHighlight$.pipe(\n      takeUntil(this.destroy$),\n      filter(value => value !== false)\n    ).subscribe((value: any) => {\n      // 清除所有高亮\n      this.clearAllHighlights();\n      value.forEach((point: ITraceSourceItemFrontend) => this.handleTracePoint(point));\n      this.hightTraceIdSetChange.emit(this.hightTraceIdSet)\n    });\n  }\n\n  public ngOnDestroy(): void {\n    this.destroy$.next();\n    this.destroy$.complete();\n  }\n\n  /**\n   * 根据单个溯源点信息进行DOM查找\n   * @param tracePoint 单个溯源点信息\n   */\n  private handleTracePoint(tracePoint: ITraceSourceItemFrontend): void {\n    // 兼容一些页面的样式偏移及shadowDom等的生成晚 在视图更新好后再进行高亮等的操作\n    setTimeout(() => {\n      const { isShadowDom, shadowDomElement } = this.highlightConf;\n      // 兼容shadowDom元素的获取\n      const walkerWrapper = isShadowDom ? shadowDomElement : this.elRef.nativeElement;\n      if (!walkerWrapper) {\n        return;\n      }\n      const { keyword, fieldName } = tracePoint;\n      // 处理*等在正则中有特殊含义的字符转义\n      // tslint:disable-next-line: newline-per-chained-call\n      const regxStr = keyword?.replace(/([*+?$^.|\\\\\\)\\(])/g, '\\\\$1');\n      const matchRegx = new RegExp(`${regxStr}`, 'g');\n\n      // 对于关键字匹配方式直接查找匹配的Text节点\n      this.searchMatchTextNode(walkerWrapper, matchRegx);\n    });\n  }\n\n  /**\n   * 搜索指定元素下的匹配文本正则的文本节点，并循环进行相应处理\n   * @param elementNode 要查找的HTML元素\n   * @param matchRegx 需要匹配的文本正则\n   */\n  private searchMatchTextNode(elementNode: Node, matchRegx: RegExp): void {\n    const textNodeFilterFn = (node: Node) => {\n      return node.nodeValue?.match(matchRegx) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP;\n    };\n    const textNodeWalker = document.createTreeWalker(elementNode, NodeFilter.SHOW_TEXT, textNodeFilterFn as any);\n    // 元素节点下匹配的文本节点\n    let curMatchTextNode = textNodeWalker.nextNode();\n\n    while (!!curMatchTextNode) {\n\n      this.searchMatchTextStr(curMatchTextNode, matchRegx);\n\n      curMatchTextNode = textNodeWalker.nextNode();\n    }\n  }\n\n  /**\n   * 对匹配到的文本节点，需要通过正则查找到当前文本节点匹配的文本有哪些，并得出文本的具体位置\n   * 然后才能对每个文本进行高亮的定位\n   * @param textNode 匹配到的文本Node节点\n   * @param matchRegx 需要匹配的文本正则\n   */\n  private searchMatchTextStr(textNode: Node, matchRegx: RegExp): void {\n    const textNodeStr = textNode.textContent;\n    let matchResult = matchRegx.exec(textNodeStr || '');\n\n    while (!!matchResult) {\n      const startIndex = matchResult?.index;\n      const endIndex = matchRegx?.lastIndex;\n      // 根据需要高亮的文本节点以及正则查找获得的文本起始高亮位置进行高亮操作\n      this.highlightTextRange(textNode, startIndex, endIndex);\n\n      matchResult = matchRegx.exec(textNodeStr || '');\n    }\n  }\n\n  /**\n   * 高亮匹配到的溯源文本\n   * @param textNode 需要高亮的文本节点\n   * @param startIndex 高亮文本节点开始下标\n   * @param endIndex 高亮文本节点结束下标\n   */\n  private highlightTextRange(textNode: Node, startIndex: number, endIndex: number): void {\n    try {\n      const range = this.createRange(textNode, startIndex, endIndex);\n      const rects = this.getHighlightRects(range, textNode);\n      const highlightElement = this.createHighlightElement(rects);\n      this.elRef.nativeElement.appendChild(highlightElement);\n    } catch (err) {\n      console.error(`${textNode}, 溯源文本高亮失败，错误信息：${err}`);\n    }\n  }\n\n  /**\n   * 创建文本范围\n   */\n  private createRange(textNode: Node, startIndex: number, endIndex: number): Range {\n    const range = document.createRange();\n    range.setStart(textNode, startIndex);\n    range.setEnd(textNode, endIndex);\n    return range;\n  }\n\n  /**\n   * 获取高亮区域的位置信息\n   */\n  private getHighlightRects(range: Range, textNode: Node): {\n    clientRect: DOMRect;\n    elementClientRect: DOMRect;\n    wrapperClientRect: DOMRect;\n  } {\n    const clientRect = range.getBoundingClientRect();\n    const elementClientRect = textNode.parentElement?.getBoundingClientRect() || clientRect;\n    const wrapperClientRect = this.elRef.nativeElement.getBoundingClientRect();\n    return { clientRect, elementClientRect, wrapperClientRect };\n  }\n\n  /**\n   * 创建高亮元素\n   */\n  private createHighlightElement(rects: {\n    clientRect: DOMRect;\n    elementClientRect: DOMRect;\n    wrapperClientRect: DOMRect;\n  }): HTMLElement {\n    // 使用 DocumentFragment 减少 DOM 操作\n    const fragment = document.createDocumentFragment();\n    const highLightElement = this.render.createElement('div');\n    fragment.appendChild(highLightElement);\n\n    // 使用 requestAnimationFrame 优化样式计算和渲染\n    requestAnimationFrame(() => {\n      const { clientRect, elementClientRect, wrapperClientRect } = rects;\n      const highLightStyle = highLightElement.style;\n\n      // 设置高亮元素ID和样式\n      highLightElement.id = this.generateHighlightId();\n      this.hightTraceIdSet.add(highLightElement.id);\n      highLightElement.className = 'highlight-mask';\n\n      // 计算位置和尺寸\n      const { left, top, width, height } = clientRect;\n      const { width: parentWidth, left: parentLeft, right: parentRight } = elementClientRect;\n      const { left: wrapperLeft, top: wrapperTop } = wrapperClientRect;\n\n      // 处理溢出情况\n      const isOverflow = left > parentRight;\n      const highLightLeft = isOverflow ? parentLeft - wrapperLeft : left - wrapperLeft;\n      const highLightWidth = isOverflow ? parentWidth : width;\n      const highLightTop = top - wrapperTop;\n\n      // 批量设置样式\n      Object.assign(highLightStyle, {\n        position: 'absolute',\n        left: `${highLightLeft}px`,\n        top: `${highLightTop}px`,\n        width: `${highLightWidth}px`,\n        height: `${height}px`,\n        maxWidth: `${parentWidth - (highLightLeft - (parentLeft - wrapperLeft))}px`,\n        pointerEvents: 'none',\n        lineHeight: `${height}px`,\n        ...this.HIGHLIGHT_STYLES.normal\n      });\n\n      // 将元素添加到 DOM\n      this.elRef.nativeElement.appendChild(fragment);\n    });\n\n    return highLightElement;\n  }\n\n  /**\n   * 生成唯一的高亮ID\n   */\n  private generateHighlightId(): string {\n    // 使用更高效的 ID 生成方式\n    return `hl-${performance.now().toString(36)}`;\n  }\n\n  /**\n   * 高亮并定位至当前指向的溯源点\n   * @param curActiveElement 当前定位的溯源点遮罩层元素\n   */\n  private activeAndScrollToCurPoint(curActiveElement?: HTMLElement): void {\n    if (!curActiveElement) return;\n\n    // 使用 requestAnimationFrame 优化滚动和高亮\n    requestAnimationFrame(() => {\n      // 重置其它溯源点样式状态\n      const highlightElements: HTMLElement[] = Array.from(document.querySelectorAll('.highlight-mask'));\n      highlightElements.forEach(element => {\n        Object.assign(element.style, this.HIGHLIGHT_STYLES.normal);\n      });\n\n      // 滚动并高亮当前溯源点\n      curActiveElement.scrollIntoView({ behavior: 'smooth', block: 'center' });\n      Object.assign(curActiveElement.style, this.HIGHLIGHT_STYLES.active);\n    });\n  }\n\n  /**\n   * 清除所有高亮元素\n   */\n  private clearAllHighlights(): void {\n    // 使用 requestAnimationFrame 优化清除操作\n    requestAnimationFrame(() => {\n      const wrapperElement = this.elRef.nativeElement;\n      const highlightElements = wrapperElement.querySelectorAll('.highlight-mask');\n      \n      // 使用 DocumentFragment 批量移除元素\n      const fragment = document.createDocumentFragment();\n      highlightElements.forEach((element: Element) => {\n        fragment.appendChild(element);\n      });\n      \n      // 清空 Set\n      this.hightTraceIdSet.clear();\n    });\n  }\n}\n\n",
+            "selector": "[traceHighlight]",
+            "providers": [],
+            "hostDirectives": [],
+            "standalone": false,
+            "inputsClass": [
+                {
+                    "name": "highlightId",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 22,
+                    "type": "string",
+                    "decorators": []
+                },
+                {
+                    "name": "traceHighlight",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 21,
+                    "type": "ITraceHighLightConf",
+                    "decorators": []
+                }
+            ],
+            "outputsClass": [
+                {
+                    "name": "hightTraceIdSetChange",
+                    "defaultValue": "new EventEmitter<Set<string>>()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 23,
+                    "type": "EventEmitter"
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [
+                {
+                    "name": "style.position",
+                    "defaultValue": "'relative'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 25,
+                    "type": "string",
+                    "decorators": []
+                }
+            ],
+            "hostListeners": [],
+            "propertiesClass": [
+                {
+                    "name": "destroy$",
+                    "defaultValue": "new Subject<void>()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Subject<void>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 27,
+                    "modifierKind": [
+                        125
+                    ]
+                },
+                {
+                    "name": "HIGHLIGHT_STYLES",
+                    "defaultValue": "{\n    normal: {\n      background: 'rgba(255, 242, 123, 0.3)',\n      border: '1.5px dashed #FD8701'\n    },\n    active: {\n      background: 'rgba(7, 181, 249, 0.3)',\n      border: 'none'\n    }\n  } as const",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 30,
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
+                },
+                {
+                    "name": "hightTraceIdSet",
+                    "defaultValue": "new Set<string>()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 26,
+                    "modifierKind": [
+                        125
+                    ]
+                },
+                {
+                    "name": "wrapperPos",
+                    "defaultValue": "'relative'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 25,
+                    "decorators": [
+                        {
+                            "name": "HostBinding",
+                            "stringifiedArguments": "'style.position'"
+                        }
+                    ],
+                    "modifierKind": [
+                        170,
+                        125
+                    ]
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "activeAndScrollToCurPoint",
+                    "args": [
+                        {
+                            "name": "curActiveElement",
+                            "type": "HTMLElement",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "optional": true
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 245,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\n高亮并定位至当前指向的溯源点\n",
+                    "description": "<p>高亮并定位至当前指向的溯源点</p>\n",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": {
+                                "pos": 7549,
+                                "end": 7565,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16842752,
+                                "transformFlags": 0,
+                                "escapedText": "curActiveElement"
+                            },
+                            "type": "HTMLElement",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "optional": true,
+                            "tagName": {
+                                "pos": 7543,
+                                "end": 7548,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16842752,
+                                "transformFlags": 0,
+                                "escapedText": "param"
+                            },
+                            "comment": "<p>当前定位的溯源点遮罩层元素</p>\n"
+                        }
+                    ]
+                },
+                {
+                    "name": "clearAllHighlights",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 265,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\n清除所有高亮元素\n",
+                    "description": "<p>清除所有高亮元素</p>\n",
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
+                    "name": "createHighlightElement",
+                    "args": [
+                        {
+                            "name": "rects",
+                            "type": "literal type",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "HTMLElement",
+                    "typeParameters": [],
+                    "line": 182,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\n创建高亮元素\n",
+                    "description": "<p>创建高亮元素</p>\n",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "rects",
+                            "type": "literal type",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "createRange",
+                    "args": [
+                        {
+                            "name": "textNode",
+                            "type": "Node",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "startIndex",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "endIndex",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "Range",
+                    "typeParameters": [],
+                    "line": 158,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\n创建文本范围\n",
+                    "description": "<p>创建文本范围</p>\n",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "textNode",
+                            "type": "Node",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "startIndex",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "endIndex",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "generateHighlightId",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "string",
+                    "typeParameters": [],
+                    "line": 236,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\n生成唯一的高亮ID\n",
+                    "description": "<p>生成唯一的高亮ID</p>\n",
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
+                    "name": "getHighlightRects",
+                    "args": [
+                        {
+                            "name": "range",
+                            "type": "Range",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "textNode",
+                            "type": "Node",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "literal type",
+                    "typeParameters": [],
+                    "line": 168,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\n获取高亮区域的位置信息\n",
+                    "description": "<p>获取高亮区域的位置信息</p>\n",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "range",
+                            "type": "Range",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "textNode",
+                            "type": "Node",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "handleTracePoint",
+                    "args": [
+                        {
+                            "name": "tracePoint",
+                            "type": "ITraceSourceItemFrontend",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 77,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\n根据单个溯源点信息进行DOM查找\n",
+                    "description": "<p>根据单个溯源点信息进行DOM查找</p>\n",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": {
+                                "pos": 2171,
+                                "end": 2181,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16842752,
+                                "transformFlags": 0,
+                                "escapedText": "tracePoint"
+                            },
+                            "type": "ITraceSourceItemFrontend",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "pos": 2165,
+                                "end": 2170,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16842752,
+                                "transformFlags": 0,
+                                "escapedText": "param"
+                            },
+                            "comment": "<p>单个溯源点信息</p>\n"
+                        }
+                    ]
+                },
+                {
+                    "name": "highlightTextRange",
+                    "args": [
+                        {
+                            "name": "textNode",
+                            "type": "Node",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "startIndex",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "endIndex",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 144,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\n高亮匹配到的溯源文本\n",
+                    "description": "<p>高亮匹配到的溯源文本</p>\n",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": {
+                                "pos": 4284,
+                                "end": 4292,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16842752,
+                                "transformFlags": 0,
+                                "escapedText": "textNode"
+                            },
+                            "type": "Node",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "pos": 4278,
+                                "end": 4283,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16842752,
+                                "transformFlags": 0,
+                                "escapedText": "param"
+                            },
+                            "comment": "<p>需要高亮的文本节点</p>\n"
+                        },
+                        {
+                            "name": {
+                                "pos": 4315,
+                                "end": 4325,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16842752,
+                                "transformFlags": 0,
+                                "escapedText": "startIndex"
+                            },
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "pos": 4309,
+                                "end": 4314,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16842752,
+                                "transformFlags": 0,
+                                "escapedText": "param"
+                            },
+                            "comment": "<p>高亮文本节点开始下标</p>\n"
+                        },
+                        {
+                            "name": {
+                                "pos": 4349,
+                                "end": 4357,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16842752,
+                                "transformFlags": 0,
+                                "escapedText": "endIndex"
+                            },
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "pos": 4343,
+                                "end": 4348,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16842752,
+                                "transformFlags": 0,
+                                "escapedText": "param"
+                            },
+                            "comment": "<p>高亮文本节点结束下标</p>\n"
+                        }
+                    ]
+                },
+                {
+                    "name": "ngOnChanges",
+                    "args": [
+                        {
+                            "name": "changes",
+                            "type": "SimpleChanges",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 46,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        125
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "changes",
+                            "type": "SimpleChanges",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "ngOnDestroy",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 68,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        125
+                    ]
+                },
+                {
+                    "name": "ngOnInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 55,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        125
+                    ]
+                },
+                {
+                    "name": "searchMatchTextNode",
+                    "args": [
+                        {
+                            "name": "elementNode",
+                            "type": "Node",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "matchRegx",
+                            "type": "RegExp",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 102,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\n搜索指定元素下的匹配文本正则的文本节点，并循环进行相应处理\n",
+                    "description": "<p>搜索指定元素下的匹配文本正则的文本节点，并循环进行相应处理</p>\n",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": {
+                                "pos": 2995,
+                                "end": 3006,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16842752,
+                                "transformFlags": 0,
+                                "escapedText": "elementNode"
+                            },
+                            "type": "Node",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "pos": 2989,
+                                "end": 2994,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16842752,
+                                "transformFlags": 0,
+                                "escapedText": "param"
+                            },
+                            "comment": "<p>要查找的HTML元素</p>\n"
+                        },
+                        {
+                            "name": {
+                                "pos": 3030,
+                                "end": 3039,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16842752,
+                                "transformFlags": 0,
+                                "escapedText": "matchRegx"
+                            },
+                            "type": "RegExp",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "pos": 3024,
+                                "end": 3029,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16842752,
+                                "transformFlags": 0,
+                                "escapedText": "param"
+                            },
+                            "comment": "<p>需要匹配的文本正则</p>\n"
+                        }
+                    ]
+                },
+                {
+                    "name": "searchMatchTextStr",
+                    "args": [
+                        {
+                            "name": "textNode",
+                            "type": "Node",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "matchRegx",
+                            "type": "RegExp",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 124,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\n对匹配到的文本节点，需要通过正则查找到当前文本节点匹配的文本有哪些，并得出文本的具体位置\n然后才能对每个文本进行高亮的定位\n",
+                    "description": "<p>对匹配到的文本节点，需要通过正则查找到当前文本节点匹配的文本有哪些，并得出文本的具体位置\n然后才能对每个文本进行高亮的定位</p>\n",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": {
+                                "pos": 3722,
+                                "end": 3730,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16842752,
+                                "transformFlags": 0,
+                                "escapedText": "textNode"
+                            },
+                            "type": "Node",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "pos": 3716,
+                                "end": 3721,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16842752,
+                                "transformFlags": 0,
+                                "escapedText": "param"
+                            },
+                            "comment": "<p>匹配到的文本Node节点</p>\n"
+                        },
+                        {
+                            "name": {
+                                "pos": 3756,
+                                "end": 3765,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16842752,
+                                "transformFlags": 0,
+                                "escapedText": "matchRegx"
+                            },
+                            "type": "RegExp",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "pos": 3750,
+                                "end": 3755,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16842752,
+                                "transformFlags": 0,
+                                "escapedText": "param"
+                            },
+                            "comment": "<p>需要匹配的文本正则</p>\n"
+                        }
+                    ]
+                }
+            ],
+            "extends": [],
+            "implements": [
+                "OnChanges",
+                "OnInit",
+                "OnDestroy"
+            ],
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [
+                    {
+                        "name": "elRef",
+                        "type": "ElementRef",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "render",
+                        "type": "Renderer2",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "line": 39,
+                "jsdoctags": [
+                    {
+                        "name": "elRef",
+                        "type": "ElementRef",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "render",
+                        "type": "Renderer2",
                         "deprecated": false,
                         "deprecationMessage": "",
                         "tagName": {
@@ -9762,6 +10615,33 @@
                 "name": "ScrollDirective",
                 "coveragePercent": 0,
                 "coverageCount": "0/7",
+                "status": "low"
+            },
+            {
+                "filePath": "src/directives/trace-highlight.directive.ts",
+                "type": "directive",
+                "linktype": "directive",
+                "name": "TraceHighlightDirective",
+                "coveragePercent": 43,
+                "coverageCount": "10/23",
+                "status": "medium"
+            },
+            {
+                "filePath": "src/directives/trace-highlight.directive.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "ITraceHighLightConf",
+                "coveragePercent": 0,
+                "coverageCount": "0/5",
+                "status": "low"
+            },
+            {
+                "filePath": "src/directives/trace-highlight.directive.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "ITraceSourceItemFrontend",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
                 "status": "low"
             },
             {

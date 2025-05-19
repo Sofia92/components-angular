@@ -3,10 +3,7 @@ import { CollapseAnimationComponent } from './collapse-animation.component';
 
 const meta: Meta<CollapseAnimationComponent> = {
   title: 'Animations/Collapse',
-  component: CollapseAnimationComponent,
-  // parameters: {
-  //   layout: 'centered',
-  // },
+  component: CollapseAnimationComponent
 };
 
 export default meta;

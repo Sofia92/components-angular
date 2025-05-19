@@ -625,12 +625,12 @@
         },
         {
             "name": "ISelectorOption",
-            "id": "interface-ISelectorOption-acfb99d6144db72ab4189f627ebd6fa068d317d9d2fb4b4740712db757482db92fc1c9076f2b9fa71f697746d150b2cc3318be40294d91a5189062f3dcc3a679",
+            "id": "interface-ISelectorOption-55ec6f9a42e49020cf27a16acf042164b38bec887f104f62b36cf42f2a2ab4f8d07e12287938a22e3271ca027576f31419e3571c3c29447dbc31e252a19e2110",
             "file": "src/utils/validators.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
-            "sourceCode": "import { Validators, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';\nimport { NzSafeAny } from \"ng-zorro-antd/core/types\";\n\nexport const REGEXP = {\n  phoneNumber: /^1[3-9]\\d{9}$/,\n  landlineAndPhone: /^((0\\d{2,3}-\\d{7,8})|(1[3-9]\\d{9}))$/,\n  onlyNumber: /^\\d+$/,\n  empty: /^\\s+$/,\n  onlyChinese: /^[\\u4e00-\\u9fa5_a-zA-Z]+$/,\n  certificateCode: /(^[1-9]\\d{5}(18|19|([23]\\d))\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{3}[0-9Xx]$)|(^[1-9]\\d{5}\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{2}[0-9Xx]$)/,\n};\n\nexport interface ISelectorOption<T = number, U = unknown> {\n  label: string;\n  value: T;\n  extra?: U;\n  checked?: boolean;\n  disabled?: boolean;\n}\n\n/**\n * 输入框不能为空（包括空白字符）\n */\nexport function noEmptyValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value;\n    const errorTip = { 'noEmpty': { value } };\n\n    return !value || REGEXP.empty.test(value) ? errorTip : null;\n  };\n}\n\nexport function checkListRequireValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value as ISelectorOption[] || [];\n    const errorTip = { 'requireChecked': { value } };\n\n    return value && value.some((item) => item.checked) ? null : errorTip;\n  };\n}\n\nexport function onlyNumberValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value;\n    const errorTip = { 'onlyNumber': { value } };\n\n    return value && REGEXP.onlyNumber.test(value) ? null : errorTip;\n  };\n}\n\nexport function onlyChineseValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value;\n    const errorTip = { 'onlyChinese': { value } };\n    return value && !REGEXP.onlyChinese.test(value) ? errorTip : null;\n  };\n}\n\nexport function phoneNumberValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value;\n    const errorTip = { 'phoneNumber': { value } };\n\n    return value && !REGEXP.phoneNumber.test(value) ? errorTip : null;\n  };\n}\n\nexport function landlineAndPhoneValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value;\n    const errorTip = { 'landlineAndPhone': { value } };\n    return value && !REGEXP.landlineAndPhone.test(value) ? errorTip : null;\n  };\n}\n\n\nexport function certificateCodeValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value;\n    const errorTip = { 'certificateCode': { value } };\n    return value && !REGEXP.certificateCode.test(value) ? errorTip : null;\n  };\n}\n\n\n// 自定义表单校验\nexport type MyErrorsOptions = { 'zh-cn': string; en: string } & Record<\n  string,\n  NzSafeAny\n>;\nexport type MyValidationErrors = Record<string, MyErrorsOptions>;\n\n\nexport class MyValidators extends Validators {\n  static override minLength(minLength: number): ValidatorFn {\n    return (control: AbstractControl): MyValidationErrors | null => {\n      if (Validators.minLength(minLength)(control) === null) {\n        return null;\n      }\n      return {\n        minlength: {\n          'zh-cn': `最小长度为 ${minLength}`,\n          en: `MinLength is ${minLength}`,\n        },\n      };\n    };\n  }\n\n  static override maxLength(maxLength: number): ValidatorFn {\n    return (control: AbstractControl): MyValidationErrors | null => {\n      if (Validators.maxLength(maxLength)(control) === null) {\n        return null;\n      }\n      return {\n        maxlength: {\n          'zh-cn': `最大长度为 ${maxLength}`,\n          en: `MaxLength is ${maxLength}`,\n        },\n      };\n    };\n  }\n  static myName(control: AbstractControl): MyValidationErrors | null {\n    const value = control.value;\n    if (/^[ ]*$/g.test(value)) {\n      return {\n        name: { 'zh-cn': `姓名不可为空`, en: `usernName Cannot be empty` },\n      };\n    } else {\n      return null;\n    }\n  }\n  static mobile(control: AbstractControl): MyValidationErrors | null {\n    const value = control.value;\n\n    if (isEmptyInputValue(value)) {\n      return null;\n    }\n\n    return isMobile(value)\n      ? null\n      : {\n        phoneNumber: {\n          'zh-cn': `手机号码格式不正确`,\n          en: `Mobile phone number is not valid`,\n        },\n      };\n  }\n  static socialUnifiedCode(control: AbstractControl): MyValidationErrors | null {\n    const value = control.value;\n    if (!/^(([0-9A-Za-z]{15})|([0-9A-Za-z]{18})|([0-9A-Za-z]{20}))$/.test(value)) {\n      return {\n        name: { 'zh-cn': `社会信用代码格式错误`, en: `invalid socialUnifiedCode` },\n      };\n    } else {\n      return null;\n    }\n  }\n\n  // 检验身份证\n  static validateIdCardNo(idCard: string): MyValidationErrors | null {\n    let isValidCard: boolean = false;\n    // 15位和18位身份证号码的正则表达式\n    const regIdCard = /^(^[1-9]\\d{7}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{3}$)|(^[1-9]\\d{5}[1-9]\\d{3}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])((\\d{4})|\\d{3}[Xx])$)$/;\n    // 如果通过该验证，说明身份证格式正确，但准确性还需计算\n    if (regIdCard.test(idCard)) {\n      if (idCard.length === 18) {\n        // 将前17位加权因子保存在数组里\n        const idCardWi = new Array(7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2);\n        // 这是除以11后，可能产生的11位余数、验证码，也保存成数组\n        const idCardY = new Array(1, 0, 10, 9, 8, 7, 6, 5, 4, 3, 2);\n        // 用来保存前17位各自乖以加权因子后的总和\n        let idCardWiSum = 0;\n\n        for (let i = 0; i < 17; i++) {\n          idCardWiSum += +(idCard.substring(i, i + 1)) * idCardWi[i];\n        }\n\n        // 计算出校验码所在数组的位置\n        const idCardMod = idCardWiSum % 11;\n        // 得到最后一位身份证号码\n        const idCardLast = idCard.substring(17);\n        // 如果等于2，则说明校验码是10，身份证号码最后一位应该是X\n        if (+idCardMod === 2) {\n          if (idCardLast === 'X' || idCardLast === 'x') {\n            // alert(\"恭喜通过验证啦！\");\n            isValidCard = true;\n          }\n        } else {\n          // 用计算出的验证码与最后一位身份证号码匹配，如果一致，说明通过，否则是无效的身份证号码\n          if (+idCardLast === idCardY[idCardMod]) {\n            // alert(\"恭喜通过验证啦！\");\n            isValidCard = true;\n          }\n        }\n      }\n    }\n\n    return isValidCard ? null : {\n      name: { 'zh-cn': `您输入的身份证号格式有误`, en: `invalid idCardNo` },\n    };;\n  }\n}\n\nfunction isEmptyInputValue(value: NzSafeAny): boolean {\n  return value == null || value.length === 0;\n}\n\nfunction isMobile(value: string): boolean {\n  return typeof value === 'string' && /^1(3[0-9]|4[01456879]|5[0-35-9]|6[2567]|7[0-8]|8[0-9]|9[0-35-9])\\d{8}$/.test(value);\n}",
+            "sourceCode": "import { Validators, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';\nimport { NzSafeAny } from \"ng-zorro-antd/core/types\";\n\nexport const REGEXP = {\n  phoneNumber: /^1[3-9]\\d{9}$/,\n  landlineAndPhone: /^((0\\d{2,3}-\\d{7,8})|(1[3-9]\\d{9}))$/,\n  nonNegativeInteger: /^\\d+$/,\n  positiveInteger: /^[1-9]\\d*$/,\n  decimalNumber: /^[0-9]+(\\.[0-9]+)?$/,\n  empty: /^\\s+$/,\n  onlyChinese: /^[\\u4e00-\\u9fa5_a-zA-Z]+$/,\n  certificateCode: /(^[1-9]\\d{5}(18|19|([23]\\d))\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{3}[0-9Xx]$)|(^[1-9]\\d{5}\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{2}[0-9Xx]$)/,\n  mailbox: /^([a-zA-Z0-9_.-]+)@([a-zA-Z0-9_.-]+).([a-zA-Z.]{2,6})$/\n};\n\nexport interface ISelectorOption<T = number, U = unknown> {\n  label: string;\n  value: T;\n  extra?: U;\n  checked?: boolean;\n  disabled?: boolean;\n}\n\n/**\n * 输入框不能为空（包括空白字符）\n */\nexport function noEmptyValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value;\n    const errorTip = { 'noEmpty': { value } };\n\n    return !value || REGEXP.empty.test(value) ? errorTip : null;\n  };\n}\n\nexport function checkListRequireValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value as ISelectorOption[] || [];\n    const errorTip = { 'requireChecked': { value } };\n\n    return value && value.some((item) => item.checked) ? null : errorTip;\n  };\n}\n\nexport function nonNegativeIntegerValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value;\n    const errorTip = { 'nonNegativeInteger': { value } };\n\n    return value && REGEXP.nonNegativeInteger.test(value) ? null : errorTip;\n  };\n}\n\nexport function onlyChineseValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value;\n    const errorTip = { 'onlyChinese': { value } };\n    return value && !REGEXP.onlyChinese.test(value) ? errorTip : null;\n  };\n}\n\nexport function phoneNumberValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value;\n    const errorTip = { 'phoneNumber': { value } };\n\n    return value && !REGEXP.phoneNumber.test(value) ? errorTip : null;\n  };\n}\n\nexport function landlineAndPhoneValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value;\n    const errorTip = { 'landlineAndPhone': { value } };\n    return value && !REGEXP.landlineAndPhone.test(value) ? errorTip : null;\n  };\n}\n\n\nexport function certificateCodeValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value;\n    const errorTip = { 'certificateCode': { value } };\n    return value && !REGEXP.certificateCode.test(value) ? errorTip : null;\n  };\n}\n\nexport function positiveIntegerValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value;\n    const errorTip = { 'positiveInteger': { value } };\n\n    return value && REGEXP.positiveInteger.test(value) ? null : errorTip;\n  };\n}\n\nexport function decimalNumberValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value;\n    const errorTip = { 'decimalNumber': { value } };\n\n    return value && REGEXP.decimalNumber.test(value) ? null : errorTip;\n  };\n}\n\n// 自定义表单校验\nexport type MyErrorsOptions = { 'zh-cn': string; en: string } & Record<\n  string,\n  NzSafeAny\n>;\nexport type MyValidationErrors = Record<string, MyErrorsOptions>;\n\n\nexport class MyValidators extends Validators {\n  static override minLength(minLength: number): ValidatorFn {\n    return (control: AbstractControl): MyValidationErrors | null => {\n      if (Validators.minLength(minLength)(control) === null) {\n        return null;\n      }\n      return {\n        minlength: {\n          'zh-cn': `最小长度为 ${minLength}`,\n          en: `MinLength is ${minLength}`,\n        },\n      };\n    };\n  }\n\n  static override maxLength(maxLength: number): ValidatorFn {\n    return (control: AbstractControl): MyValidationErrors | null => {\n      if (Validators.maxLength(maxLength)(control) === null) {\n        return null;\n      }\n      return {\n        maxlength: {\n          'zh-cn': `最大长度为 ${maxLength}`,\n          en: `MaxLength is ${maxLength}`,\n        },\n      };\n    };\n  }\n  static myName(control: AbstractControl): MyValidationErrors | null {\n    const value = control.value;\n    if (/^[ ]*$/g.test(value)) {\n      return {\n        name: { 'zh-cn': `姓名不可为空`, en: `usernName Cannot be empty` },\n      };\n    } else {\n      return null;\n    }\n  }\n  static mobile(control: AbstractControl): MyValidationErrors | null {\n    const value = control.value;\n\n    if (isEmptyInputValue(value)) {\n      return null;\n    }\n\n    return isMobile(value)\n      ? null\n      : {\n        phoneNumber: {\n          'zh-cn': `手机号码格式不正确`,\n          en: `Mobile phone number is not valid`,\n        },\n      };\n  }\n  static socialUnifiedCode(control: AbstractControl): MyValidationErrors | null {\n    const value = control.value;\n    if (!/^(([0-9A-Za-z]{15})|([0-9A-Za-z]{18})|([0-9A-Za-z]{20}))$/.test(value)) {\n      return {\n        name: { 'zh-cn': `社会信用代码格式错误`, en: `invalid socialUnifiedCode` },\n      };\n    } else {\n      return null;\n    }\n  }\n\n  // 检验身份证\n  static validateIdCardNo(idCard: string): MyValidationErrors | null {\n    let isValidCard: boolean = false;\n    // 15位和18位身份证号码的正则表达式\n    const regIdCard = /^(^[1-9]\\d{7}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{3}$)|(^[1-9]\\d{5}[1-9]\\d{3}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])((\\d{4})|\\d{3}[Xx])$)$/;\n    // 如果通过该验证，说明身份证格式正确，但准确性还需计算\n    if (regIdCard.test(idCard)) {\n      if (idCard.length === 18) {\n        // 将前17位加权因子保存在数组里\n        const idCardWi = new Array(7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2);\n        // 这是除以11后，可能产生的11位余数、验证码，也保存成数组\n        const idCardY = new Array(1, 0, 10, 9, 8, 7, 6, 5, 4, 3, 2);\n        // 用来保存前17位各自乖以加权因子后的总和\n        let idCardWiSum = 0;\n\n        for (let i = 0; i < 17; i++) {\n          idCardWiSum += +(idCard.substring(i, i + 1)) * idCardWi[i];\n        }\n\n        // 计算出校验码所在数组的位置\n        const idCardMod = idCardWiSum % 11;\n        // 得到最后一位身份证号码\n        const idCardLast = idCard.substring(17);\n        // 如果等于2，则说明校验码是10，身份证号码最后一位应该是X\n        if (+idCardMod === 2) {\n          if (idCardLast === 'X' || idCardLast === 'x') {\n            // alert(\"恭喜通过验证啦！\");\n            isValidCard = true;\n          }\n        } else {\n          // 用计算出的验证码与最后一位身份证号码匹配，如果一致，说明通过，否则是无效的身份证号码\n          if (+idCardLast === idCardY[idCardMod]) {\n            // alert(\"恭喜通过验证啦！\");\n            isValidCard = true;\n          }\n        }\n      }\n    }\n\n    return isValidCard ? null : {\n      name: { 'zh-cn': `您输入的身份证号格式有误`, en: `invalid idCardNo` },\n    };;\n  }\n\n  static mailboxValidator(): ValidatorFn {\n    return (control: AbstractControl): ValidationErrors | null => {\n      const value = control.value;\n      const errorTip = { 'mailbox': { value } };\n\n      return value && !REGEXP.mailbox.test(value) ? errorTip : null;\n    };\n  }\n}\n\nfunction isEmptyInputValue(value: NzSafeAny): boolean {\n  return value == null || value.length === 0;\n}\n\nfunction isMobile(value: string): boolean {\n  return typeof value === 'string' && /^1(3[0-9]|4[01456879]|5[0-35-9]|6[2567]|7[0-8]|8[0-9]|9[0-35-9])\\d{8}$/.test(value);\n}",
             "properties": [
                 {
                     "name": "checked",
@@ -640,7 +640,7 @@
                     "indexKey": "",
                     "optional": true,
                     "description": "",
-                    "line": 17
+                    "line": 20
                 },
                 {
                     "name": "disabled",
@@ -650,7 +650,7 @@
                     "indexKey": "",
                     "optional": true,
                     "description": "",
-                    "line": 18
+                    "line": 21
                 },
                 {
                     "name": "extra",
@@ -660,7 +660,7 @@
                     "indexKey": "",
                     "optional": true,
                     "description": "",
-                    "line": 16
+                    "line": 19
                 },
                 {
                     "name": "label",
@@ -670,7 +670,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 14
+                    "line": 17
                 },
                 {
                     "name": "value",
@@ -680,7 +680,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 15
+                    "line": 18
                 }
             ],
             "indexSignatures": [],
@@ -1909,16 +1909,29 @@
     "classes": [
         {
             "name": "MyValidators",
-            "id": "class-MyValidators-acfb99d6144db72ab4189f627ebd6fa068d317d9d2fb4b4740712db757482db92fc1c9076f2b9fa71f697746d150b2cc3318be40294d91a5189062f3dcc3a679",
+            "id": "class-MyValidators-55ec6f9a42e49020cf27a16acf042164b38bec887f104f62b36cf42f2a2ab4f8d07e12287938a22e3271ca027576f31419e3571c3c29447dbc31e252a19e2110",
             "file": "src/utils/validators.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "class",
-            "sourceCode": "import { Validators, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';\nimport { NzSafeAny } from \"ng-zorro-antd/core/types\";\n\nexport const REGEXP = {\n  phoneNumber: /^1[3-9]\\d{9}$/,\n  landlineAndPhone: /^((0\\d{2,3}-\\d{7,8})|(1[3-9]\\d{9}))$/,\n  onlyNumber: /^\\d+$/,\n  empty: /^\\s+$/,\n  onlyChinese: /^[\\u4e00-\\u9fa5_a-zA-Z]+$/,\n  certificateCode: /(^[1-9]\\d{5}(18|19|([23]\\d))\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{3}[0-9Xx]$)|(^[1-9]\\d{5}\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{2}[0-9Xx]$)/,\n};\n\nexport interface ISelectorOption<T = number, U = unknown> {\n  label: string;\n  value: T;\n  extra?: U;\n  checked?: boolean;\n  disabled?: boolean;\n}\n\n/**\n * 输入框不能为空（包括空白字符）\n */\nexport function noEmptyValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value;\n    const errorTip = { 'noEmpty': { value } };\n\n    return !value || REGEXP.empty.test(value) ? errorTip : null;\n  };\n}\n\nexport function checkListRequireValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value as ISelectorOption[] || [];\n    const errorTip = { 'requireChecked': { value } };\n\n    return value && value.some((item) => item.checked) ? null : errorTip;\n  };\n}\n\nexport function onlyNumberValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value;\n    const errorTip = { 'onlyNumber': { value } };\n\n    return value && REGEXP.onlyNumber.test(value) ? null : errorTip;\n  };\n}\n\nexport function onlyChineseValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value;\n    const errorTip = { 'onlyChinese': { value } };\n    return value && !REGEXP.onlyChinese.test(value) ? errorTip : null;\n  };\n}\n\nexport function phoneNumberValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value;\n    const errorTip = { 'phoneNumber': { value } };\n\n    return value && !REGEXP.phoneNumber.test(value) ? errorTip : null;\n  };\n}\n\nexport function landlineAndPhoneValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value;\n    const errorTip = { 'landlineAndPhone': { value } };\n    return value && !REGEXP.landlineAndPhone.test(value) ? errorTip : null;\n  };\n}\n\n\nexport function certificateCodeValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value;\n    const errorTip = { 'certificateCode': { value } };\n    return value && !REGEXP.certificateCode.test(value) ? errorTip : null;\n  };\n}\n\n\n// 自定义表单校验\nexport type MyErrorsOptions = { 'zh-cn': string; en: string } & Record<\n  string,\n  NzSafeAny\n>;\nexport type MyValidationErrors = Record<string, MyErrorsOptions>;\n\n\nexport class MyValidators extends Validators {\n  static override minLength(minLength: number): ValidatorFn {\n    return (control: AbstractControl): MyValidationErrors | null => {\n      if (Validators.minLength(minLength)(control) === null) {\n        return null;\n      }\n      return {\n        minlength: {\n          'zh-cn': `最小长度为 ${minLength}`,\n          en: `MinLength is ${minLength}`,\n        },\n      };\n    };\n  }\n\n  static override maxLength(maxLength: number): ValidatorFn {\n    return (control: AbstractControl): MyValidationErrors | null => {\n      if (Validators.maxLength(maxLength)(control) === null) {\n        return null;\n      }\n      return {\n        maxlength: {\n          'zh-cn': `最大长度为 ${maxLength}`,\n          en: `MaxLength is ${maxLength}`,\n        },\n      };\n    };\n  }\n  static myName(control: AbstractControl): MyValidationErrors | null {\n    const value = control.value;\n    if (/^[ ]*$/g.test(value)) {\n      return {\n        name: { 'zh-cn': `姓名不可为空`, en: `usernName Cannot be empty` },\n      };\n    } else {\n      return null;\n    }\n  }\n  static mobile(control: AbstractControl): MyValidationErrors | null {\n    const value = control.value;\n\n    if (isEmptyInputValue(value)) {\n      return null;\n    }\n\n    return isMobile(value)\n      ? null\n      : {\n        phoneNumber: {\n          'zh-cn': `手机号码格式不正确`,\n          en: `Mobile phone number is not valid`,\n        },\n      };\n  }\n  static socialUnifiedCode(control: AbstractControl): MyValidationErrors | null {\n    const value = control.value;\n    if (!/^(([0-9A-Za-z]{15})|([0-9A-Za-z]{18})|([0-9A-Za-z]{20}))$/.test(value)) {\n      return {\n        name: { 'zh-cn': `社会信用代码格式错误`, en: `invalid socialUnifiedCode` },\n      };\n    } else {\n      return null;\n    }\n  }\n\n  // 检验身份证\n  static validateIdCardNo(idCard: string): MyValidationErrors | null {\n    let isValidCard: boolean = false;\n    // 15位和18位身份证号码的正则表达式\n    const regIdCard = /^(^[1-9]\\d{7}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{3}$)|(^[1-9]\\d{5}[1-9]\\d{3}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])((\\d{4})|\\d{3}[Xx])$)$/;\n    // 如果通过该验证，说明身份证格式正确，但准确性还需计算\n    if (regIdCard.test(idCard)) {\n      if (idCard.length === 18) {\n        // 将前17位加权因子保存在数组里\n        const idCardWi = new Array(7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2);\n        // 这是除以11后，可能产生的11位余数、验证码，也保存成数组\n        const idCardY = new Array(1, 0, 10, 9, 8, 7, 6, 5, 4, 3, 2);\n        // 用来保存前17位各自乖以加权因子后的总和\n        let idCardWiSum = 0;\n\n        for (let i = 0; i < 17; i++) {\n          idCardWiSum += +(idCard.substring(i, i + 1)) * idCardWi[i];\n        }\n\n        // 计算出校验码所在数组的位置\n        const idCardMod = idCardWiSum % 11;\n        // 得到最后一位身份证号码\n        const idCardLast = idCard.substring(17);\n        // 如果等于2，则说明校验码是10，身份证号码最后一位应该是X\n        if (+idCardMod === 2) {\n          if (idCardLast === 'X' || idCardLast === 'x') {\n            // alert(\"恭喜通过验证啦！\");\n            isValidCard = true;\n          }\n        } else {\n          // 用计算出的验证码与最后一位身份证号码匹配，如果一致，说明通过，否则是无效的身份证号码\n          if (+idCardLast === idCardY[idCardMod]) {\n            // alert(\"恭喜通过验证啦！\");\n            isValidCard = true;\n          }\n        }\n      }\n    }\n\n    return isValidCard ? null : {\n      name: { 'zh-cn': `您输入的身份证号格式有误`, en: `invalid idCardNo` },\n    };;\n  }\n}\n\nfunction isEmptyInputValue(value: NzSafeAny): boolean {\n  return value == null || value.length === 0;\n}\n\nfunction isMobile(value: string): boolean {\n  return typeof value === 'string' && /^1(3[0-9]|4[01456879]|5[0-35-9]|6[2567]|7[0-8]|8[0-9]|9[0-35-9])\\d{8}$/.test(value);\n}",
+            "sourceCode": "import { Validators, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';\nimport { NzSafeAny } from \"ng-zorro-antd/core/types\";\n\nexport const REGEXP = {\n  phoneNumber: /^1[3-9]\\d{9}$/,\n  landlineAndPhone: /^((0\\d{2,3}-\\d{7,8})|(1[3-9]\\d{9}))$/,\n  nonNegativeInteger: /^\\d+$/,\n  positiveInteger: /^[1-9]\\d*$/,\n  decimalNumber: /^[0-9]+(\\.[0-9]+)?$/,\n  empty: /^\\s+$/,\n  onlyChinese: /^[\\u4e00-\\u9fa5_a-zA-Z]+$/,\n  certificateCode: /(^[1-9]\\d{5}(18|19|([23]\\d))\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{3}[0-9Xx]$)|(^[1-9]\\d{5}\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{2}[0-9Xx]$)/,\n  mailbox: /^([a-zA-Z0-9_.-]+)@([a-zA-Z0-9_.-]+).([a-zA-Z.]{2,6})$/\n};\n\nexport interface ISelectorOption<T = number, U = unknown> {\n  label: string;\n  value: T;\n  extra?: U;\n  checked?: boolean;\n  disabled?: boolean;\n}\n\n/**\n * 输入框不能为空（包括空白字符）\n */\nexport function noEmptyValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value;\n    const errorTip = { 'noEmpty': { value } };\n\n    return !value || REGEXP.empty.test(value) ? errorTip : null;\n  };\n}\n\nexport function checkListRequireValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value as ISelectorOption[] || [];\n    const errorTip = { 'requireChecked': { value } };\n\n    return value && value.some((item) => item.checked) ? null : errorTip;\n  };\n}\n\nexport function nonNegativeIntegerValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value;\n    const errorTip = { 'nonNegativeInteger': { value } };\n\n    return value && REGEXP.nonNegativeInteger.test(value) ? null : errorTip;\n  };\n}\n\nexport function onlyChineseValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value;\n    const errorTip = { 'onlyChinese': { value } };\n    return value && !REGEXP.onlyChinese.test(value) ? errorTip : null;\n  };\n}\n\nexport function phoneNumberValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value;\n    const errorTip = { 'phoneNumber': { value } };\n\n    return value && !REGEXP.phoneNumber.test(value) ? errorTip : null;\n  };\n}\n\nexport function landlineAndPhoneValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value;\n    const errorTip = { 'landlineAndPhone': { value } };\n    return value && !REGEXP.landlineAndPhone.test(value) ? errorTip : null;\n  };\n}\n\n\nexport function certificateCodeValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value;\n    const errorTip = { 'certificateCode': { value } };\n    return value && !REGEXP.certificateCode.test(value) ? errorTip : null;\n  };\n}\n\nexport function positiveIntegerValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value;\n    const errorTip = { 'positiveInteger': { value } };\n\n    return value && REGEXP.positiveInteger.test(value) ? null : errorTip;\n  };\n}\n\nexport function decimalNumberValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const value = control.value;\n    const errorTip = { 'decimalNumber': { value } };\n\n    return value && REGEXP.decimalNumber.test(value) ? null : errorTip;\n  };\n}\n\n// 自定义表单校验\nexport type MyErrorsOptions = { 'zh-cn': string; en: string } & Record<\n  string,\n  NzSafeAny\n>;\nexport type MyValidationErrors = Record<string, MyErrorsOptions>;\n\n\nexport class MyValidators extends Validators {\n  static override minLength(minLength: number): ValidatorFn {\n    return (control: AbstractControl): MyValidationErrors | null => {\n      if (Validators.minLength(minLength)(control) === null) {\n        return null;\n      }\n      return {\n        minlength: {\n          'zh-cn': `最小长度为 ${minLength}`,\n          en: `MinLength is ${minLength}`,\n        },\n      };\n    };\n  }\n\n  static override maxLength(maxLength: number): ValidatorFn {\n    return (control: AbstractControl): MyValidationErrors | null => {\n      if (Validators.maxLength(maxLength)(control) === null) {\n        return null;\n      }\n      return {\n        maxlength: {\n          'zh-cn': `最大长度为 ${maxLength}`,\n          en: `MaxLength is ${maxLength}`,\n        },\n      };\n    };\n  }\n  static myName(control: AbstractControl): MyValidationErrors | null {\n    const value = control.value;\n    if (/^[ ]*$/g.test(value)) {\n      return {\n        name: { 'zh-cn': `姓名不可为空`, en: `usernName Cannot be empty` },\n      };\n    } else {\n      return null;\n    }\n  }\n  static mobile(control: AbstractControl): MyValidationErrors | null {\n    const value = control.value;\n\n    if (isEmptyInputValue(value)) {\n      return null;\n    }\n\n    return isMobile(value)\n      ? null\n      : {\n        phoneNumber: {\n          'zh-cn': `手机号码格式不正确`,\n          en: `Mobile phone number is not valid`,\n        },\n      };\n  }\n  static socialUnifiedCode(control: AbstractControl): MyValidationErrors | null {\n    const value = control.value;\n    if (!/^(([0-9A-Za-z]{15})|([0-9A-Za-z]{18})|([0-9A-Za-z]{20}))$/.test(value)) {\n      return {\n        name: { 'zh-cn': `社会信用代码格式错误`, en: `invalid socialUnifiedCode` },\n      };\n    } else {\n      return null;\n    }\n  }\n\n  // 检验身份证\n  static validateIdCardNo(idCard: string): MyValidationErrors | null {\n    let isValidCard: boolean = false;\n    // 15位和18位身份证号码的正则表达式\n    const regIdCard = /^(^[1-9]\\d{7}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{3}$)|(^[1-9]\\d{5}[1-9]\\d{3}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])((\\d{4})|\\d{3}[Xx])$)$/;\n    // 如果通过该验证，说明身份证格式正确，但准确性还需计算\n    if (regIdCard.test(idCard)) {\n      if (idCard.length === 18) {\n        // 将前17位加权因子保存在数组里\n        const idCardWi = new Array(7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2);\n        // 这是除以11后，可能产生的11位余数、验证码，也保存成数组\n        const idCardY = new Array(1, 0, 10, 9, 8, 7, 6, 5, 4, 3, 2);\n        // 用来保存前17位各自乖以加权因子后的总和\n        let idCardWiSum = 0;\n\n        for (let i = 0; i < 17; i++) {\n          idCardWiSum += +(idCard.substring(i, i + 1)) * idCardWi[i];\n        }\n\n        // 计算出校验码所在数组的位置\n        const idCardMod = idCardWiSum % 11;\n        // 得到最后一位身份证号码\n        const idCardLast = idCard.substring(17);\n        // 如果等于2，则说明校验码是10，身份证号码最后一位应该是X\n        if (+idCardMod === 2) {\n          if (idCardLast === 'X' || idCardLast === 'x') {\n            // alert(\"恭喜通过验证啦！\");\n            isValidCard = true;\n          }\n        } else {\n          // 用计算出的验证码与最后一位身份证号码匹配，如果一致，说明通过，否则是无效的身份证号码\n          if (+idCardLast === idCardY[idCardMod]) {\n            // alert(\"恭喜通过验证啦！\");\n            isValidCard = true;\n          }\n        }\n      }\n    }\n\n    return isValidCard ? null : {\n      name: { 'zh-cn': `您输入的身份证号格式有误`, en: `invalid idCardNo` },\n    };;\n  }\n\n  static mailboxValidator(): ValidatorFn {\n    return (control: AbstractControl): ValidationErrors | null => {\n      const value = control.value;\n      const errorTip = { 'mailbox': { value } };\n\n      return value && !REGEXP.mailbox.test(value) ? errorTip : null;\n    };\n  }\n}\n\nfunction isEmptyInputValue(value: NzSafeAny): boolean {\n  return value == null || value.length === 0;\n}\n\nfunction isMobile(value: string): boolean {\n  return typeof value === 'string' && /^1(3[0-9]|4[01456879]|5[0-35-9]|6[2567]|7[0-8]|8[0-9]|9[0-35-9])\\d{8}$/.test(value);\n}",
             "inputsClass": [],
             "outputsClass": [],
             "properties": [],
             "methods": [
+                {
+                    "name": "mailboxValidator",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "ValidatorFn",
+                    "typeParameters": [],
+                    "line": 223,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        126
+                    ]
+                },
                 {
                     "name": "maxLength",
                     "args": [
@@ -1932,7 +1945,7 @@
                     "optional": false,
                     "returnType": "ValidatorFn",
                     "typeParameters": [],
-                    "line": 109,
+                    "line": 129,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -1964,7 +1977,7 @@
                     "optional": false,
                     "returnType": "ValidatorFn",
                     "typeParameters": [],
-                    "line": 95,
+                    "line": 115,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -1996,7 +2009,7 @@
                     "optional": false,
                     "returnType": "MyValidationErrors | null",
                     "typeParameters": [],
-                    "line": 132,
+                    "line": 152,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -2027,7 +2040,7 @@
                     "optional": false,
                     "returnType": "MyValidationErrors | null",
                     "typeParameters": [],
-                    "line": 122,
+                    "line": 142,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -2058,7 +2071,7 @@
                     "optional": false,
                     "returnType": "MyValidationErrors | null",
                     "typeParameters": [],
-                    "line": 148,
+                    "line": 168,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -2089,7 +2102,7 @@
                     "optional": false,
                     "returnType": "MyValidationErrors | null",
                     "typeParameters": [],
-                    "line": 160,
+                    "line": 180,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -6550,11 +6563,13 @@
                 "name": "COLLAPSE_ANIMATION",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/animations/collapse.ts",
+                "file": "src/animations/animations.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "AnimationTriggerMetadata",
-                "defaultValue": "trigger('collapse', [\n  transition('no => yes, void => yes', [\n    animate('300ms cubic-bezier(0.4, 0, 0.2, 1)', keyframes([\n      style({\n        height: '60px',\n        opacity: 0.5,\n        transform: 'scale(0.95)',\n        overflow: 'hidden',\n      }),\n      style({\n        height: '*',\n        opacity: 1,\n        transform: 'scale(1)',\n        overflow: 'hidden',\n      }),\n    ])),\n  ]),\n  transition('yes => no', [\n    animate('300ms cubic-bezier(0.4, 0, 0.2, 1)', keyframes([\n      style({\n        height: '*',\n        opacity: 1,\n        transform: 'scale(1)',\n        overflow: 'hidden',\n      }),\n      style({\n        opacity: 0.5,\n        transform: 'scale(0.95)',\n        overflow: 'hidden',\n      }),\n    ])),\n  ]),\n])"
+                "defaultValue": "trigger('collapse', [\n  transition('no => yes, void => yes', [\n    animate('300ms cubic-bezier(0.4, 0, 0.2, 1)', keyframes([\n      style({\n        height: '60px',\n        opacity: 0.5,\n        transform: 'scale(0.95)',\n        overflow: 'hidden',\n      }),\n      style({\n        height: '*',\n        opacity: 1,\n        transform: 'scale(1)',\n        overflow: 'hidden',\n      }),\n    ])),\n  ]),\n  transition('yes => no', [\n    animate('300ms cubic-bezier(0.4, 0, 0.2, 1)', keyframes([\n      style({\n        height: '*',\n        opacity: 1,\n        transform: 'scale(1)',\n        overflow: 'hidden',\n      }),\n      style({\n        opacity: 0.5,\n        transform: 'scale(0.95)',\n        overflow: 'hidden',\n      }),\n    ])),\n  ]),\n])",
+                "rawdescription": "折叠动画",
+                "description": "<p>折叠动画</p>\n"
             },
             {
                 "name": "CommonIconNames",
@@ -6585,6 +6600,18 @@
                 "deprecationMessage": "",
                 "type": "[]",
                 "defaultValue": "[\n    'Edit',\n    'Form',\n    'Copy',\n    'Scissor',\n    'Delete',\n    'Snippets',\n    'Diff',\n    'Highlight',\n    'AlignCenter',\n    'AlignLeft',\n    'AlignRight',\n    'BgColors',\n    'Bold',\n    'Italic',\n    'Underline',\n    'Strikethrough',\n    'Redo',\n    'Undo',\n    'ZoomIn',\n    'ZoomOut',\n    'FontColors',\n    'FontSize',\n    'LineHeight',\n    'Dash',\n    'SmallDash',\n    'SortAscending',\n    'SortDescending',\n    'Drag',\n    'OrderedList',\n    'UnorderedList',\n    'RadiusSetting',\n    'ColumnWidth',\n    'ColumnHeight',\n]"
+            },
+            {
+                "name": "FADE_ANIMATION",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/animations/animations.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "AnimationTriggerMetadata",
+                "defaultValue": "trigger('fade', [\n  state('fadeOut, void', style({ \n    opacity: 0,\n    transform: 'translateY(20px) scale(0.95)'\n  })),\n  state('fadeIn', style({ \n    opacity: 1,\n    transform: 'translateY(0) scale(1)'\n  })),\n  transition('* <=> fadeIn', animate('800ms cubic-bezier(0.4, 0, 0.2, 1)')),\n])",
+                "rawdescription": "淡入淡出动画",
+                "description": "<p>淡入淡出动画</p>\n"
             },
             {
                 "name": "fileTypeIconMap",
@@ -6644,7 +6671,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "object",
-                "defaultValue": "{\n  phoneNumber: /^1[3-9]\\d{9}$/,\n  landlineAndPhone: /^((0\\d{2,3}-\\d{7,8})|(1[3-9]\\d{9}))$/,\n  onlyNumber: /^\\d+$/,\n  empty: /^\\s+$/,\n  onlyChinese: /^[\\u4e00-\\u9fa5_a-zA-Z]+$/,\n  certificateCode: /(^[1-9]\\d{5}(18|19|([23]\\d))\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{3}[0-9Xx]$)|(^[1-9]\\d{5}\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{2}[0-9Xx]$)/,\n}"
+                "defaultValue": "{\n  phoneNumber: /^1[3-9]\\d{9}$/,\n  landlineAndPhone: /^((0\\d{2,3}-\\d{7,8})|(1[3-9]\\d{9}))$/,\n  nonNegativeInteger: /^\\d+$/,\n  positiveInteger: /^[1-9]\\d*$/,\n  decimalNumber: /^[0-9]+(\\.[0-9]+)?$/,\n  empty: /^\\s+$/,\n  onlyChinese: /^[\\u4e00-\\u9fa5_a-zA-Z]+$/,\n  certificateCode: /(^[1-9]\\d{5}(18|19|([23]\\d))\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{3}[0-9Xx]$)|(^[1-9]\\d{5}\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{2}[0-9Xx]$)/,\n  mailbox: /^([a-zA-Z0-9_.-]+)@([a-zA-Z0-9_.-]+).([a-zA-Z.]{2,6})$/\n}"
             },
             {
                 "name": "StreamStatusIconMap",
@@ -6930,6 +6957,17 @@
                         "comment": ""
                     }
                 ]
+            },
+            {
+                "name": "decimalNumberValidator",
+                "file": "src/utils/validators.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [],
+                "returnType": "ValidatorFn"
             },
             {
                 "name": "formatSreamMeta",
@@ -7547,6 +7585,17 @@
                 "returnType": "ValidatorFn"
             },
             {
+                "name": "nonNegativeIntegerValidator",
+                "file": "src/utils/validators.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [],
+                "returnType": "ValidatorFn"
+            },
+            {
                 "name": "onlyChineseValidator",
                 "file": "src/utils/validators.ts",
                 "ctype": "miscellaneous",
@@ -7558,7 +7607,7 @@
                 "returnType": "ValidatorFn"
             },
             {
-                "name": "onlyNumberValidator",
+                "name": "phoneNumberValidator",
                 "file": "src/utils/validators.ts",
                 "ctype": "miscellaneous",
                 "subtype": "function",
@@ -7569,7 +7618,7 @@
                 "returnType": "ValidatorFn"
             },
             {
-                "name": "phoneNumberValidator",
+                "name": "positiveIntegerValidator",
                 "file": "src/utils/validators.ts",
                 "ctype": "miscellaneous",
                 "subtype": "function",
@@ -8432,16 +8481,30 @@
                     "defaultValue": "(\n  component: CanComponentDeactivate\n) => {\n  return component.canDeactivate ? component.canDeactivate() : true;\n}"
                 }
             ],
-            "src/animations/collapse.ts": [
+            "src/animations/animations.ts": [
                 {
                     "name": "COLLAPSE_ANIMATION",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/animations/collapse.ts",
+                    "file": "src/animations/animations.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "AnimationTriggerMetadata",
-                    "defaultValue": "trigger('collapse', [\n  transition('no => yes, void => yes', [\n    animate('300ms cubic-bezier(0.4, 0, 0.2, 1)', keyframes([\n      style({\n        height: '60px',\n        opacity: 0.5,\n        transform: 'scale(0.95)',\n        overflow: 'hidden',\n      }),\n      style({\n        height: '*',\n        opacity: 1,\n        transform: 'scale(1)',\n        overflow: 'hidden',\n      }),\n    ])),\n  ]),\n  transition('yes => no', [\n    animate('300ms cubic-bezier(0.4, 0, 0.2, 1)', keyframes([\n      style({\n        height: '*',\n        opacity: 1,\n        transform: 'scale(1)',\n        overflow: 'hidden',\n      }),\n      style({\n        opacity: 0.5,\n        transform: 'scale(0.95)',\n        overflow: 'hidden',\n      }),\n    ])),\n  ]),\n])"
+                    "defaultValue": "trigger('collapse', [\n  transition('no => yes, void => yes', [\n    animate('300ms cubic-bezier(0.4, 0, 0.2, 1)', keyframes([\n      style({\n        height: '60px',\n        opacity: 0.5,\n        transform: 'scale(0.95)',\n        overflow: 'hidden',\n      }),\n      style({\n        height: '*',\n        opacity: 1,\n        transform: 'scale(1)',\n        overflow: 'hidden',\n      }),\n    ])),\n  ]),\n  transition('yes => no', [\n    animate('300ms cubic-bezier(0.4, 0, 0.2, 1)', keyframes([\n      style({\n        height: '*',\n        opacity: 1,\n        transform: 'scale(1)',\n        overflow: 'hidden',\n      }),\n      style({\n        opacity: 0.5,\n        transform: 'scale(0.95)',\n        overflow: 'hidden',\n      }),\n    ])),\n  ]),\n])",
+                    "rawdescription": "折叠动画",
+                    "description": "<p>折叠动画</p>\n"
+                },
+                {
+                    "name": "FADE_ANIMATION",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/animations/animations.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "AnimationTriggerMetadata",
+                    "defaultValue": "trigger('fade', [\n  state('fadeOut, void', style({ \n    opacity: 0,\n    transform: 'translateY(20px) scale(0.95)'\n  })),\n  state('fadeIn', style({ \n    opacity: 1,\n    transform: 'translateY(0) scale(1)'\n  })),\n  transition('* <=> fadeIn', animate('800ms cubic-bezier(0.4, 0, 0.2, 1)')),\n])",
+                    "rawdescription": "淡入淡出动画",
+                    "description": "<p>淡入淡出动画</p>\n"
                 }
             ],
             "src/components/assets/util/sourceIcons.ts": [
@@ -8561,7 +8624,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "object",
-                    "defaultValue": "{\n  phoneNumber: /^1[3-9]\\d{9}$/,\n  landlineAndPhone: /^((0\\d{2,3}-\\d{7,8})|(1[3-9]\\d{9}))$/,\n  onlyNumber: /^\\d+$/,\n  empty: /^\\s+$/,\n  onlyChinese: /^[\\u4e00-\\u9fa5_a-zA-Z]+$/,\n  certificateCode: /(^[1-9]\\d{5}(18|19|([23]\\d))\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{3}[0-9Xx]$)|(^[1-9]\\d{5}\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{2}[0-9Xx]$)/,\n}"
+                    "defaultValue": "{\n  phoneNumber: /^1[3-9]\\d{9}$/,\n  landlineAndPhone: /^((0\\d{2,3}-\\d{7,8})|(1[3-9]\\d{9}))$/,\n  nonNegativeInteger: /^\\d+$/,\n  positiveInteger: /^[1-9]\\d*$/,\n  decimalNumber: /^[0-9]+(\\.[0-9]+)?$/,\n  empty: /^\\s+$/,\n  onlyChinese: /^[\\u4e00-\\u9fa5_a-zA-Z]+$/,\n  certificateCode: /(^[1-9]\\d{5}(18|19|([23]\\d))\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{3}[0-9Xx]$)|(^[1-9]\\d{5}\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{2}[0-9Xx]$)/,\n  mailbox: /^([a-zA-Z0-9_.-]+)@([a-zA-Z0-9_.-]+).([a-zA-Z.]{2,6})$/\n}"
                 }
             ],
             "src/directives/event-source/typing.ts": [
@@ -8986,6 +9049,17 @@
                     "returnType": "ValidatorFn"
                 },
                 {
+                    "name": "decimalNumberValidator",
+                    "file": "src/utils/validators.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [],
+                    "returnType": "ValidatorFn"
+                },
+                {
                     "name": "isEmptyInputValue",
                     "file": "src/utils/validators.ts",
                     "ctype": "miscellaneous",
@@ -9066,6 +9140,17 @@
                     "returnType": "ValidatorFn"
                 },
                 {
+                    "name": "nonNegativeIntegerValidator",
+                    "file": "src/utils/validators.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [],
+                    "returnType": "ValidatorFn"
+                },
+                {
                     "name": "onlyChineseValidator",
                     "file": "src/utils/validators.ts",
                     "ctype": "miscellaneous",
@@ -9077,7 +9162,7 @@
                     "returnType": "ValidatorFn"
                 },
                 {
-                    "name": "onlyNumberValidator",
+                    "name": "phoneNumberValidator",
                     "file": "src/utils/validators.ts",
                     "ctype": "miscellaneous",
                     "subtype": "function",
@@ -9088,7 +9173,7 @@
                     "returnType": "ValidatorFn"
                 },
                 {
-                    "name": "phoneNumberValidator",
+                    "name": "positiveIntegerValidator",
                     "file": "src/utils/validators.ts",
                     "ctype": "miscellaneous",
                     "subtype": "function",
@@ -10344,18 +10429,28 @@
     },
     "routes": [],
     "coverage": {
-        "count": 19,
+        "count": 20,
         "status": "low",
         "files": [
             {
-                "filePath": "src/animations/collapse.ts",
+                "filePath": "src/animations/animations.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "COLLAPSE_ANIMATION",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
+                "coveragePercent": 100,
+                "coverageCount": "1/1",
+                "status": "very-good"
+            },
+            {
+                "filePath": "src/animations/animations.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "FADE_ANIMATION",
+                "coveragePercent": 100,
+                "coverageCount": "1/1",
+                "status": "very-good"
             },
             {
                 "filePath": "src/app/app.component.ts",
@@ -11199,7 +11294,7 @@
                 "linktype": "classe",
                 "name": "MyValidators",
                 "coveragePercent": 0,
-                "coverageCount": "0/7",
+                "coverageCount": "0/8",
                 "status": "low"
             },
             {
@@ -11227,6 +11322,16 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "function",
                 "name": "checkListRequireValidator",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/validators.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "decimalNumberValidator",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -11276,6 +11381,16 @@
                 "type": "function",
                 "linktype": "miscellaneous",
                 "linksubtype": "function",
+                "name": "nonNegativeIntegerValidator",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/utils/validators.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
                 "name": "onlyChineseValidator",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
@@ -11286,7 +11401,7 @@
                 "type": "function",
                 "linktype": "miscellaneous",
                 "linksubtype": "function",
-                "name": "onlyNumberValidator",
+                "name": "phoneNumberValidator",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -11296,7 +11411,7 @@
                 "type": "function",
                 "linktype": "miscellaneous",
                 "linksubtype": "function",
-                "name": "phoneNumberValidator",
+                "name": "positiveIntegerValidator",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"

@@ -1,1 +1,1 @@
-export { COLLAPSE_ANIMATION } from './collapse';
+export { COLLAPSE_ANIMATION, FADE_ANIMATION } from './animations';

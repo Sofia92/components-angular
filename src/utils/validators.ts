@@ -44,7 +44,7 @@ export function onlyNumberValidator(): ValidatorFn {
     const value = control.value;
     const errorTip = { 'onlyNumber': { value } };
 
-    return value && REGEXP.onlyNumber.test(value) ? errorTip : null;
+    return value && REGEXP.onlyNumber.test(value) ? null : errorTip;
   };
 }
 
@@ -154,6 +154,50 @@ export class MyValidators extends Validators {
     } else {
       return null;
     }
+  }
+
+  // 检验身份证
+  static validateIdCardNo(idCard: string): MyValidationErrors | null {
+    let isValidCard: boolean = false;
+    // 15位和18位身份证号码的正则表达式
+    const regIdCard = /^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/;
+    // 如果通过该验证，说明身份证格式正确，但准确性还需计算
+    if (regIdCard.test(idCard)) {
+      if (idCard.length === 18) {
+        // 将前17位加权因子保存在数组里
+        const idCardWi = new Array(7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2);
+        // 这是除以11后，可能产生的11位余数、验证码，也保存成数组
+        const idCardY = new Array(1, 0, 10, 9, 8, 7, 6, 5, 4, 3, 2);
+        // 用来保存前17位各自乖以加权因子后的总和
+        let idCardWiSum = 0;
+
+        for (let i = 0; i < 17; i++) {
+          idCardWiSum += +(idCard.substring(i, i + 1)) * idCardWi[i];
+        }
+
+        // 计算出校验码所在数组的位置
+        const idCardMod = idCardWiSum % 11;
+        // 得到最后一位身份证号码
+        const idCardLast = idCard.substring(17);
+        // 如果等于2，则说明校验码是10，身份证号码最后一位应该是X
+        if (+idCardMod === 2) {
+          if (idCardLast === 'X' || idCardLast === 'x') {
+            // alert("恭喜通过验证啦！");
+            isValidCard = true;
+          }
+        } else {
+          // 用计算出的验证码与最后一位身份证号码匹配，如果一致，说明通过，否则是无效的身份证号码
+          if (+idCardLast === idCardY[idCardMod]) {
+            // alert("恭喜通过验证啦！");
+            isValidCard = true;
+          }
+        }
+      }
+    }
+
+    return isValidCard ? null : {
+      name: { 'zh-cn': `您输入的身份证号格式有误`, en: `invalid idCardNo` },
+    };;
   }
 }
 

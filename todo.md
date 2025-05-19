@@ -15,5 +15,6 @@
 
 已 Reviewed
 
+- git@git.sy:manhattan/360view-fe.git
 - ai-platform-frontend
 - bank-web

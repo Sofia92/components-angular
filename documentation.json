@@ -284,6 +284,91 @@
             "extends": []
         },
         {
+            "name": "IAppConversation",
+            "id": "interface-IAppConversation-65eeb946dcf7d5a8afde7d3b63eec9261ebfd1382a93ca28b1a0ca338b4db97b530df8dbf25600c44865a8fb6b032f06c54d1728f5119dbd0c87fbd59a2a2fdb",
+            "file": "src/directives/event-source/typing.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "interface",
+            "sourceCode": "export const StreamStatusIconMap = {\n  'default': ['loading', 'status-icon loading'],\n  'failed': ['question-circle', 'status-icon error'],\n  'succeeded': ['check-circle', 'status-icon success'],\n  'start': ['icons:node-start', 'node-icon start'],\n  'llm': ['icons:node-llm', 'node-icon llm'],\n  'if-else': ['icons:node-branch', 'node-icon if-else'],\n  'http-request': ['icons:node-http', 'node-icon http-request'],\n  'code': ['icons:script', 'node-icon code'],\n  'tool': ['icons:node-iteration', 'node-icon iteration'],\n  'iteration': ['icons:node-iteration', 'node-icon iteration'],\n  'answer': ['icons:node-answer', 'node-icon answer']\n}\nexport function formatSreamMeta(stream: any) {\n  stream.status = stream.status || 'default';\n  const [icon, className] = StreamStatusIconMap[stream.status as keyof typeof StreamStatusIconMap];\n  stream.status_icon = icon;\n  stream.status_className = className;\n\n\n  if (stream.node_type) {\n    const [node_icon, node_className] = StreamStatusIconMap[stream.node_type as keyof typeof StreamStatusIconMap] || ['', ''];\n    stream.node_icon = node_icon;\n    stream.node_className = node_className;\n  }\n}\n\n\nexport interface IAppConversation {\n  id: string,\n  name?: string,\n  inputs?: any,\n  status?: string,\n  introduction?: string,\n  created_at?: number,\n  updated_at?: number\n}\n\n\nexport enum StreamEvent {\n  PING = 'ping',\n  ERROR = 'error',\n  MESSAGE = 'message',\n  MESSAGE_END = 'message_end',\n  TTS_MESSAGE = 'tts_message',\n  TTS_MESSAGE_END = 'tts_message_end',\n  MESSAGE_FILE = 'message_file',\n  MESSAGE_REPLACE = 'message_replace',\n  AGENT_THOUGHT = 'agent_thought',\n  AGENT_MESSAGE = 'agent_message',\n  WORKFLOW_STARTED = 'workflow_started',\n  WORKFLOW_FINISHED = 'workflow_finished',\n  NODE_STARTED = 'node_started',\n  NODE_FINISHED = 'node_finished',\n  NODE_RETRY = 'node_retry',\n  PARALLEL_BRANCH_STARTED = 'parallel_branch_started',\n  PARALLEL_BRANCH_FINISHED = 'parallel_branch_finished',\n  ITERATION_STARTED = 'iteration_started',\n  ITERATION_NEXT = 'iteration_next',\n  ITERATION_COMPLETED = 'iteration_completed',\n  LOOP_STARTED = 'loop_started',\n  LOOP_NEXT = 'loop_next',\n  LOOP_COMPLETED = 'loop_completed',\n  TEXT_CHUNK = 'text_chunk',\n  TEXT_REPLACE = 'text_replace',\n  AGENT_LOG = 'agent_log'\n}\n",
+            "properties": [
+                {
+                    "name": "created_at",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "indexKey": "",
+                    "optional": true,
+                    "description": "",
+                    "line": 35
+                },
+                {
+                    "name": "id",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 30
+                },
+                {
+                    "name": "inputs",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "any",
+                    "indexKey": "",
+                    "optional": true,
+                    "description": "",
+                    "line": 32
+                },
+                {
+                    "name": "introduction",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": true,
+                    "description": "",
+                    "line": 34
+                },
+                {
+                    "name": "name",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": true,
+                    "description": "",
+                    "line": 31
+                },
+                {
+                    "name": "status",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": true,
+                    "description": "",
+                    "line": 33
+                },
+                {
+                    "name": "updated_at",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "indexKey": "",
+                    "optional": true,
+                    "description": "",
+                    "line": 36
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 171,
+            "methods": [],
+            "extends": []
+        },
+        {
             "name": "IAppIcon",
             "id": "interface-IAppIcon-59505c6142b25678c8f63be522ce230d04f3fecc29855271afc78486a2bd5212f677249be3dcdac84cc23343d6464df61cb4885dc2b2062721982197c5426b4c",
             "file": "src/components/assets/util/index.ts",
@@ -331,6 +416,61 @@
                     "optional": false,
                     "description": "",
                     "line": 17
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 171,
+            "methods": [],
+            "extends": []
+        },
+        {
+            "name": "IChatContext",
+            "id": "interface-IChatContext-1ef0d4760b01c73cbb3b95e9c119304287d6150a53e539b640e129cd7ece1837334b8872b56fd9b2c01ceb09ec8b77deed9b3222dd8273016edfde969b962d18",
+            "file": "src/directives/event-source/event-source.directive.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "interface",
+            "sourceCode": "import { Directive } from '@angular/core';\nimport { takeUntil } from 'rxjs';\nimport { DestroySubscription } from '../destroy.subscription';\nimport { EventSourceService } from './event-source.service';\nimport { last, cloneDeep } from \"lodash\";\nimport { formatSreamMeta, IAppConversation, StreamEvent } from './typing';\n\nexport interface IChatContext {\n  loading: any;\n  messages: any[];\n  messageMap: Map<string, any>;\n  currentConversation?: IAppConversation;\n}\n@Directive()\nexport class EventSourceDirective extends DestroySubscription {\n  constructor(protected _eventSourceService: EventSourceService) { super() }\n\n  chat(request: { url: string, body: any }, chatContext: IChatContext) {\n    chatContext.messages.push(cloneDeep(request.body));\n    const currentMessage = last(chatContext.messages);\n    currentMessage.answerLoading = true;\n\n\n    this._eventSourceService.connectToServerSentEvents(\n      request.url, {\n      method: 'POST',\n      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer token` },\n      body: JSON.stringify(request.body),\n      withCredentials: true\n    }\n    ).pipe(\n      takeUntil(this.destroy$)\n    ).subscribe({\n      next: data => this._handleEvent(data, chatContext),\n      error: error => this._handleError(error, chatContext)\n    })\n  }\n\n  private _handleEvent(message: any, chatContext: IChatContext) {\n    const currentMessage = last(chatContext.messages);\n    const { event, message_id, conversation_id, task_id, workflow_run_id, answer = '', thought, code, data } = message;\n    if (chatContext.currentConversation) {\n      chatContext.currentConversation.id = conversation_id;\n    }\n    currentMessage.id = message_id;\n    data && formatSreamMeta(data);\n    switch (event) {\n      case StreamEvent.WORKFLOW_STARTED:\n        chatContext.messageMap.set(message_id, { workflow: data, nodeMap: new Map() })\n        break;\n      case StreamEvent.NODE_STARTED:\n      case StreamEvent.NODE_FINISHED:\n        chatContext.messageMap.get(message_id).nodeMap.set(data.node_id, data);\n        break;\n      case StreamEvent.AGENT_THOUGHT:\n        currentMessage.thought = thought;\n        if (!!thought) {\n          currentMessage.answerLoading = false;\n        }\n        break;\n      case StreamEvent.AGENT_MESSAGE:\n      case StreamEvent.MESSAGE:\n        currentMessage.answer = currentMessage.answer + answer;\n        this._replaceInput(currentMessage);\n        break;\n      case StreamEvent.WORKFLOW_FINISHED:\n        currentMessage.answer = data.outputs?.answer || '';\n        currentMessage.answerLoading = false;\n        break;\n      case StreamEvent.MESSAGE_END:\n        currentMessage.answerLoading = false;\n        break;\n      case StreamEvent.ERROR:\n        currentMessage.answer += code || '抱歉，服务器异常';\n        currentMessage.answerLoading = false;\n        break;\n      default:\n        break;\n    }\n  }\n\n  private _handleError(error: any, chatContext: IChatContext) {\n    const currentMessage = last(chatContext.messages);\n    currentMessage.answer = error?.message || '抱歉，服务器异常';\n    currentMessage.answerLoading = false;\n  }\n\n  private _replaceInput(message: any) {\n    if (message?.answer) {\n      const inputs = message.inputs || {};\n      let answer = message.answer;\n      Object.keys(inputs).forEach(key => {\n        const regex = new RegExp(`{{${key}}}`, 'g');\n        answer = answer.replace(regex, inputs[key]);\n      });\n      message.answer = answer;\n    }\n  }\n}\n",
+            "properties": [
+                {
+                    "name": "currentConversation",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "IAppConversation",
+                    "indexKey": "",
+                    "optional": true,
+                    "description": "",
+                    "line": 12
+                },
+                {
+                    "name": "loading",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "any",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 9
+                },
+                {
+                    "name": "messageMap",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Map<string | any>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 11
+                },
+                {
+                    "name": "messages",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "any[]",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 10
                 }
             ],
             "indexSignatures": [],
@@ -800,6 +940,188 @@
                 "deprecationMessage": "",
                 "args": [],
                 "line": 13
+            },
+            "extends": [],
+            "type": "injectable"
+        },
+        {
+            "name": "EventSourceService",
+            "id": "injectable-EventSourceService-f20176317e26d4a92e3f5bc1f5077d1f0423c004c3538a72afa46ea72256f145bd23db8008fdc9d364016fc6e3c947f5baedff3636f1ee4253eee16386ac5491",
+            "file": "src/directives/event-source/event-source.service.ts",
+            "properties": [
+                {
+                    "name": "xs",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "EventTarget",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 6
+                }
+            ],
+            "methods": [
+                {
+                    "name": "_sseevent",
+                    "args": [
+                        {
+                            "name": "message",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "any",
+                    "typeParameters": [],
+                    "line": 96,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "message",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "close",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 28,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "connectToServerSentEvents",
+                    "args": [
+                        {
+                            "name": "url",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "options",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "Observable<Event>",
+                    "typeParameters": [],
+                    "line": 10,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "url",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "options",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "XhrSource",
+                    "args": [
+                        {
+                            "name": "url",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "opts",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "EventTarget",
+                    "typeParameters": [],
+                    "line": 37,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "url",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "opts",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "description": "",
+            "rawdescription": "\n",
+            "sourceCode": "import { Injectable, NgZone } from '@angular/core';\nimport { Observable, Subscriber } from 'rxjs';\n\n@Injectable({ providedIn: 'root' })\nexport class EventSourceService {\n  xs: EventTarget;\n\n  constructor(private zone: NgZone) { }\n\n  connectToServerSentEvents(url: string, options: any): Observable<Event> {\n    this.xs = this.XhrSource(url, options);\n    return new Observable((subscriber: Subscriber<Event>) => {\n      this.xs.addEventListener('error', (error: any) => {\n        this.zone.run(() => subscriber.error(JSON.parse(error['reason'])));\n      });\n      this.xs.addEventListener('message', (e: any) => {\n        const message = JSON.parse(e['data']);\n\n        this.zone.run(() => subscriber.next(message));\n      });\n      this.xs.addEventListener('close', e => {\n        // outputEl.textContent += '\\nDONE';\n        this.zone.run(() => subscriber.complete());\n      });\n    });\n  }\n\n  close(): void {\n    if (!this.xs) {\n      return;\n    }\n\n    (this.xs as any)['close']();\n    (this.xs as any) = null;\n  }\n\n  private XhrSource(url: string, opts: any): EventTarget {\n    const eventTarget = new EventTarget();\n    const xhr = new XMLHttpRequest();\n\n    xhr.open(opts.method || 'GET', url, true);\n    for (var k in opts.headers) {\n      xhr.setRequestHeader(k, opts.headers[k]);\n    }\n\n    var ongoing = false, start = 0;\n    xhr.onprogress = () => {\n      if (!ongoing) {\n        // onloadstart is sync with `xhr.send`, listeners don't have a chance\n        ongoing = true;\n        const option = {\n          status: xhr.status,\n          headers: xhr.getAllResponseHeaders(),\n          url: (xhr as any)['responseUrl'],\n        };\n        eventTarget.dispatchEvent(new Event('open', (option as any)));\n      }\n\n      var i, chunk;\n      while ((i = xhr.responseText.indexOf('\\n\\n', start)) >= 0) {\n        chunk = xhr.responseText.slice(start, i);\n        start = i + 2;\n        if (chunk.length) {\n          eventTarget.dispatchEvent(this._sseevent(chunk));\n        }\n      }\n    }\n\n    xhr.onloadend = _ => {\n      if (xhr.status == 200) {\n        eventTarget.dispatchEvent(new CloseEvent('close'))\n      } else {\n        eventTarget.dispatchEvent(new CloseEvent('error', { reason: xhr.response }));\n      }\n    }\n\n    xhr.timeout = opts.timeout;\n    xhr.ontimeout = _ => {\n      eventTarget.dispatchEvent(new CloseEvent('error', { reason: JSON.stringify({ message: 'Network request timed out' }) }));\n    }\n    xhr.onerror = _ => {\n      eventTarget.dispatchEvent(new CloseEvent('error', { reason: xhr.response }));\n    }\n    xhr.onabort = _ => {\n      eventTarget.dispatchEvent(new CloseEvent('error', { reason: JSON.stringify({ message: 'Network request aborted' }) }));\n    }\n\n    (eventTarget as any)['close'] = () => {\n      xhr.abort();\n    }\n\n    xhr.send(opts.body);\n    return eventTarget;\n  }\n\n  private _sseevent(message: string) {\n    let type = 'message', start = 0;\n    if (message.startsWith('event: ')) {\n      start = message.indexOf('\\n');\n      type = message.slice(7, start);\n    }\n    start = message.indexOf(': ', start) + 2;\n    let data = message.slice(start, message.length);\n\n    return new MessageEvent(type, { data: data })\n  }\n}\n",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [
+                    {
+                        "name": "zone",
+                        "type": "NgZone",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "line": 6,
+                "jsdoctags": [
+                    {
+                        "name": "zone",
+                        "type": "NgZone",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
             },
             "extends": [],
             "type": "injectable"
@@ -1675,6 +1997,404 @@
     ],
     "directives": [
         {
+            "name": "BallParabolaDirective",
+            "id": "directive-BallParabolaDirective-1729f61054b19e27a416c2d0c86e7108fa9702d8000fda76fa61f175e1e0a19b5b184c78f8c1a8623317ff48373bf5c52c291b3a4869fd3e7e870fa386154441",
+            "file": "src/directives/ball-parabola.directive.ts",
+            "type": "directive",
+            "description": "",
+            "rawdescription": "\n",
+            "sourceCode": "import { DOCUMENT } from '@angular/common';\nimport { AfterViewInit, Directive, ElementRef, EventEmitter, Inject, Input, Optional, Output, OnDestroy } from '@angular/core';\nimport { fromEvent, Subscription } from 'rxjs';\nimport { distinctUntilChanged } from 'rxjs/operators';\n\n@Directive({\n  selector: '[appBallParabola]',\n})\nexport class BallParabolaDirective implements AfterViewInit, OnDestroy {\n  /** 控制抛物线动画是否启用 */\n  @Input() public isAnimationEnabled: boolean = false;\n\n  /** 目标元素的 DOM ID */\n  @Input() public targetDomId: string;\n\n  /** 抛物线动画完成时触发的事件 */\n  @Output() public finishParabola: EventEmitter<void> = new EventEmitter<void>();\n\n  /** 点击事件订阅 */\n  private clickSubscription: Subscription | null = null;\n\n  /** 动画小球的样式配置 */\n  private readonly BALL_STYLES = {\n    initial: {\n      width: '14px',\n      height: '14px',\n      borderRadius: '7px',\n      backgroundColor: 'red',\n      position: 'absolute',\n      transition: 'left 1s, top 1s'\n    },\n    final: {\n      width: '6px',\n      height: '6px',\n      borderRadius: '3px',\n      transition: 'left 1s ease-in, top 0.6s linear, width 0.7s linear, height 0.7s linear, borderRadius 0.7s linear'\n    }\n  };\n\n  /** 动画时间配置（毫秒） */\n  private readonly ANIMATION_TIMING = {\n    initialDelay: 20,\n    duration: 1500\n  };\n\n  constructor(\n    private readonly elementRef: ElementRef,\n    @Optional() @Inject(DOCUMENT) private readonly document: Document\n  ) {}\n\n  /**\n   * 组件初始化后，根据动画开关状态决定是否监听点击事件\n   */\n  public ngAfterViewInit(): void {\n    this.updateClickSubscription();\n  }\n\n  /**\n   * 组件销毁时，清理订阅\n   */\n  public ngOnDestroy(): void {\n    this.unsubscribeClick();\n  }\n\n  /**\n   * 更新点击事件订阅状态\n   */\n  private updateClickSubscription(): void {\n    this.unsubscribeClick();\n\n    if (this.isAnimationEnabled) {\n      this.clickSubscription = fromEvent<MouseEvent>(this.elementRef.nativeElement, 'click')\n        .pipe(distinctUntilChanged())\n        .subscribe((event) => {\n          this.createParabolaBall(event);\n        });\n    }\n  }\n\n  /**\n   * 取消点击事件订阅\n   */\n  private unsubscribeClick(): void {\n    if (this.clickSubscription) {\n      this.clickSubscription.unsubscribe();\n      this.clickSubscription = null;\n    }\n  }\n\n  /**\n   * 创建并执行抛物线动画\n   * @param event 点击事件对象\n   */\n  private createParabolaBall(event: MouseEvent): void {\n    const ball = this.createBallElement();\n    const targetElement = this.document.getElementById(this.targetDomId);\n    \n    if (!targetElement) {\n      console.warn(`Target element with id \"${this.targetDomId}\" not found`);\n      return;\n    }\n\n    this.positionBall(ball);\n    this.animateBall(ball, targetElement);\n  }\n\n  /**\n   * 创建动画小球元素\n   */\n  private createBallElement(): HTMLDivElement {\n    const ball = this.document.createElement('div');\n    ball.className = 'parabola-ball';\n    Object.assign(ball.style, this.BALL_STYLES.initial);\n    this.document.body.appendChild(ball);\n    return ball;\n  }\n\n  /**\n   * 设置小球的初始位置\n   * @param ball 小球元素\n   */\n  private positionBall(ball: HTMLDivElement): void {\n    const originRect = this.elementRef.nativeElement.getBoundingClientRect();\n    ball.style.top = `${originRect.top}px`;\n    ball.style.left = `${originRect.left + originRect.width / 2}px`;\n  }\n\n  /**\n   * 执行小球动画\n   * @param ball 小球元素\n   * @param targetElement 目标元素\n   */\n  private animateBall(ball: HTMLDivElement, targetElement: HTMLElement): void {\n    const targetRect = targetElement.getBoundingClientRect();\n    \n    // 设置最终位置和样式\n    setTimeout(() => {\n      Object.assign(ball.style, this.BALL_STYLES.final);\n      ball.style.top = `${targetRect.top - 2}px`;\n      ball.style.left = `${targetRect.left + targetRect.width - 3}px`;\n    }, this.ANIMATION_TIMING.initialDelay);\n\n    // 清理动画元素\n    setTimeout(() => {\n      if (this.document.body.contains(ball)) {\n        this.document.body.removeChild(ball);\n      }\n      this.finishParabola.emit();\n    }, this.ANIMATION_TIMING.duration);\n  }\n}\n",
+            "selector": "[appBallParabola]",
+            "providers": [],
+            "hostDirectives": [],
+            "standalone": false,
+            "inputsClass": [
+                {
+                    "name": "isAnimationEnabled",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n控制抛物线动画是否启用",
+                    "description": "<p>控制抛物线动画是否启用</p>\n",
+                    "line": 22,
+                    "type": "boolean",
+                    "decorators": []
+                },
+                {
+                    "name": "targetDomId",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n目标元素的 DOM ID",
+                    "description": "<p>目标元素的 DOM ID</p>\n",
+                    "line": 25,
+                    "type": "string",
+                    "decorators": []
+                }
+            ],
+            "outputsClass": [
+                {
+                    "name": "finishParabola",
+                    "defaultValue": "new EventEmitter<void>()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n抛物线动画完成时触发的事件",
+                    "description": "<p>抛物线动画完成时触发的事件</p>\n",
+                    "line": 28,
+                    "type": "EventEmitter<void>"
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "propertiesClass": [
+                {
+                    "name": "ANIMATION_TIMING",
+                    "defaultValue": "{\n    initialDelay: 20,\n    duration: 1500\n  }",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "object",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "<p>动画时间配置（毫秒）</p>\n",
+                    "line": 52,
+                    "rawdescription": "\n动画时间配置（毫秒）",
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
+                },
+                {
+                    "name": "BALL_STYLES",
+                    "defaultValue": "{\n    initial: {\n      width: '14px',\n      height: '14px',\n      borderRadius: '7px',\n      backgroundColor: 'red',\n      position: 'absolute',\n      transition: 'left 1s, top 1s'\n    },\n    final: {\n      width: '6px',\n      height: '6px',\n      borderRadius: '3px',\n      transition: 'left 1s ease-in, top 0.6s linear, width 0.7s linear, height 0.7s linear, borderRadius 0.7s linear'\n    }\n  }",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "object",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "<p>动画小球的样式配置</p>\n",
+                    "line": 34,
+                    "rawdescription": "\n动画小球的样式配置",
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
+                },
+                {
+                    "name": "clickSubscription",
+                    "defaultValue": "null",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Subscription | null",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "<p>点击事件订阅</p>\n",
+                    "line": 31,
+                    "rawdescription": "\n点击事件订阅",
+                    "modifierKind": [
+                        123
+                    ]
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "animateBall",
+                    "args": [
+                        {
+                            "name": "ball",
+                            "type": "HTMLDivElement",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "targetElement",
+                            "type": "HTMLElement",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 144,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\n执行小球动画\n",
+                    "description": "<p>执行小球动画</p>\n",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": {
+                                "pos": 3441,
+                                "end": 3445,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16842752,
+                                "transformFlags": 0,
+                                "escapedText": "ball"
+                            },
+                            "type": "HTMLDivElement",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "pos": 3435,
+                                "end": 3440,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16842752,
+                                "transformFlags": 0,
+                                "escapedText": "param"
+                            },
+                            "comment": "<p>小球元素</p>\n"
+                        },
+                        {
+                            "name": {
+                                "pos": 3463,
+                                "end": 3476,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16842752,
+                                "transformFlags": 0,
+                                "escapedText": "targetElement"
+                            },
+                            "type": "HTMLElement",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "pos": 3457,
+                                "end": 3462,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16842752,
+                                "transformFlags": 0,
+                                "escapedText": "param"
+                            },
+                            "comment": "<p>目标元素</p>\n"
+                        }
+                    ]
+                },
+                {
+                    "name": "createBallElement",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "HTMLDivElement",
+                    "typeParameters": [],
+                    "line": 121,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\n创建动画小球元素\n",
+                    "description": "<p>创建动画小球元素</p>\n",
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
+                    "name": "createParabolaBall",
+                    "args": [
+                        {
+                            "name": "event",
+                            "type": "MouseEvent",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 105,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\n创建并执行抛物线动画\n",
+                    "description": "<p>创建并执行抛物线动画</p>\n",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": {
+                                "pos": 2428,
+                                "end": 2433,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16842752,
+                                "transformFlags": 0,
+                                "escapedText": "event"
+                            },
+                            "type": "MouseEvent",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "pos": 2422,
+                                "end": 2427,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16842752,
+                                "transformFlags": 0,
+                                "escapedText": "param"
+                            },
+                            "comment": "<p>点击事件对象</p>\n"
+                        }
+                    ]
+                },
+                {
+                    "name": "ngAfterViewInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 65,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\n组件初始化后，根据动画开关状态决定是否监听点击事件\n",
+                    "description": "<p>组件初始化后，根据动画开关状态决定是否监听点击事件</p>\n",
+                    "modifierKind": [
+                        125
+                    ]
+                },
+                {
+                    "name": "ngOnDestroy",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 72,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\n组件销毁时，清理订阅\n",
+                    "description": "<p>组件销毁时，清理订阅</p>\n",
+                    "modifierKind": [
+                        125
+                    ]
+                },
+                {
+                    "name": "positionBall",
+                    "args": [
+                        {
+                            "name": "ball",
+                            "type": "HTMLDivElement",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 133,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\n设置小球的初始位置\n",
+                    "description": "<p>设置小球的初始位置</p>\n",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": {
+                                "pos": 3146,
+                                "end": 3150,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16842752,
+                                "transformFlags": 0,
+                                "escapedText": "ball"
+                            },
+                            "type": "HTMLDivElement",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "pos": 3140,
+                                "end": 3145,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16842752,
+                                "transformFlags": 0,
+                                "escapedText": "param"
+                            },
+                            "comment": "<p>小球元素</p>\n"
+                        }
+                    ]
+                },
+                {
+                    "name": "unsubscribeClick",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 94,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\n取消点击事件订阅\n",
+                    "description": "<p>取消点击事件订阅</p>\n",
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
+                    "name": "updateClickSubscription",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 79,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\n更新点击事件订阅状态\n",
+                    "description": "<p>更新点击事件订阅状态</p>\n",
+                    "modifierKind": [
+                        123
+                    ]
+                }
+            ],
+            "extends": [],
+            "implements": [
+                "AfterViewInit",
+                "OnDestroy"
+            ],
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [
+                    {
+                        "name": "elementRef",
+                        "type": "ElementRef",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "document",
+                        "type": "Document",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "line": 55,
+                "jsdoctags": [
+                    {
+                        "name": "elementRef",
+                        "type": "ElementRef",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "document",
+                        "type": "Document",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            }
+        },
+        {
             "name": "DestroySubscription",
             "id": "directive-DestroySubscription-094f9440da6751b94a12a454fc646434e2f77467c1d5feb77a69f6a5559b0abe02334780eee31fe3be46e86a6e7aa8e433a30708b629bbc9f2d8742214e47c01",
             "file": "src/directives/destroy.subscription.ts",
@@ -1726,6 +2446,256 @@
             "implements": [
                 "OnDestroy"
             ]
+        },
+        {
+            "name": "EventSourceDirective",
+            "id": "directive-EventSourceDirective-1ef0d4760b01c73cbb3b95e9c119304287d6150a53e539b640e129cd7ece1837334b8872b56fd9b2c01ceb09ec8b77deed9b3222dd8273016edfde969b962d18",
+            "file": "src/directives/event-source/event-source.directive.ts",
+            "type": "directive",
+            "description": "",
+            "rawdescription": "\n",
+            "sourceCode": "import { Directive } from '@angular/core';\nimport { takeUntil } from 'rxjs';\nimport { DestroySubscription } from '../destroy.subscription';\nimport { EventSourceService } from './event-source.service';\nimport { last, cloneDeep } from \"lodash\";\nimport { formatSreamMeta, IAppConversation, StreamEvent } from './typing';\n\nexport interface IChatContext {\n  loading: any;\n  messages: any[];\n  messageMap: Map<string, any>;\n  currentConversation?: IAppConversation;\n}\n@Directive()\nexport class EventSourceDirective extends DestroySubscription {\n  constructor(protected _eventSourceService: EventSourceService) { super() }\n\n  chat(request: { url: string, body: any }, chatContext: IChatContext) {\n    chatContext.messages.push(cloneDeep(request.body));\n    const currentMessage = last(chatContext.messages);\n    currentMessage.answerLoading = true;\n\n\n    this._eventSourceService.connectToServerSentEvents(\n      request.url, {\n      method: 'POST',\n      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer token` },\n      body: JSON.stringify(request.body),\n      withCredentials: true\n    }\n    ).pipe(\n      takeUntil(this.destroy$)\n    ).subscribe({\n      next: data => this._handleEvent(data, chatContext),\n      error: error => this._handleError(error, chatContext)\n    })\n  }\n\n  private _handleEvent(message: any, chatContext: IChatContext) {\n    const currentMessage = last(chatContext.messages);\n    const { event, message_id, conversation_id, task_id, workflow_run_id, answer = '', thought, code, data } = message;\n    if (chatContext.currentConversation) {\n      chatContext.currentConversation.id = conversation_id;\n    }\n    currentMessage.id = message_id;\n    data && formatSreamMeta(data);\n    switch (event) {\n      case StreamEvent.WORKFLOW_STARTED:\n        chatContext.messageMap.set(message_id, { workflow: data, nodeMap: new Map() })\n        break;\n      case StreamEvent.NODE_STARTED:\n      case StreamEvent.NODE_FINISHED:\n        chatContext.messageMap.get(message_id).nodeMap.set(data.node_id, data);\n        break;\n      case StreamEvent.AGENT_THOUGHT:\n        currentMessage.thought = thought;\n        if (!!thought) {\n          currentMessage.answerLoading = false;\n        }\n        break;\n      case StreamEvent.AGENT_MESSAGE:\n      case StreamEvent.MESSAGE:\n        currentMessage.answer = currentMessage.answer + answer;\n        this._replaceInput(currentMessage);\n        break;\n      case StreamEvent.WORKFLOW_FINISHED:\n        currentMessage.answer = data.outputs?.answer || '';\n        currentMessage.answerLoading = false;\n        break;\n      case StreamEvent.MESSAGE_END:\n        currentMessage.answerLoading = false;\n        break;\n      case StreamEvent.ERROR:\n        currentMessage.answer += code || '抱歉，服务器异常';\n        currentMessage.answerLoading = false;\n        break;\n      default:\n        break;\n    }\n  }\n\n  private _handleError(error: any, chatContext: IChatContext) {\n    const currentMessage = last(chatContext.messages);\n    currentMessage.answer = error?.message || '抱歉，服务器异常';\n    currentMessage.answerLoading = false;\n  }\n\n  private _replaceInput(message: any) {\n    if (message?.answer) {\n      const inputs = message.inputs || {};\n      let answer = message.answer;\n      Object.keys(inputs).forEach(key => {\n        const regex = new RegExp(`{{${key}}}`, 'g');\n        answer = answer.replace(regex, inputs[key]);\n      });\n      message.answer = answer;\n    }\n  }\n}\n",
+            "providers": [],
+            "hostDirectives": [],
+            "standalone": false,
+            "inputsClass": [],
+            "outputsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "propertiesClass": [
+                {
+                    "name": "destroy$",
+                    "defaultValue": "new Subject()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Subject<>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 7,
+                    "modifierKind": [
+                        124
+                    ],
+                    "inheritance": {
+                        "file": "DestroySubscription"
+                    }
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "_handleError",
+                    "args": [
+                        {
+                            "name": "error",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "chatContext",
+                            "type": "IChatContext",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 82,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "error",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "chatContext",
+                            "type": "IChatContext",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "_handleEvent",
+                    "args": [
+                        {
+                            "name": "message",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "chatContext",
+                            "type": "IChatContext",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 39,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "message",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "chatContext",
+                            "type": "IChatContext",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "_replaceInput",
+                    "args": [
+                        {
+                            "name": "message",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 88,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "message",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "chat",
+                    "args": [
+                        {
+                            "name": "request",
+                            "type": "literal type",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "chatContext",
+                            "type": "IChatContext",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 18,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "request",
+                            "type": "literal type",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "chatContext",
+                            "type": "IChatContext",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "ngOnDestroy",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 9,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        125
+                    ],
+                    "inheritance": {
+                        "file": "DestroySubscription"
+                    }
+                }
+            ],
+            "extends": [
+                "DestroySubscription"
+            ],
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [
+                    {
+                        "name": "_eventSourceService",
+                        "type": "EventSourceService",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "line": 15,
+                "jsdoctags": [
+                    {
+                        "name": "_eventSourceService",
+                        "type": "EventSourceService",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            }
         },
         {
             "name": "IntersectionObserverDirective",
@@ -2309,6 +3279,286 @@
             "implements": [
                 "OnDestroy"
             ]
+        },
+        {
+            "name": "ScrollDirective",
+            "id": "directive-ScrollDirective-3ca19d6279033e15915433b85ec43fd86b6324c6c1a669996cbe7b215f1dfb68cdc6492a619ca82c1932cbf9b53cb55ec20d86fbb26035349c3055674282f736",
+            "file": "src/directives/scroll.directive.ts",
+            "type": "directive",
+            "description": "",
+            "rawdescription": "\n",
+            "sourceCode": "import { Directive, ElementRef, EventEmitter, HostListener, Output } from '@angular/core';\n\n@Directive({\n  selector: '[appScroll]'\n})\nexport class ScrollDirective {\n  @Output() scrollToTop = new EventEmitter<void>();\n  @Output() scrollToBottom = new EventEmitter<void>();\n\n  private readonly threshold = 50; // 触发阈值，距离顶部或底部多少像素时触发\n\n  constructor(private elementRef: ElementRef) { }\n\n  @HostListener('scroll', ['$event'])\n  onScroll(event: Event): void {\n    const element = event.target as HTMLElement;\n    const scrollTop = element.scrollTop;\n    const scrollHeight = element.scrollHeight;\n    const clientHeight = element.clientHeight;\n\n    // 检查是否滚动到底部\n    if (scrollHeight - scrollTop - clientHeight < this.threshold) {\n      this.scrollToBottom.emit();\n    }\n\n    // 检查是否滚动到顶部\n    if (scrollTop < this.threshold) {\n      this.scrollToTop.emit();\n    }\n  }\n}",
+            "selector": "[appScroll]",
+            "providers": [],
+            "hostDirectives": [],
+            "standalone": false,
+            "inputsClass": [],
+            "outputsClass": [
+                {
+                    "name": "scrollToBottom",
+                    "defaultValue": "new EventEmitter<void>()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 14,
+                    "type": "EventEmitter"
+                },
+                {
+                    "name": "scrollToTop",
+                    "defaultValue": "new EventEmitter<void>()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 13,
+                    "type": "EventEmitter"
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [
+                {
+                    "name": "scroll",
+                    "args": [
+                        {
+                            "name": "event",
+                            "type": "Event",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "argsDecorator": [
+                        "$event"
+                    ],
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 21
+                }
+            ],
+            "propertiesClass": [
+                {
+                    "name": "threshold",
+                    "defaultValue": "50",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 16,
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "onScroll",
+                    "args": [
+                        {
+                            "name": "event",
+                            "type": "Event",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 21,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "decorators": [
+                        {
+                            "name": "HostListener",
+                            "stringifiedArguments": "'scroll', ['$event']"
+                        }
+                    ],
+                    "modifierKind": [
+                        170
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "event",
+                            "type": "Event",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "extends": [],
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [
+                    {
+                        "name": "elementRef",
+                        "type": "ElementRef",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "line": 16,
+                "jsdoctags": [
+                    {
+                        "name": "elementRef",
+                        "type": "ElementRef",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "WaterMarkDirective",
+            "id": "directive-WaterMarkDirective-559e97e39798dac6a55e312d2a7bd68d256c4a6a1b1cb861b5f239e0b0cc34827f1d5df1ecf689363e28eb58b6f58cd779514aa9382c8ad783a0b1ebe7fda284",
+            "file": "src/directives/water-mark.directive.ts",
+            "type": "directive",
+            "description": "",
+            "rawdescription": "\n",
+            "sourceCode": "import { Directive, ElementRef, HostBinding, Renderer2, AfterViewInit, Input } from '@angular/core';\nimport { format } from 'date-fns';\n\n@Directive({\n  selector: '[appWaterMark]'\n})\nexport class WaterMarkDirective implements AfterViewInit {\n  @Input() name: string;\n  @Input() isDisplay: boolean;\n  @HostBinding('style.position') public positionStyle = 'relative';\n\n  constructor(private el: ElementRef,\n    private renderer: Renderer2) {\n  }\n\n  public async ngAfterViewInit(): Promise<void> {\n    if (!this.name || !this.isDisplay) return;\n\n    const waterMarkDiv = this.renderer.createElement('div');\n    const waterMarkImg = this.getWaterMarkImageUrl();\n    const waterMarkDivStyle = `\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 100%;\n      height: 100%;\n      pointer-events: none;\n      opacity: 0.13;\n      z-index: 1005;\n      background-image: url('${waterMarkImg}');\n    `;\n    this.renderer.setAttribute(waterMarkDiv, 'style', waterMarkDivStyle);\n    this.renderer.appendChild(this.el.nativeElement, waterMarkDiv);\n\n  }\n\n  private getWaterMarkImageUrl(): string {\n    const canvas = this.renderer.createElement('canvas');\n    canvas.setAttribute('width', '250px');\n    canvas.setAttribute('height', '150px');\n\n    const ctx = canvas.getContext('2d');\n    ctx.textAlign = 'left';\n    ctx.textBaseline = 'middle';\n    ctx.font = '12px PingFangSC-Regular, PingFang SC';\n    ctx.fillStyle = '#54627B';\n    ctx.rotate(10 * Math.PI / 180);\n    const strArr = [`${this.name} ${format(new Date(), 'yyyy-MM-dd HH:mm:ss')}`];\n    strArr.forEach((str, i) => {\n      ctx.fillText(str, 40, 70 + i * 15);\n    });\n\n    return canvas.toDataURL();\n  }\n}\n",
+            "selector": "[appWaterMark]",
+            "providers": [],
+            "hostDirectives": [],
+            "standalone": false,
+            "inputsClass": [
+                {
+                    "name": "isDisplay",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 9,
+                    "type": "boolean",
+                    "decorators": []
+                },
+                {
+                    "name": "name",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 8,
+                    "type": "string",
+                    "decorators": []
+                }
+            ],
+            "outputsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [
+                {
+                    "name": "style.position",
+                    "defaultValue": "'relative'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 10,
+                    "type": "string",
+                    "decorators": []
+                }
+            ],
+            "hostListeners": [],
+            "propertiesClass": [
+                {
+                    "name": "positionStyle",
+                    "defaultValue": "'relative'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 10,
+                    "decorators": [
+                        {
+                            "name": "HostBinding",
+                            "stringifiedArguments": "'style.position'"
+                        }
+                    ],
+                    "modifierKind": [
+                        170,
+                        125
+                    ]
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "getWaterMarkImageUrl",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "string",
+                    "typeParameters": [],
+                    "line": 37,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
+                    "name": "ngAfterViewInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "Promise<void>",
+                    "typeParameters": [],
+                    "line": 16,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        125,
+                        134
+                    ]
+                }
+            ],
+            "extends": [],
+            "implements": [
+                "AfterViewInit"
+            ],
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [
+                    {
+                        "name": "el",
+                        "type": "ElementRef",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "renderer",
+                        "type": "Renderer2",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "line": 10,
+                "jsdoctags": [
+                    {
+                        "name": "el",
+                        "type": "ElementRef",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "renderer",
+                        "type": "Renderer2",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            }
         }
     ],
     "components": [
@@ -4413,6 +5663,16 @@
                 "defaultValue": "(\n  component: CanComponentDeactivate\n) => {\n  return component.canDeactivate ? component.canDeactivate() : true;\n}"
             },
             {
+                "name": "CELLOVERLAYANIMATION",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/animations/overlayAnimation.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "AnimationTriggerMetadata",
+                "defaultValue": "trigger('collapse', [\n  transition('no => yes, void => yes', [\n    animate('300ms cubic-bezier(0.4, 0, 0.2, 1)', keyframes([\n      style({\n        height: '60px',\n        opacity: 0.5,\n        transform: 'scale(0.95)',\n        overflow: 'hidden',\n      }),\n      style({\n        height: '*',\n        opacity: 1,\n        transform: 'scale(1)',\n        overflow: 'hidden',\n      }),\n    ])),\n  ]),\n  transition('yes => no', [\n    animate('300ms cubic-bezier(0.4, 0, 0.2, 1)', keyframes([\n      style({\n        height: '*',\n        opacity: 1,\n        transform: 'scale(1)',\n        overflow: 'hidden',\n      }),\n      style({\n        height: '60px',\n        opacity: 0.5,\n        transform: 'scale(0.95)',\n        overflow: 'hidden',\n      }),\n    ])),\n  ]),\n])"
+            },
+            {
                 "name": "CommonIconNames",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -4507,6 +5767,16 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/utils/index.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "object",
+                "defaultValue": "{\n  'default': ['loading', 'status-icon loading'],\n  'failed': ['question-circle', 'status-icon error'],\n  'succeeded': ['check-circle', 'status-icon success'],\n  'start': ['icons:node-start', 'node-icon start'],\n  'llm': ['icons:node-llm', 'node-icon llm'],\n  'if-else': ['icons:node-branch', 'node-icon if-else'],\n  'http-request': ['icons:node-http', 'node-icon http-request'],\n  'code': ['icons:script', 'node-icon code'],\n  'tool': ['icons:node-iteration', 'node-icon iteration'],\n  'iteration': ['icons:node-iteration', 'node-icon iteration'],\n  'answer': ['icons:node-answer', 'node-icon answer']\n}"
+            },
+            {
+                "name": "StreamStatusIconMap",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/directives/event-source/typing.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "object",
@@ -4722,6 +5992,90 @@
                 ]
             },
             {
+                "name": "copyToClipboard",
+                "file": "src/utils/upload.file.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "<p>复制到剪贴板</p>\n",
+                "args": [
+                    {
+                        "name": "elem",
+                        "type": "HTMLElement",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "returnType": "boolean",
+                "jsdoctags": [
+                    {
+                        "name": {
+                            "pos": 1993,
+                            "end": 1997,
+                            "kind": 80,
+                            "id": 0,
+                            "flags": 16777216,
+                            "transformFlags": 0,
+                            "escapedText": "elem"
+                        },
+                        "type": "HTMLElement",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "pos": 1987,
+                            "end": 1992,
+                            "kind": 80,
+                            "id": 0,
+                            "flags": 16777216,
+                            "transformFlags": 0,
+                            "escapedText": "param"
+                        },
+                        "comment": ""
+                    },
+                    {
+                        "tagName": {
+                            "pos": 2003,
+                            "end": 2010,
+                            "kind": 80,
+                            "id": 0,
+                            "flags": 16777216,
+                            "transformFlags": 0,
+                            "escapedText": "returns"
+                        },
+                        "comment": ""
+                    }
+                ]
+            },
+            {
+                "name": "formatSreamMeta",
+                "file": "src/directives/event-source/typing.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [
+                    {
+                        "name": "stream",
+                        "type": "any",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "jsdoctags": [
+                    {
+                        "name": "stream",
+                        "type": "any",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            {
                 "name": "generateUid",
                 "file": "src/utils/index.ts",
                 "ctype": "miscellaneous",
@@ -4770,6 +6124,62 @@
                         "tagName": {
                             "text": "param"
                         }
+                    }
+                ]
+            },
+            {
+                "name": "getDownloadFileName",
+                "file": "src/utils/upload.file.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "<p>获取下载文件名</p>\n",
+                "args": [
+                    {
+                        "name": "headers",
+                        "type": "HttpHeaders",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "returnType": "string",
+                "jsdoctags": [
+                    {
+                        "name": {
+                            "pos": 1557,
+                            "end": 1564,
+                            "kind": 80,
+                            "id": 0,
+                            "flags": 16777216,
+                            "transformFlags": 0,
+                            "escapedText": "headers"
+                        },
+                        "type": "HttpHeaders",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "pos": 1551,
+                            "end": 1556,
+                            "kind": 80,
+                            "id": 0,
+                            "flags": 16777216,
+                            "transformFlags": 0,
+                            "escapedText": "param"
+                        },
+                        "comment": ""
+                    },
+                    {
+                        "tagName": {
+                            "pos": 1570,
+                            "end": 1577,
+                            "kind": 80,
+                            "id": 0,
+                            "flags": 16777216,
+                            "transformFlags": 0,
+                            "escapedText": "returns"
+                        },
+                        "comment": ""
                     }
                 ]
             },
@@ -5284,6 +6694,48 @@
                 "description": "",
                 "args": [],
                 "returnType": "ValidatorFn"
+            },
+            {
+                "name": "printToClipboard",
+                "file": "src/utils/upload.file.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "<p>打印到剪贴板</p>\n",
+                "args": [
+                    {
+                        "name": "codes",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "returnType": "void",
+                "jsdoctags": [
+                    {
+                        "name": {
+                            "pos": 2798,
+                            "end": 2803,
+                            "kind": 80,
+                            "id": 0,
+                            "flags": 16777216,
+                            "transformFlags": 0,
+                            "escapedText": "codes"
+                        },
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "pos": 2792,
+                            "end": 2797,
+                            "kind": 80,
+                            "id": 0,
+                            "flags": 16777216,
+                            "transformFlags": 0,
+                            "escapedText": "param"
+                        },
+                        "comment": ""
+                    }
+                ]
             },
             {
                 "name": "racePromises",
@@ -5902,6 +7354,173 @@
                 "deprecationMessage": "",
                 "description": "",
                 "file": "src/components/assets/util/index.ts"
+            },
+            {
+                "name": "StreamEvent",
+                "childs": [
+                    {
+                        "name": "PING",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "ping"
+                    },
+                    {
+                        "name": "ERROR",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "error"
+                    },
+                    {
+                        "name": "MESSAGE",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "message"
+                    },
+                    {
+                        "name": "MESSAGE_END",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "message_end"
+                    },
+                    {
+                        "name": "TTS_MESSAGE",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "tts_message"
+                    },
+                    {
+                        "name": "TTS_MESSAGE_END",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "tts_message_end"
+                    },
+                    {
+                        "name": "MESSAGE_FILE",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "message_file"
+                    },
+                    {
+                        "name": "MESSAGE_REPLACE",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "message_replace"
+                    },
+                    {
+                        "name": "AGENT_THOUGHT",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "agent_thought"
+                    },
+                    {
+                        "name": "AGENT_MESSAGE",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "agent_message"
+                    },
+                    {
+                        "name": "WORKFLOW_STARTED",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "workflow_started"
+                    },
+                    {
+                        "name": "WORKFLOW_FINISHED",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "workflow_finished"
+                    },
+                    {
+                        "name": "NODE_STARTED",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "node_started"
+                    },
+                    {
+                        "name": "NODE_FINISHED",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "node_finished"
+                    },
+                    {
+                        "name": "NODE_RETRY",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "node_retry"
+                    },
+                    {
+                        "name": "PARALLEL_BRANCH_STARTED",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "parallel_branch_started"
+                    },
+                    {
+                        "name": "PARALLEL_BRANCH_FINISHED",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "parallel_branch_finished"
+                    },
+                    {
+                        "name": "ITERATION_STARTED",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "iteration_started"
+                    },
+                    {
+                        "name": "ITERATION_NEXT",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "iteration_next"
+                    },
+                    {
+                        "name": "ITERATION_COMPLETED",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "iteration_completed"
+                    },
+                    {
+                        "name": "LOOP_STARTED",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "loop_started"
+                    },
+                    {
+                        "name": "LOOP_NEXT",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "loop_next"
+                    },
+                    {
+                        "name": "LOOP_COMPLETED",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "loop_completed"
+                    },
+                    {
+                        "name": "TEXT_CHUNK",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "text_chunk"
+                    },
+                    {
+                        "name": "TEXT_REPLACE",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "text_replace"
+                    },
+                    {
+                        "name": "AGENT_LOG",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "agent_log"
+                    }
+                ],
+                "ctype": "miscellaneous",
+                "subtype": "enum",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "file": "src/directives/event-source/typing.ts"
             }
         ],
         "groupedVariables": {
@@ -5927,6 +7546,18 @@
                     "deprecationMessage": "",
                     "type": "CanDeactivateFn<CanComponentDeactivate>",
                     "defaultValue": "(\n  component: CanComponentDeactivate\n) => {\n  return component.canDeactivate ? component.canDeactivate() : true;\n}"
+                }
+            ],
+            "src/animations/overlayAnimation.ts": [
+                {
+                    "name": "CELLOVERLAYANIMATION",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/animations/overlayAnimation.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "AnimationTriggerMetadata",
+                    "defaultValue": "trigger('collapse', [\n  transition('no => yes, void => yes', [\n    animate('300ms cubic-bezier(0.4, 0, 0.2, 1)', keyframes([\n      style({\n        height: '60px',\n        opacity: 0.5,\n        transform: 'scale(0.95)',\n        overflow: 'hidden',\n      }),\n      style({\n        height: '*',\n        opacity: 1,\n        transform: 'scale(1)',\n        overflow: 'hidden',\n      }),\n    ])),\n  ]),\n  transition('yes => no', [\n    animate('300ms cubic-bezier(0.4, 0, 0.2, 1)', keyframes([\n      style({\n        height: '*',\n        opacity: 1,\n        transform: 'scale(1)',\n        overflow: 'hidden',\n      }),\n      style({\n        height: '60px',\n        opacity: 0.5,\n        transform: 'scale(0.95)',\n        overflow: 'hidden',\n      }),\n    ])),\n  ]),\n])"
                 }
             ],
             "src/components/assets/util/sourceIcons.ts": [
@@ -6047,6 +7678,18 @@
                     "deprecationMessage": "",
                     "type": "object",
                     "defaultValue": "{\n  phoneNumber: /^1[3-9]\\d{9}$/,\n  landlineAndPhone: /^((0\\d{2,3}-\\d{7,8})|(1[3-9]\\d{9}))$/,\n  onlyNumber: /^\\d+$/,\n  empty: /^\\s+$/,\n  onlyChinese: /^[\\u4e00-\\u9fa5_a-zA-Z]+$/,\n  certificateCode: /(^[1-9]\\d{5}(18|19|([23]\\d))\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{3}[0-9Xx]$)|(^[1-9]\\d{5}\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{2}[0-9Xx]$)/,\n}"
+                }
+            ],
+            "src/directives/event-source/typing.ts": [
+                {
+                    "name": "StreamStatusIconMap",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/directives/event-source/typing.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "object",
+                    "defaultValue": "{\n  'default': ['loading', 'status-icon loading'],\n  'failed': ['question-circle', 'status-icon error'],\n  'succeeded': ['check-circle', 'status-icon success'],\n  'start': ['icons:node-start', 'node-icon start'],\n  'llm': ['icons:node-llm', 'node-icon llm'],\n  'if-else': ['icons:node-branch', 'node-icon if-else'],\n  'http-request': ['icons:node-http', 'node-icon http-request'],\n  'code': ['icons:script', 'node-icon code'],\n  'tool': ['icons:node-iteration', 'node-icon iteration'],\n  'iteration': ['icons:node-iteration', 'node-icon iteration'],\n  'answer': ['icons:node-answer', 'node-icon answer']\n}"
                 }
             ]
         },
@@ -6659,6 +8302,190 @@
                             }
                         }
                     ]
+                },
+                {
+                    "name": "copyToClipboard",
+                    "file": "src/utils/upload.file.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "<p>复制到剪贴板</p>\n",
+                    "args": [
+                        {
+                            "name": "elem",
+                            "type": "HTMLElement",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "returnType": "boolean",
+                    "jsdoctags": [
+                        {
+                            "name": {
+                                "pos": 1993,
+                                "end": 1997,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16777216,
+                                "transformFlags": 0,
+                                "escapedText": "elem"
+                            },
+                            "type": "HTMLElement",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "pos": 1987,
+                                "end": 1992,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16777216,
+                                "transformFlags": 0,
+                                "escapedText": "param"
+                            },
+                            "comment": ""
+                        },
+                        {
+                            "tagName": {
+                                "pos": 2003,
+                                "end": 2010,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16777216,
+                                "transformFlags": 0,
+                                "escapedText": "returns"
+                            },
+                            "comment": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "getDownloadFileName",
+                    "file": "src/utils/upload.file.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "<p>获取下载文件名</p>\n",
+                    "args": [
+                        {
+                            "name": "headers",
+                            "type": "HttpHeaders",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "returnType": "string",
+                    "jsdoctags": [
+                        {
+                            "name": {
+                                "pos": 1557,
+                                "end": 1564,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16777216,
+                                "transformFlags": 0,
+                                "escapedText": "headers"
+                            },
+                            "type": "HttpHeaders",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "pos": 1551,
+                                "end": 1556,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16777216,
+                                "transformFlags": 0,
+                                "escapedText": "param"
+                            },
+                            "comment": ""
+                        },
+                        {
+                            "tagName": {
+                                "pos": 1570,
+                                "end": 1577,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16777216,
+                                "transformFlags": 0,
+                                "escapedText": "returns"
+                            },
+                            "comment": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "printToClipboard",
+                    "file": "src/utils/upload.file.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "<p>打印到剪贴板</p>\n",
+                    "args": [
+                        {
+                            "name": "codes",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "returnType": "void",
+                    "jsdoctags": [
+                        {
+                            "name": {
+                                "pos": 2798,
+                                "end": 2803,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16777216,
+                                "transformFlags": 0,
+                                "escapedText": "codes"
+                            },
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "pos": 2792,
+                                "end": 2797,
+                                "kind": 80,
+                                "id": 0,
+                                "flags": 16777216,
+                                "transformFlags": 0,
+                                "escapedText": "param"
+                            },
+                            "comment": ""
+                        }
+                    ]
+                }
+            ],
+            "src/directives/event-source/typing.ts": [
+                {
+                    "name": "formatSreamMeta",
+                    "file": "src/directives/event-source/typing.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [
+                        {
+                            "name": "stream",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "stream",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
                 }
             ],
             "src/utils/index.ts": [
@@ -7218,6 +9045,175 @@
                     "description": "",
                     "file": "src/components/assets/util/index.ts"
                 }
+            ],
+            "src/directives/event-source/typing.ts": [
+                {
+                    "name": "StreamEvent",
+                    "childs": [
+                        {
+                            "name": "PING",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "ping"
+                        },
+                        {
+                            "name": "ERROR",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "error"
+                        },
+                        {
+                            "name": "MESSAGE",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "message"
+                        },
+                        {
+                            "name": "MESSAGE_END",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "message_end"
+                        },
+                        {
+                            "name": "TTS_MESSAGE",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "tts_message"
+                        },
+                        {
+                            "name": "TTS_MESSAGE_END",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "tts_message_end"
+                        },
+                        {
+                            "name": "MESSAGE_FILE",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "message_file"
+                        },
+                        {
+                            "name": "MESSAGE_REPLACE",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "message_replace"
+                        },
+                        {
+                            "name": "AGENT_THOUGHT",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "agent_thought"
+                        },
+                        {
+                            "name": "AGENT_MESSAGE",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "agent_message"
+                        },
+                        {
+                            "name": "WORKFLOW_STARTED",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "workflow_started"
+                        },
+                        {
+                            "name": "WORKFLOW_FINISHED",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "workflow_finished"
+                        },
+                        {
+                            "name": "NODE_STARTED",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "node_started"
+                        },
+                        {
+                            "name": "NODE_FINISHED",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "node_finished"
+                        },
+                        {
+                            "name": "NODE_RETRY",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "node_retry"
+                        },
+                        {
+                            "name": "PARALLEL_BRANCH_STARTED",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "parallel_branch_started"
+                        },
+                        {
+                            "name": "PARALLEL_BRANCH_FINISHED",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "parallel_branch_finished"
+                        },
+                        {
+                            "name": "ITERATION_STARTED",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "iteration_started"
+                        },
+                        {
+                            "name": "ITERATION_NEXT",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "iteration_next"
+                        },
+                        {
+                            "name": "ITERATION_COMPLETED",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "iteration_completed"
+                        },
+                        {
+                            "name": "LOOP_STARTED",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "loop_started"
+                        },
+                        {
+                            "name": "LOOP_NEXT",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "loop_next"
+                        },
+                        {
+                            "name": "LOOP_COMPLETED",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "loop_completed"
+                        },
+                        {
+                            "name": "TEXT_CHUNK",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "text_chunk"
+                        },
+                        {
+                            "name": "TEXT_REPLACE",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "text_replace"
+                        },
+                        {
+                            "name": "AGENT_LOG",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "agent_log"
+                        }
+                    ],
+                    "ctype": "miscellaneous",
+                    "subtype": "enum",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "file": "src/directives/event-source/typing.ts"
+                }
             ]
         },
         "groupedTypeAliases": {
@@ -7464,9 +9460,19 @@
     },
     "routes": [],
     "coverage": {
-        "count": 18,
+        "count": 19,
         "status": "low",
         "files": [
+            {
+                "filePath": "src/animations/overlayAnimation.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "CELLOVERLAYANIMATION",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
             {
                 "filePath": "src/app/app.component.ts",
                 "type": "component",
@@ -7618,12 +9624,77 @@
                 "status": "low"
             },
             {
+                "filePath": "src/directives/ball-parabola.directive.ts",
+                "type": "directive",
+                "linktype": "directive",
+                "name": "BallParabolaDirective",
+                "coveragePercent": 87,
+                "coverageCount": "14/16",
+                "status": "very-good"
+            },
+            {
                 "filePath": "src/directives/destroy.subscription.ts",
                 "type": "directive",
                 "linktype": "directive",
                 "name": "DestroySubscription",
                 "coveragePercent": 0,
                 "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "src/directives/event-source/event-source.directive.ts",
+                "type": "directive",
+                "linktype": "directive",
+                "name": "EventSourceDirective",
+                "coveragePercent": 0,
+                "coverageCount": "0/8",
+                "status": "low"
+            },
+            {
+                "filePath": "src/directives/event-source/event-source.directive.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "IChatContext",
+                "coveragePercent": 0,
+                "coverageCount": "0/5",
+                "status": "low"
+            },
+            {
+                "filePath": "src/directives/event-source/event-source.service.ts",
+                "type": "injectable",
+                "linktype": "injectable",
+                "name": "EventSourceService",
+                "coveragePercent": 0,
+                "coverageCount": "0/7",
+                "status": "low"
+            },
+            {
+                "filePath": "src/directives/event-source/typing.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "IAppConversation",
+                "coveragePercent": 0,
+                "coverageCount": "0/8",
+                "status": "low"
+            },
+            {
+                "filePath": "src/directives/event-source/typing.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "formatSreamMeta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/directives/event-source/typing.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "StreamStatusIconMap",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
                 "status": "low"
             },
             {
@@ -7652,6 +9723,24 @@
                 "coveragePercent": 91,
                 "coverageCount": "11/12",
                 "status": "very-good"
+            },
+            {
+                "filePath": "src/directives/scroll.directive.ts",
+                "type": "directive",
+                "linktype": "directive",
+                "name": "ScrollDirective",
+                "coveragePercent": 0,
+                "coverageCount": "0/7",
+                "status": "low"
+            },
+            {
+                "filePath": "src/directives/water-mark.directive.ts",
+                "type": "directive",
+                "linktype": "directive",
+                "name": "WaterMarkDirective",
+                "coveragePercent": 0,
+                "coverageCount": "0/8",
+                "status": "low"
             },
             {
                 "filePath": "src/pipes/file-size.pipe.ts",
@@ -8152,6 +10241,36 @@
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
+            },
+            {
+                "filePath": "src/utils/upload.file.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "copyToClipboard",
+                "coveragePercent": 100,
+                "coverageCount": "1/1",
+                "status": "very-good"
+            },
+            {
+                "filePath": "src/utils/upload.file.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "getDownloadFileName",
+                "coveragePercent": 100,
+                "coverageCount": "1/1",
+                "status": "very-good"
+            },
+            {
+                "filePath": "src/utils/upload.file.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "printToClipboard",
+                "coveragePercent": 100,
+                "coverageCount": "1/1",
+                "status": "very-good"
             },
             {
                 "filePath": "src/utils/uuid.ts",

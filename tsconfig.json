@@ -20,6 +20,9 @@
     "target": "ES2022",
     "module": "ES2022",
     "paths": {
+      "@Animations": [
+        "./src/animations"
+      ],
       "@Components": [
         "./src/components"
       ],

@@ -37,6 +37,9 @@
       ],
       "@Services": [
         "./src/services"
+      ],
+      "@AngularEcharts": [
+        "./library/AngularEcharts/components"
       ]
     }
   },

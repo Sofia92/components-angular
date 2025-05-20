@@ -284,6 +284,96 @@
             "extends": []
         },
         {
+            "name": "ChartData",
+            "id": "interface-ChartData-ae4dd3619643f7e37a7760363c9a86b1321bc9e6fe6a4da32c4fe71a89ce3cd4deb31596917022d9dff3bc6f786371990c963e02e7cb4ce922b1cd050d4edfd7",
+            "file": "library/AngularEcharts/components/typings.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "interface",
+            "sourceCode": "export interface ChartData {\n  label: string;\n  type: ChartType;\n  data: ChartDataItem[];\n}\n\nexport interface ChartDataItem {\n  label: string;\n  value: number;\n  unit?: string;\n}\n\nexport enum ChartType {\n  LINE = 'line',\n  PIE = 'pie',\n}\n",
+            "properties": [
+                {
+                    "name": "data",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "ChartDataItem[]",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 4
+                },
+                {
+                    "name": "label",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 2
+                },
+                {
+                    "name": "type",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "ChartType",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 3
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 171,
+            "methods": [],
+            "extends": []
+        },
+        {
+            "name": "ChartDataItem",
+            "id": "interface-ChartDataItem-ae4dd3619643f7e37a7760363c9a86b1321bc9e6fe6a4da32c4fe71a89ce3cd4deb31596917022d9dff3bc6f786371990c963e02e7cb4ce922b1cd050d4edfd7",
+            "file": "library/AngularEcharts/components/typings.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "interface",
+            "sourceCode": "export interface ChartData {\n  label: string;\n  type: ChartType;\n  data: ChartDataItem[];\n}\n\nexport interface ChartDataItem {\n  label: string;\n  value: number;\n  unit?: string;\n}\n\nexport enum ChartType {\n  LINE = 'line',\n  PIE = 'pie',\n}\n",
+            "properties": [
+                {
+                    "name": "label",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 8
+                },
+                {
+                    "name": "unit",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": true,
+                    "description": "",
+                    "line": 10
+                },
+                {
+                    "name": "value",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 9
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 171,
+            "methods": [],
+            "extends": []
+        },
+        {
             "name": "IAppConversation",
             "id": "interface-IAppConversation-65eeb946dcf7d5a8afde7d3b63eec9261ebfd1382a93ca28b1a0ca338b4db97b530df8dbf25600c44865a8fb6b032f06c54d1728f5119dbd0c87fbd59a2a2fdb",
             "file": "src/directives/event-source/typing.ts",
@@ -2527,6 +2617,96 @@
                     }
                 ]
             }
+        },
+        {
+            "name": "ChartAbstract",
+            "id": "directive-ChartAbstract-0b2db82dac4f0fa14a70dc0aa7b04a344e7aeef9df93563510e3d85fc272529a3631078dd058f2312acca3d372996e116436ebbb1922c6a903ded937ff63cc83",
+            "file": "library/AngularEcharts/components/chart.abstract.ts",
+            "type": "directive",
+            "description": "",
+            "rawdescription": "\n",
+            "sourceCode": "import { AfterViewInit, Directive } from '@angular/core';\nimport * as echarts from 'echarts';\n\n@Directive()\nexport abstract class ChartAbstract implements AfterViewInit {\n  protected option: echarts.EChartsOption = { ...BASE_OPTION };\n  protected myChart!: echarts.ECharts;\n  protected chartId: string = '';\n  ngAfterViewInit() {\n    window.addEventListener('resize', (e) => {\n      this.myChart.resize();\n    });\n  }\n\n  protected initChart() {\n    this.myChart = echarts.init(document.getElementById(this.chartId) as HTMLDivElement);\n  }\n\n}\n\nconst BASE_OPTION: echarts.EChartsOption = {\n  grid: {},\n  legend: {\n    show: false,\n  }\n};",
+            "providers": [],
+            "hostDirectives": [],
+            "standalone": false,
+            "inputsClass": [],
+            "outputsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "propertiesClass": [
+                {
+                    "name": "chartId",
+                    "defaultValue": "''",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 8,
+                    "modifierKind": [
+                        124
+                    ]
+                },
+                {
+                    "name": "myChart",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "echarts.ECharts",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 7,
+                    "modifierKind": [
+                        124
+                    ]
+                },
+                {
+                    "name": "option",
+                    "defaultValue": "{ ...BASE_OPTION }",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "echarts.EChartsOption",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 6,
+                    "modifierKind": [
+                        124
+                    ]
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "initChart",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 15,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        124
+                    ]
+                },
+                {
+                    "name": "ngAfterViewInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 9,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                }
+            ],
+            "extends": [],
+            "implements": [
+                "AfterViewInit"
+            ]
         },
         {
             "name": "DestroySubscription",
@@ -6118,6 +6298,171 @@
             ]
         },
         {
+            "name": "LineChartComponent",
+            "id": "component-LineChartComponent-1f60271f94d0b78034372d29b6ec83be1183cf7d1bd4732f37512c3a77f0f8b104066c71ed09901167b9dc4e2c71b63921fe6a4f6822704d08d837a56856ca8f",
+            "file": "library/AngularEcharts/components/chart-line.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "chart-line",
+            "styleUrls": [
+                "./chart.scss"
+            ],
+            "styles": [],
+            "template": "<div id=\"echarts-line\" class=\"chart-item line\"></div>",
+            "templateUrl": [],
+            "viewProviders": [],
+            "hostDirectives": [],
+            "inputsClass": [
+                {
+                    "name": "chartData",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 11,
+                    "type": "ChartData",
+                    "decorators": []
+                }
+            ],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "chartId",
+                    "defaultValue": "'echarts-line'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 13,
+                    "modifierKind": [
+                        164
+                    ],
+                    "inheritance": {
+                        "file": "ChartAbstract"
+                    }
+                },
+                {
+                    "name": "option",
+                    "defaultValue": "{ ...BASE_OPTION }",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "echarts.EChartsOption",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 12,
+                    "modifierKind": [
+                        164
+                    ],
+                    "inheritance": {
+                        "file": "ChartAbstract"
+                    }
+                },
+                {
+                    "name": "myChart",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "echarts.ECharts",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 7,
+                    "modifierKind": [
+                        124
+                    ],
+                    "inheritance": {
+                        "file": "ChartAbstract"
+                    }
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "ngOnChanges",
+                    "args": [
+                        {
+                            "name": "changes",
+                            "type": "SimpleChanges",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 15,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "changes",
+                            "type": "SimpleChanges",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "initChart",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 15,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        124
+                    ],
+                    "inheritance": {
+                        "file": "ChartAbstract"
+                    }
+                },
+                {
+                    "name": "ngAfterViewInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 9,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "inheritance": {
+                        "file": "ChartAbstract"
+                    }
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "standalone": false,
+            "imports": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';\nimport * as echarts from 'echarts';\nimport { ChartData } from './typings';\nimport { ChartAbstract } from './chart.abstract';\n@Component({\n  selector: 'chart-line',\n  template: `<div id=\"echarts-line\" class=\"chart-item line\"></div>`,\n  styleUrls: ['./chart.scss']\n})\nexport class LineChartComponent extends ChartAbstract implements OnChanges {\n  @Input() chartData!: ChartData;\n  override option: echarts.EChartsOption = { ...BASE_OPTION };\n  override chartId: string = 'echarts-line';\n\n  ngOnChanges(changes: SimpleChanges) {\n    if (changes['chartData']) {\n      const labels = this.chartData.data.map((d: any) => d.label);\n      const values = this.chartData.data.map((d: any) => d.value);\n      this.option.xAxis = { ...this.option.xAxis, data: labels };\n      this.option.series = [{ type: 'line', data: values, smooth: true }];\n\n      if (!this.myChart) {\n        this.initChart();\n      };\n\n      this.myChart.setOption(this.option);\n    }\n  }\n}\n\nconst BASE_OPTION: echarts.EChartsOption = {\n  grid: {},\n  legend: {\n    show: false,\n  },\n  tooltip: {\n    trigger: 'axis',\n    confine: true,\n    backgroundColor: 'rgba(255, 255, 255, 1)',\n    borderWidth: 1,\n    borderColor: '#ccc',\n    padding: 10,\n    textStyle: {\n      color: '#000',\n      fontSize: 12,\n    }\n  },\n  xAxis: {\n    type: 'category',\n    data: [],\n  },\n  yAxis: {\n    type: 'value',\n  },\n  series: [],\n  // color: undefined,\n};",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": ":host {\n  height: 100%;\n  width: 100%;\n  display: block;\n}\n.chart-item {\n  height: 100%;\n  width: 100%;\n  min-height: 120px;\n}\n",
+                    "styleUrl": "./chart.scss"
+                }
+            ],
+            "stylesData": "",
+            "extends": [
+                "ChartAbstract"
+            ],
+            "implements": [
+                "OnChanges"
+            ]
+        },
+        {
             "name": "SearchBoxComponent",
             "id": "component-SearchBoxComponent-49521038947d44e34b3473448395c091b6f10c5e5b036ccd8764e59e3cd29a6321806fff6fdf9205333e4f9c7df3b14dd4e18fee73ecf689f2fe6aeb4ce99cc9",
             "file": "src/components/search-box/search-box.component.ts",
@@ -6548,6 +6893,26 @@
                 "deprecationMessage": "",
                 "type": "ApplicationConfig",
                 "defaultValue": "{\n  providers: [\n    provideZoneChangeDetection({ eventCoalescing: true }),\n    provideRouter(routes),\n    provideAnimationsAsync(),\n    provideHttpClient(), //added the function here\n    provideNzI18n(en_US)\n  ]\n}"
+            },
+            {
+                "name": "BASE_OPTION",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "library/AngularEcharts/components/chart-line.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "echarts.EChartsOption",
+                "defaultValue": "{\n  grid: {},\n  legend: {\n    show: false,\n  },\n  tooltip: {\n    trigger: 'axis',\n    confine: true,\n    backgroundColor: 'rgba(255, 255, 255, 1)',\n    borderWidth: 1,\n    borderColor: '#ccc',\n    padding: 10,\n    textStyle: {\n      color: '#000',\n      fontSize: 12,\n    }\n  },\n  xAxis: {\n    type: 'category',\n    data: [],\n  },\n  yAxis: {\n    type: 'value',\n  },\n  series: [],\n  // color: undefined,\n}"
+            },
+            {
+                "name": "BASE_OPTION",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "library/AngularEcharts/components/chart.abstract.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "echarts.EChartsOption",
+                "defaultValue": "{\n  grid: {},\n  legend: {\n    show: false,\n  }\n}"
             },
             {
                 "name": "CanComponentDeactivateGuard",
@@ -8160,6 +8525,29 @@
         ],
         "enumerations": [
             {
+                "name": "ChartType",
+                "childs": [
+                    {
+                        "name": "LINE",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "line"
+                    },
+                    {
+                        "name": "PIE",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "pie"
+                    }
+                ],
+                "ctype": "miscellaneous",
+                "subtype": "enum",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "file": "library/AngularEcharts/components/typings.ts"
+            },
+            {
                 "name": "ECmpTypeOperatorMap",
                 "childs": [
                     {
@@ -8467,6 +8855,30 @@
                     "deprecationMessage": "",
                     "type": "ApplicationConfig",
                     "defaultValue": "{\n  providers: [\n    provideZoneChangeDetection({ eventCoalescing: true }),\n    provideRouter(routes),\n    provideAnimationsAsync(),\n    provideHttpClient(), //added the function here\n    provideNzI18n(en_US)\n  ]\n}"
+                }
+            ],
+            "library/AngularEcharts/components/chart-line.ts": [
+                {
+                    "name": "BASE_OPTION",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "library/AngularEcharts/components/chart-line.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "echarts.EChartsOption",
+                    "defaultValue": "{\n  grid: {},\n  legend: {\n    show: false,\n  },\n  tooltip: {\n    trigger: 'axis',\n    confine: true,\n    backgroundColor: 'rgba(255, 255, 255, 1)',\n    borderWidth: 1,\n    borderColor: '#ccc',\n    padding: 10,\n    textStyle: {\n      color: '#000',\n      fontSize: 12,\n    }\n  },\n  xAxis: {\n    type: 'category',\n    data: [],\n  },\n  yAxis: {\n    type: 'value',\n  },\n  series: [],\n  // color: undefined,\n}"
+                }
+            ],
+            "library/AngularEcharts/components/chart.abstract.ts": [
+                {
+                    "name": "BASE_OPTION",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "library/AngularEcharts/components/chart.abstract.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "echarts.EChartsOption",
+                    "defaultValue": "{\n  grid: {},\n  legend: {\n    show: false,\n  }\n}"
                 }
             ],
             "src/services/canDeactive.guard.ts": [
@@ -9882,6 +10294,31 @@
             ]
         },
         "groupedEnumerations": {
+            "library/AngularEcharts/components/typings.ts": [
+                {
+                    "name": "ChartType",
+                    "childs": [
+                        {
+                            "name": "LINE",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "line"
+                        },
+                        {
+                            "name": "PIE",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "pie"
+                        }
+                    ],
+                    "ctype": "miscellaneous",
+                    "subtype": "enum",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "file": "library/AngularEcharts/components/typings.ts"
+                }
+            ],
             "src/utils/typings.ts": [
                 {
                     "name": "ECmpTypeOperatorMap",
@@ -10429,9 +10866,65 @@
     },
     "routes": [],
     "coverage": {
-        "count": 20,
+        "count": 19,
         "status": "low",
         "files": [
+            {
+                "filePath": "library/AngularEcharts/components/chart-line.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "LineChartComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/8",
+                "status": "low"
+            },
+            {
+                "filePath": "library/AngularEcharts/components/chart-line.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "BASE_OPTION",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "library/AngularEcharts/components/chart.abstract.ts",
+                "type": "directive",
+                "linktype": "directive",
+                "name": "ChartAbstract",
+                "coveragePercent": 0,
+                "coverageCount": "0/6",
+                "status": "low"
+            },
+            {
+                "filePath": "library/AngularEcharts/components/chart.abstract.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "BASE_OPTION",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "library/AngularEcharts/components/typings.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "ChartData",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "library/AngularEcharts/components/typings.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "ChartDataItem",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
             {
                 "filePath": "src/animations/animations.ts",
                 "type": "variable",

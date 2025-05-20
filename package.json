@@ -23,6 +23,7 @@
     "@angular/platform-browser": "^19.2.0",
     "@angular/platform-browser-dynamic": "^19.2.0",
     "@angular/router": "^19.2.0",
+    "echarts": "^5.6.0",
     "html2canvas": "^1.4.1",
     "jspdf": "^3.0.1",
     "ng-zorro-antd": "^19.2.1",

@@ -1,0 +1,296 @@
+/* You can add global styles to this file, and also import other style files */
+i {
+  font-style: normal;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+.flex {
+  display: flex;
+  flex-direction: row;
+}
+.flex[vertical] {
+  flex-direction: column;
+}
+.flex[justify=center] {
+  justify-content: center;
+}
+.flex[justify=between] {
+  justify-content: space-between;
+}
+.flex[justify=end] {
+  justify-content: end;
+}
+.flex[align=start] {
+  align-items: flex-start;
+}
+.flex[align=center] {
+  align-items: center;
+}
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.bordered {
+  border: 1px solid #e0e0e0;
+}
+
+.border-radius {
+  border-radius: 4px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.full-height {
+  height: 100%;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.cursor-abandon {
+  cursor: not-allowed;
+}
+
+.no-wrap, .ellipsis {
+  white-space: nowrap;
+}
+
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.padding-sm {
+  padding: 0.5rem;
+}
+
+.padding-md {
+  padding: 1rem;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.text-left {
+  text-align: left !important;
+}
+
+.text-right {
+  text-align: right !important;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.text-bold {
+  font-weight: bold !important;
+}
+
+.text-italic {
+  font-style: italic !important;
+}
+
+.gap-sm {
+  gap: 4px;
+}
+
+.gap-md {
+  gap: 8px;
+}
+
+.gap-xxs {
+  gap: 2px !important;
+}
+
+.gap-xs {
+  gap: 4px !important;
+}
+
+.gap-sm {
+  gap: 8px !important;
+}
+
+.gap-md {
+  gap: 12px !important;
+}
+
+.gap-lg {
+  gap: 16px !important;
+}
+
+.gap-xl {
+  gap: 24px !important;
+}
+
+.gap-xxl {
+  gap: 36px !important;
+}
+
+.padding-xxs {
+  padding: 2px !important;
+}
+
+.padding-xs {
+  padding: 4px !important;
+}
+
+.padding-sm {
+  padding: 8px !important;
+}
+
+.padding-md {
+  padding: 12px !important;
+}
+
+.padding-lg {
+  padding: 16px !important;
+}
+
+.padding-xl {
+  padding: 24px !important;
+}
+
+.padding-xxl {
+  padding: 36px !important;
+}
+
+.padding-top-xxs {
+  padding-top: 2px !important;
+}
+
+.padding-top-xs {
+  padding-top: 4px !important;
+}
+
+.padding-top-sm {
+  padding-top: 8px !important;
+}
+
+.padding-top-md {
+  padding-top: 12px !important;
+}
+
+.padding-top-lg {
+  padding-top: 16px !important;
+}
+
+.padding-top-xl {
+  padding-top: 24px !important;
+}
+
+.padding-top-xxl {
+  padding-top: 36px !important;
+}
+
+.padding-left-xxs {
+  padding-left: 2px !important;
+}
+
+.padding-left-xs {
+  padding-left: 4px !important;
+}
+
+.padding-left-sm {
+  padding-left: 8px !important;
+}
+
+.padding-left-md {
+  padding-left: 12px !important;
+}
+
+.padding-left-lg {
+  padding-left: 16px !important;
+}
+
+.padding-left-xl {
+  padding-left: 24px !important;
+}
+
+.padding-left-xxl {
+  padding-left: 36px !important;
+}
+
+.padding-right-xxs {
+  padding-right: 2px !important;
+}
+
+.padding-right-xs {
+  padding-right: 4px !important;
+}
+
+.padding-right-sm {
+  padding-right: 8px !important;
+}
+
+.padding-right-md {
+  padding-right: 12px !important;
+}
+
+.padding-right-lg {
+  padding-right: 16px !important;
+}
+
+.padding-right-xl {
+  padding-right: 24px !important;
+}
+
+.padding-right-xxl {
+  padding-right: 36px !important;
+}
+
+.padding-bottom-xxs {
+  padding-bottom: 2px !important;
+}
+
+.padding-bottom-xs {
+  padding-bottom: 4px !important;
+}
+
+.padding-bottom-sm {
+  padding-bottom: 8px !important;
+}
+
+.padding-bottom-md {
+  padding-bottom: 12px !important;
+}
+
+.padding-bottom-lg {
+  padding-bottom: 16px !important;
+}
+
+.padding-bottom-xl {
+  padding-bottom: 24px !important;
+}
+
+.padding-bottom-xxl {
+  padding-bottom: 36px !important;
+}
+
+.full-width-height-block, .full-width-height-grid {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.full-width-height-block {
+  display: block;
+}
+.full-width-height-grid {
+  display: grid;
+}
+
+.bg-white {
+  background-color: white;
+}
+
+.bg-black {
+  background-color: black;
+}
